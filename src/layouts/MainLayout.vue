@@ -17,7 +17,18 @@
     </q-header>
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-      <!-- drawer content -->
+      <div class="flex column full-height">
+        <div class="q-mb-auto">group 1</div>
+        <q-separator />
+        <div>
+          <q-item clickable v-ripple :to="{ name: 'product-info' }">
+            <q-item-section avatar>
+              <q-icon color="grey" name="info" />
+            </q-item-section>
+            <q-item-section>About Mirai</q-item-section>
+          </q-item>
+        </div>
+      </div>
     </q-drawer>
 
     <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
