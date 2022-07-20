@@ -1,5 +1,9 @@
 import { RouteRecordRaw } from 'vue-router';
 
+import tasksRoutes from 'src/modules/tasks/routes';
+import notesRoutes from 'src/modules/notes/routes';
+import weatherRoutes from 'src/modules/weather/routes';
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -15,6 +19,9 @@ const routes: RouteRecordRaw[] = [
         name: 'product-info',
         component: () => import('pages/ProductInfo.vue'),
       },
+      ...tasksRoutes,
+      ...notesRoutes,
+      ...weatherRoutes,
     ],
   },
 

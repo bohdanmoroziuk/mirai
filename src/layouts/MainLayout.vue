@@ -6,27 +6,61 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
           Mirai
         </q-toolbar-title>
 
-        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+        <div class="q-gutter-x-sm">
+          <q-btn dense flat round icon="notifications" />
+          <q-btn dense flat round icon="person" :to="{ name: 'account' }" />
+          <q-btn dense flat round icon="info" :to="{ name: 'info' }" />
+          <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+        </div>
       </q-toolbar>
     </q-header>
 
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
       <div class="flex column full-height">
-        <div class="q-mb-auto">group 1</div>
+        <div class="link-group q-mb-auto">
+          <q-list>
+            <q-item-label header>Tasks</q-item-label>
+            <q-item clickable v-ripple :to="{ name: 'inbox' }">
+              <q-item-section avatar>
+                <q-icon color="primary" name="inbox" />
+              </q-item-section>
+              <q-item-section>Inbox</q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :to="{ name: 'today' }">
+              <q-item-section avatar>
+                <q-icon color="green" name="folder" />
+              </q-item-section>
+              <q-item-section>Today</q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :to="{ name: 'overdue' }">
+              <q-item-section avatar>
+                <q-icon color="red" name="folder_off" />
+              </q-item-section>
+              <q-item-section>Overdue</q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item-label header>Notes</q-item-label>
+            <q-item clickable v-ripple :to="{ name: 'notes' }">
+              <q-item-section avatar>
+                <q-icon color="primary" name="note_alt" />
+              </q-item-section>
+              <q-item-section>Notes</q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item-label header>Weather</q-item-label>
+            <q-item clickable v-ripple :to="{ name: 'weather' }">
+              <q-item-section avatar>
+                <q-icon color="primary" name="sunny" />
+              </q-item-section>
+              <q-item-section>Weather</q-item-section>
+            </q-item>
+          </q-list>
+        </div>
         <q-separator />
-        <div>
-          <q-item clickable v-ripple :to="{ name: 'product-info' }">
-            <q-item-section avatar>
-              <q-icon color="grey" name="info" />
-            </q-item-section>
-            <q-item-section>About Mirai</q-item-section>
-          </q-item>
+        <div class="link-group">
         </div>
       </div>
     </q-drawer>
@@ -50,25 +84,17 @@
   </q-layout>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref } from 'vue';
 
-export default {
-  setup() {
-    const leftDrawerOpen = ref(false);
-    const rightDrawerOpen = ref(false);
+const leftDrawerOpen = ref(false);
+const rightDrawerOpen = ref(false);
 
-    return {
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+};
 
-      rightDrawerOpen,
-      toggleRightDrawer() {
-        rightDrawerOpen.value = !rightDrawerOpen.value;
-      },
-    };
-  },
+const toggleRightDrawer = () => {
+  rightDrawerOpen.value = !rightDrawerOpen.value;
 };
 </script>
