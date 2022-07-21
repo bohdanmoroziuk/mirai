@@ -1,37 +1,42 @@
 <template>
-  <div
-    v-if="hasNotes"
-    class="q-gutter-md"
-    style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: max-content;"
-  >
-    <q-card
-      class="card column"
+  <q-list>
+    <template
       v-for="note of notes"
       :key="note.id"
-      flat
-      square
-      bordered
     >
-      <q-card-section>
-        <div class="text-h6">{{ note.name }}</div>
-      </q-card-section>
+      <q-item>
+        <q-item-section>
+          <q-item-label>
+            {{ note.name }}
+          </q-item-label>
+        </q-item-section>
 
-      <q-card-section>
-        {{ note.text }}
-      </q-card-section>
+        <q-item-section>
+          <q-item-label caption>
+            {{ note.text }}
+          </q-item-label>
+        </q-item-section>
 
-      <q-separator dark />
-
-      <q-card-actions class="q-mt-auto">
-        <q-btn color="negative" flat @click="deleteNote(note.id)">Delete</q-btn>
-      </q-card-actions>
-    </q-card>
-  </div>
-  <div v-else class="text-grey">No notes. Try to add your first one...</div>
+        <q-item-section side>
+          <div class="q-gutter-x-sm">
+            <q-btn
+              flat
+              dense
+              round
+              icon="delete"
+              color="negative"
+              @click="deleteNote(note.id)"
+            />
+          </div>
+        </q-item-section>
+      </q-item>
+      <q-separator />
+    </template>
+  </q-list>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, computed } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
 import { Note } from 'src/modules/notes/stores/notes';
 
@@ -43,11 +48,9 @@ interface Emits {
   (event: 'delete', payload: string): void;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const emits = defineEmits<Emits>();
-
-const hasNotes = computed(() => props.notes.length > 0);
 
 const deleteNote = (id: string) => {
   emits('delete', id);
