@@ -1,0 +1,71 @@
+<template>
+  <q-dialog v-model="dialog" persistent>
+    <q-card style="min-width: 350px">
+      <q-card-section>
+        <div class="text-h6">Add note</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <div class="q-gutter-y-sm">
+          <q-input dense v-model.trim="name" autofocus placeholder="Name" />
+          <q-input dense v-model.trim="text" placeholder="Text" />
+        </div>
+      </q-card-section>
+
+      <q-card-actions align="right" class="text-primary">
+        <q-btn flat label="Cancel" @click="hideDialog" />
+        <q-btn flat label="Add" :disable="cannotAddNote" @click="addTopic" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import { useQuasar } from 'quasar';
+import { storeToRefs } from 'pinia';
+
+import { useDialogsStore } from 'src/modules/notes/stores/dialogs';
+import { useNotesStore } from 'src/modules/notes/stores/notes';
+
+const $q = useQuasar();
+
+const dialogsStore = useDialogsStore();
+
+const notesStore = useNotesStore();
+
+const { isNoteDialogShown } = storeToRefs(dialogsStore);
+
+const dialog = computed({
+  get() {
+    return isNoteDialogShown.value;
+  },
+  set() {
+    dialogsStore.toggleNoteDialog();
+  },
+});
+
+const name = ref('');
+
+const text = ref('');
+
+const cannotAddNote = computed(() => name.value === '');
+
+const hideDialog = () => {
+  name.value = '';
+  text.value = '';
+  dialogsStore.hideNoteDialog();
+};
+
+const addTopic = () => {
+  try {
+    notesStore.addNote(name.value, text.value);
+
+    $q.notify({ type: 'positive', message: 'New note added' });
+  } catch (error) {
+    $q.notify({ type: 'negative', message: (error as Error).message });
+  } finally {
+    hideDialog();
+  }
+};
+</script>
