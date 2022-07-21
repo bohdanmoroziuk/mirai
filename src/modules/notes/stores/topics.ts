@@ -16,6 +16,7 @@ export const createTopic = (name: string): Topic => ({
 });
 
 export const useTopicsStore = defineStore('topics', {
+  persist: true,
   state(): State {
     return {
       topics: [],

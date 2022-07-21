@@ -1,5 +1,5 @@
 <template>
-  <div class="topic-list">
+  <div class="topic-list" v-if="hasTopics">
     <q-chip
       class="topic-list-item"
       v-for="topic of topics"
@@ -12,10 +12,11 @@
       {{ topic.name }}
     </q-chip>
   </div>
+  <div v-else class="text-grey">No topics. Try to add your first one...</div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits, computed } from 'vue';
 
 import { Topic } from 'src/modules/notes/stores/topics';
 
@@ -27,9 +28,11 @@ interface Emits {
   (event: 'remove', payload: string): void;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const emits = defineEmits<Emits>();
+
+const hasTopics = computed(() => props.topics.length > 0);
 
 const removeTopic = (id: string) => {
   emits('remove', id);
