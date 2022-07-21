@@ -5,6 +5,7 @@
         color="primary"
         icon="add"
         label="Add note"
+        @click="openDialog"
       />
     </div>
     <div class="toolbox-group" style="flex: 1;">
@@ -51,4 +52,8 @@ const viewModel = computed({
     notesStore.setView(value);
   },
 });
+
+const openDialog = () => {
+  notesStore.openDialog();
+};
 </script>

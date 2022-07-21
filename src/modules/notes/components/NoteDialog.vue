@@ -25,7 +25,7 @@
 
       <q-card-actions align="right" class="text-primary">
         <q-btn flat label="Cancel" @click="hideDialog" />
-        <q-btn flat label="Add" :disable="cannotAddNote" @click="addTopic" />
+        <q-btn flat label="Add" :disable="cannotAddNote" @click="addNote" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -36,23 +36,20 @@ import { ref, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { storeToRefs } from 'pinia';
 
-import { useDialogsStore } from 'src/modules/notes/stores/dialogs';
 import { useNotesStore } from 'src/modules/notes/stores/notes';
 
 const $q = useQuasar();
 
-const dialogsStore = useDialogsStore();
-
 const notesStore = useNotesStore();
 
-const { isNoteDialogShown } = storeToRefs(dialogsStore);
+const { isDialogOpen } = storeToRefs(notesStore);
 
 const dialog = computed({
   get() {
-    return isNoteDialogShown.value;
+    return isDialogOpen.value;
   },
   set() {
-    dialogsStore.toggleNoteDialog();
+    notesStore.toggleDialog();
   },
 });
 
@@ -65,10 +62,10 @@ const cannotAddNote = computed(() => name.value === '');
 const hideDialog = () => {
   name.value = '';
   text.value = '';
-  dialogsStore.hideNoteDialog();
+  notesStore.closeDialog();
 };
 
-const addTopic = () => {
+const addNote = () => {
   try {
     notesStore.addNote(name.value, text.value);
 

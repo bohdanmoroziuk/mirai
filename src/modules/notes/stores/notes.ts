@@ -14,6 +14,7 @@ export interface State {
   notes: Note[];
   searchTerm: string;
   view: View;
+  isDialogOpen: boolean;
 }
 
 export const createNote = (name: string, text: string): Note => ({
@@ -30,6 +31,7 @@ export const useNotesStore = defineStore('notes', {
       notes: [],
       searchTerm: '',
       view: 'grid',
+      isDialogOpen: false,
     };
   },
   getters: {
@@ -60,6 +62,15 @@ export const useNotesStore = defineStore('notes', {
     },
     setView(view: View) {
       this.view = view;
+    },
+    openDialog() {
+      this.isDialogOpen = true;
+    },
+    closeDialog() {
+      this.isDialogOpen = false;
+    },
+    toggleDialog() {
+      this.isDialogOpen = !this.isDialogOpen;
     },
   },
 });
