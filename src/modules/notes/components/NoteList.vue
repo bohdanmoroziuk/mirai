@@ -2,11 +2,15 @@
   <div
     v-if="hasNotes"
     class="q-gutter-md"
-    style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: max-content;">
+    style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: max-content;"
+  >
     <q-card
-      class="card"
+      class="card column"
       v-for="note of notes"
       :key="note.id"
+      flat
+      square
+      bordered
     >
       <q-card-section>
         <div class="text-h6">{{ note.name }}</div>
@@ -18,7 +22,7 @@
 
       <q-separator dark />
 
-      <q-card-actions>
+      <q-card-actions class="q-mt-auto">
         <q-btn color="negative" flat>Delete</q-btn>
       </q-card-actions>
     </q-card>

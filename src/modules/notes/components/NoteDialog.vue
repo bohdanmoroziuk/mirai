@@ -1,14 +1,25 @@
 <template>
   <q-dialog v-model="dialog" persistent>
-    <q-card style="min-width: 350px">
+    <q-card style="min-width: 350px;">
       <q-card-section>
         <div class="text-h6">Add note</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <div class="q-gutter-y-sm">
-          <q-input dense v-model.trim="name" autofocus placeholder="Name" />
-          <q-input dense v-model.trim="text" placeholder="Text" />
+        <div class="q-gutter-y-md">
+          <q-input
+            v-model.trim="name"
+            placeholder="Name"
+            clearable
+            autofocus
+            dense
+          />
+          <q-input
+            v-model.trim="text"
+            placeholder="Text"
+            clearable
+            dense
+          />
         </div>
       </q-card-section>
 
