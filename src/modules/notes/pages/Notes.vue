@@ -1,66 +1,45 @@
 <template>
   <div class="notes-page q-pa-md">
-    <div class="row items-center q-gutter-x-sm">
-      <q-btn
-        color="secondary"
-        icon="add"
-        label="Add topic"
-        @click="showTopicDialog"
-      />
-      <q-btn
-        color="primary"
-        icon="add"
-        label="Add note"
-        @click="showNoteDialog"
-      />
-    </div>
+    <Toolbox />
     <q-separator spaced="16px" />
-    <TopicList :topics="topics" @remove="removeTopic" />
-    <q-separator spaced="16px" />
-    <NoteList :notes="notes" @delete="deleteNote" />
+    <NoteList :notes="filteredNotes" @delete="deleteNote" />
     <TopicDialog />
     <NoteDialog />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { storeToRefs } from 'pinia';
 
-import { useDialogsStore } from 'src/modules/notes/stores/dialogs';
 import { useNotesStore } from 'src/modules/notes/stores/notes';
-import { useTopicsStore } from 'src/modules/notes/stores/topics';
 
-import TopicList from 'src/modules/notes/components/TopicList.vue';
+import Toolbox from 'src/modules/notes/components/Toolbox.vue';
 import TopicDialog from 'src/modules/notes/components/TopicDialog.vue';
 import NoteDialog from 'src/modules/notes/components/NoteDialog.vue';
 import NoteList from 'src/modules/notes/components/NoteList.vue';
 
 const $q = useQuasar();
 
-const topicsStore = useTopicsStore();
-
 const notesStore = useNotesStore();
-
-const { topics } = storeToRefs(topicsStore);
 
 const { notes } = storeToRefs(notesStore);
 
-const dialogsStore = useDialogsStore();
+const searchTerm = ref('');
 
-const showTopicDialog = () => {
-  dialogsStore.showTopicDialog();
-};
+const normalizedSearchTerm = computed(() => searchTerm.value.toLowerCase());
 
-const showNoteDialog = () => {
-  dialogsStore.showNoteDialog();
-};
+const filteredNotes = computed(() => {
+  if (normalizedSearchTerm.value === '') return notes.value;
+  if (notes.value.length === 0) return notes.value;
 
-const removeTopic = (id: string) => {
-  topicsStore.deleteTopic(id);
-
-  $q.notify({ type: 'positive', message: 'Topic deleted' });
-};
+  return notes.value.filter((note) => {
+    if (note.name.toLowerCase().includes(normalizedSearchTerm.value)) return true;
+    if (note.text.toLowerCase().includes(normalizedSearchTerm.value)) return true;
+    return false;
+  });
+});
 
 const deleteNote = (id: string) => {
   notesStore.deleteNote(id);
