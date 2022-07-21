@@ -9,9 +9,9 @@
     </div>
     <div class="toolbox-group" style="flex: 1;">
       <q-input
-        v-model.trim="searchTerm"
+        v-model.trim="searchTermModel"
         placeholder="Search"
-        debounce="500"
+        debounce="300"
         dense
       />
     </div>
@@ -25,9 +25,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
 
-const searchTerm = ref('');
+import { useNotesStore } from 'src/modules/notes/stores/notes';
+
+const notesStore = useNotesStore();
+
+const { searchTerm } = storeToRefs(notesStore);
+
+const searchTermModel = computed({
+  get() {
+    return searchTerm.value;
+  },
+  set(value: string) {
+    notesStore.setSearchTerm(value);
+  },
+});
 
 const view = ref('grid');
 </script>

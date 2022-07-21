@@ -10,6 +10,7 @@ export interface Note {
 
 export interface State {
   notes: Note[];
+  searchTerm: string;
 }
 
 export const createNote = (name: string, text: string): Note => ({
@@ -24,7 +25,22 @@ export const useNotesStore = defineStore('notes', {
   state(): State {
     return {
       notes: [],
+      searchTerm: '',
     };
+  },
+  getters: {
+    filteredNotes(state: State): Note[] {
+      const needle = state.searchTerm.toLowerCase();
+
+      if (this.notes.length === 0) return this.notes;
+      if (needle === '') return this.notes;
+
+      return this.notes.filter((note) => {
+        if (note.name.toLowerCase().includes(needle)) return true;
+        if (note.text.toLowerCase().includes(needle)) return true;
+        return false;
+      });
+    },
   },
   actions: {
     addNote(name: string, text: string) {
@@ -34,6 +50,9 @@ export const useNotesStore = defineStore('notes', {
     },
     deleteNote(id: string) {
       this.notes = this.notes.filter((note) => note.id !== id);
+    },
+    setSearchTerm(searchTerm: string) {
+      this.searchTerm = searchTerm;
     },
   },
 });

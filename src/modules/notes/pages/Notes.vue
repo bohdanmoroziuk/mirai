@@ -9,7 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { storeToRefs } from 'pinia';
 
@@ -24,22 +23,7 @@ const $q = useQuasar();
 
 const notesStore = useNotesStore();
 
-const { notes } = storeToRefs(notesStore);
-
-const searchTerm = ref('');
-
-const normalizedSearchTerm = computed(() => searchTerm.value.toLowerCase());
-
-const filteredNotes = computed(() => {
-  if (normalizedSearchTerm.value === '') return notes.value;
-  if (notes.value.length === 0) return notes.value;
-
-  return notes.value.filter((note) => {
-    if (note.name.toLowerCase().includes(normalizedSearchTerm.value)) return true;
-    if (note.text.toLowerCase().includes(normalizedSearchTerm.value)) return true;
-    return false;
-  });
-});
+const { filteredNotes } = storeToRefs(notesStore);
 
 const deleteNote = (id: string) => {
   notesStore.deleteNote(id);
