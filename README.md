@@ -1,6 +1,6 @@
 # Mirai (mirai)
 
-> A Quasar Project.
+> An app for managing tasks, projects and notes.
 
 ## Install the dependencies
 ```bash
