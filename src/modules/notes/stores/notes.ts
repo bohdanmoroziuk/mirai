@@ -1,6 +1,8 @@
 import { uid } from 'quasar';
 import { defineStore } from 'pinia';
 
+export type View = 'list' | 'grid';
+
 export interface Note {
   id: string;
   name: string;
@@ -11,6 +13,7 @@ export interface Note {
 export interface State {
   notes: Note[];
   searchTerm: string;
+  view: View;
 }
 
 export const createNote = (name: string, text: string): Note => ({
@@ -26,6 +29,7 @@ export const useNotesStore = defineStore('notes', {
     return {
       notes: [],
       searchTerm: '',
+      view: 'grid',
     };
   },
   getters: {
@@ -53,6 +57,9 @@ export const useNotesStore = defineStore('notes', {
     },
     setSearchTerm(searchTerm: string) {
       this.searchTerm = searchTerm;
+    },
+    setView(view: View) {
+      this.view = view;
     },
   },
 });

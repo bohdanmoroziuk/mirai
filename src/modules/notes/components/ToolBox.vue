@@ -17,22 +17,22 @@
     </div>
     <div class="toolbox-group">
       <div class="q-gutter-sm">
-        <q-radio v-model="view" val="list" label="List" />
-        <q-radio v-model="view" val="grid" label="Grid" />
+        <q-radio v-model="viewModel" val="list" label="List" />
+        <q-radio v-model="viewModel" val="grid" label="Grid" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import { useNotesStore } from 'src/modules/notes/stores/notes';
+import { useNotesStore, View } from 'src/modules/notes/stores/notes';
 
 const notesStore = useNotesStore();
 
-const { searchTerm } = storeToRefs(notesStore);
+const { searchTerm, view } = storeToRefs(notesStore);
 
 const searchTermModel = computed({
   get() {
@@ -43,5 +43,12 @@ const searchTermModel = computed({
   },
 });
 
-const view = ref('grid');
+const viewModel = computed({
+  get() {
+    return view.value;
+  },
+  set(value: View) {
+    notesStore.setView(value);
+  },
+});
 </script>
