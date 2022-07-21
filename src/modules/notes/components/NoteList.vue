@@ -23,7 +23,7 @@
       <q-separator dark />
 
       <q-card-actions class="q-mt-auto">
-        <q-btn color="negative" flat>Delete</q-btn>
+        <q-btn color="negative" flat @click="deleteNote(note.id)">Delete</q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
+import { defineProps, defineEmits, computed } from 'vue';
 
 import { Note } from 'src/modules/notes/stores/notes';
 
@@ -39,9 +39,19 @@ interface Props {
   notes: Note[];
 }
 
+interface Emits {
+  (event: 'delete', payload: string): void;
+}
+
 const props = defineProps<Props>();
 
+const emits = defineEmits<Emits>();
+
 const hasNotes = computed(() => props.notes.length > 0);
+
+const deleteNote = (id: string) => {
+  emits('delete', id);
+};
 </script>
 
 <style scoped>

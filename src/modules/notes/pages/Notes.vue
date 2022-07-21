@@ -17,7 +17,7 @@
     <q-separator spaced="16px" />
     <TopicList :topics="topics" @remove="removeTopic" />
     <q-separator spaced="16px" />
-    <NoteList :notes="notes" />
+    <NoteList :notes="notes" @delete="deleteNote" />
     <TopicDialog />
     <NoteDialog />
   </div>
@@ -40,9 +40,11 @@ const $q = useQuasar();
 
 const topicsStore = useTopicsStore();
 
+const notesStore = useNotesStore();
+
 const { topics } = storeToRefs(topicsStore);
 
-const { notes } = storeToRefs(useNotesStore());
+const { notes } = storeToRefs(notesStore);
 
 const dialogsStore = useDialogsStore();
 
@@ -58,5 +60,11 @@ const removeTopic = (id: string) => {
   topicsStore.deleteTopic(id);
 
   $q.notify({ type: 'positive', message: 'Topic deleted' });
+};
+
+const deleteNote = (id: string) => {
+  notesStore.deleteNote(id);
+
+  $q.notify({ type: 'positive', message: 'Note deleted' });
 };
 </script>
