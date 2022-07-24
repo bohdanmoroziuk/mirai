@@ -105,5 +105,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
     'vue/multi-word-component-names': 0,
+
+    '@typescript-eslint/no-shadow': 0,
   }
 }

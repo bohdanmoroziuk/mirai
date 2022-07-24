@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, computed } from 'vue';
 
-import { Note } from 'src/modules/notes/stores/notes';
+import { Note } from 'src/modules/notes/types';
 
 interface Props {
   notes: Note[];

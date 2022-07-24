@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { storeToRefs } from 'pinia';
 
@@ -35,9 +36,31 @@ const viewMap = {
   grid: NoteGrid,
 };
 
-const deleteNote = (id: string) => {
-  notesStore.deleteNote(id);
+const getNotes = async () => {
+  try {
+    $q.loadingBar.start();
 
-  $q.notify({ type: 'positive', message: 'Note deleted' });
+    await notesStore.getNotes();
+  } catch (error) {
+    $q.notify({ type: 'negative', message: (error as Error).message });
+  } finally {
+    $q.loadingBar.stop();
+  }
 };
+
+const deleteNote = async (id: string) => {
+  try {
+    $q.loadingBar.start();
+
+    await notesStore.deleteNote(id);
+
+    $q.notify({ type: 'positive', message: 'Note deleted' });
+  } catch (error) {
+    $q.notify({ type: 'negative', message: (error as Error).message });
+  } finally {
+    $q.loadingBar.stop();
+  }
+};
+
+onMounted(getNotes);
 </script>

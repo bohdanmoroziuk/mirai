@@ -1,14 +1,17 @@
 import { uid } from 'quasar';
 import { defineStore } from 'pinia';
+import {
+  doc,
+  setDoc,
+  getDocs,
+  deleteDoc,
+  collection,
+} from 'firebase/firestore';
+
+import { firestore } from 'src/firebase';
+import { Note } from 'src/modules/notes/types';
 
 export type View = 'list' | 'grid';
-
-export interface Note {
-  id: string;
-  name: string;
-  text: string;
-  createdAt: number;
-}
 
 export interface State {
   notes: Note[];
@@ -25,7 +28,6 @@ export const createNote = (name: string, text: string): Note => ({
 });
 
 export const useNotesStore = defineStore('notes', {
-  persist: true,
   state(): State {
     return {
       notes: [],
@@ -49,12 +51,21 @@ export const useNotesStore = defineStore('notes', {
     },
   },
   actions: {
-    addNote(name: string, text: string) {
+    async getNotes() {
+      const snapshot = await getDocs(collection(firestore, 'notes'));
+
+      this.notes = snapshot.docs.map((doc) => doc.data() as Note);
+    },
+    async addNote(name: string, text: string) {
       const note = createNote(name, text);
 
-      this.notes = [...this.notes, note];
+      await setDoc(doc(firestore, 'notes', note.id), note);
+
+      this.notes = [note, ...this.notes];
     },
-    deleteNote(id: string) {
+    async deleteNote(id: string) {
+      await deleteDoc(doc(firestore, 'notes', id));
+
       this.notes = this.notes.filter((note) => note.id !== id);
     },
     setSearchTerm(searchTerm: string) {

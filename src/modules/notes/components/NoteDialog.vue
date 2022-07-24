@@ -65,15 +65,18 @@ const hideDialog = () => {
   notesStore.closeDialog();
 };
 
-const addNote = () => {
+const addNote = async () => {
   try {
-    notesStore.addNote(name.value, text.value);
+    $q.loadingBar.start();
+
+    await notesStore.addNote(name.value, text.value);
 
     $q.notify({ type: 'positive', message: 'New note added' });
   } catch (error) {
     $q.notify({ type: 'negative', message: (error as Error).message });
   } finally {
     hideDialog();
+    $q.loadingBar.stop();
   }
 };
 </script>
