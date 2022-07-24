@@ -4,9 +4,7 @@
       class="card column"
       v-for="note of notes"
       :key="note.id"
-      flat
       square
-      bordered
     >
       <q-card-section>
         <div>{{ note.name }}</div>
