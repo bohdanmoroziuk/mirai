@@ -98,6 +98,9 @@ module.exports = configure((ctx) => ({
         position: 'top-right',
         timeout: 2000,
       },
+      loadingBar: {
+        //
+      },
     },
 
     // iconSet: 'material-icons', // Quasar icon set
@@ -113,6 +116,7 @@ module.exports = configure((ctx) => ({
     // Quasar plugins
     plugins: [
       'Notify',
+      'LoadingBar',
     ],
   },
 

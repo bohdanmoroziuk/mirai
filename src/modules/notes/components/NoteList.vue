@@ -9,6 +9,9 @@
           <q-item-label>
             {{ note.name }}
           </q-item-label>
+          <q-item-label class="text-grey">
+            {{ formatDate(note.createdAt) }}
+          </q-item-label>
         </q-item-section>
 
         <q-item-section>
@@ -38,7 +41,8 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
 
-import { Note } from 'src/modules/notes/stores/notes';
+import { Note } from 'src/modules/notes/types';
+import { formatDate } from 'src/modules/notes/utils';
 
 interface Props {
   notes: Note[];
@@ -56,7 +60,3 @@ const deleteNote = (id: string) => {
   emits('delete', id);
 };
 </script>
-
-<style scoped>
-
-</style>
