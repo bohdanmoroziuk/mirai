@@ -9,7 +9,8 @@
       bordered
     >
       <q-card-section>
-        <div class="text-h6">{{ note.name }}</div>
+        <div>{{ note.name }}</div>
+        <div class="text-grey">{{ formatDate(note.createdAt) }}</div>
       </q-card-section>
 
       <q-card-section>
@@ -29,6 +30,7 @@
 import { defineProps, defineEmits } from 'vue';
 
 import { Note } from 'src/modules/notes/types';
+import { formatDate } from 'src/modules/notes/utils';
 
 interface Props {
   notes: Note[];
