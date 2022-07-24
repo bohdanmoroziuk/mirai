@@ -16,21 +16,37 @@
         dense
       />
     </div>
-    <div class="toolbox-group flex">
-      <div class="q-gutter-sm">
-        <q-radio v-model="sortKeyModel" val="name" label="Name" />
-        <q-radio v-model="sortKeyModel" val="createdAt" label="Date" />
-      </div>
-      <div class="q-gutter-sm">
-        <q-radio v-model="sortDirectionModel" val="asc" label="Asc" />
-        <q-radio v-model="sortDirectionModel" val="desc" label="Desc" />
-      </div>
-    </div>
     <div class="toolbox-group">
-      <div class="q-gutter-sm">
-        <q-radio v-model="viewModel" val="list" label="List" />
-        <q-radio v-model="viewModel" val="grid" label="Grid" />
-      </div>
+      <q-btn-dropdown
+        color="primary"
+        dropdown-icon="settings"
+        no-icon-animation
+      >
+        <div class="q-px-sm">
+          <div class="row items-center justify-between no-wrap q-pa-sm">
+            <span>View as:</span>
+            <div class="q-gutter-sm">
+              <q-radio v-model="viewModel" val="list" label="List" />
+              <q-radio v-model="viewModel" val="grid" label="Grid" />
+            </div>
+          </div>
+          <q-separator spaced="8px" />
+          <div class="row items-center justify-between no-wrap q-pa-sm">
+            <span>Sort by:</span>
+            <div class="q-gutter-sm">
+              <q-radio v-model="sortKeyModel" val="name" label="Name" />
+              <q-radio v-model="sortKeyModel" val="createdAt" label="Date" />
+            </div>
+          </div>
+          <div class="row items-center justify-between no-wrap q-pa-sm">
+            <span>Sort direction:</span>
+            <div class="q-gutter-sm">
+              <q-radio v-model="sortDirectionModel" val="asc" label="Asc" />
+              <q-radio v-model="sortDirectionModel" val="desc" label="Desc" />
+            </div>
+          </div>
+        </div>
+      </q-btn-dropdown>
     </div>
   </div>
 </template>
