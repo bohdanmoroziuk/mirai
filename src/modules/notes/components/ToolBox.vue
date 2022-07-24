@@ -16,6 +16,16 @@
         dense
       />
     </div>
+    <div class="toolbox-group flex">
+      <div class="q-gutter-sm">
+        <q-radio v-model="sortKeyModel" val="name" label="Name" />
+        <q-radio v-model="sortKeyModel" val="createdAt" label="Date" />
+      </div>
+      <div class="q-gutter-sm">
+        <q-radio v-model="sortDirectionModel" val="asc" label="Asc" />
+        <q-radio v-model="sortDirectionModel" val="desc" label="Desc" />
+      </div>
+    </div>
     <div class="toolbox-group">
       <div class="q-gutter-sm">
         <q-radio v-model="viewModel" val="list" label="List" />
@@ -29,11 +39,21 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import { useNotesStore, View } from 'src/modules/notes/stores/notes';
+import {
+  View,
+  SortKey,
+  SortDirection,
+  useNotesStore,
+} from 'src/modules/notes/stores/notes';
 
 const notesStore = useNotesStore();
 
-const { searchTerm, view } = storeToRefs(notesStore);
+const {
+  searchTerm,
+  view,
+  sortKey,
+  sortDirection,
+} = storeToRefs(notesStore);
 
 const searchTermModel = computed({
   get() {
@@ -50,6 +70,24 @@ const viewModel = computed({
   },
   set(value: View) {
     notesStore.setView(value);
+  },
+});
+
+const sortKeyModel = computed({
+  get() {
+    return sortKey.value;
+  },
+  set(value: SortKey) {
+    notesStore.setSortKey(value);
+  },
+});
+
+const sortDirectionModel = computed({
+  get() {
+    return sortDirection.value;
+  },
+  set(value: SortDirection) {
+    notesStore.setSortDirection(value);
   },
 });
 
