@@ -56,7 +56,3 @@ const deleteNote = (id: string) => {
   emits('delete', id);
 };
 </script>
-
-<style scoped>
-
-</style>
