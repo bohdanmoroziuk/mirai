@@ -15,7 +15,7 @@ import { useNotesStore } from 'src/modules/notes/stores/notes';
 
 import ToolBox from 'src/modules/notes/containers/ToolBox.vue';
 import NotesView from 'src/modules/notes/containers/NotesView.vue';
-import NoteDialog from 'src/modules/notes/components/NoteDialog.vue';
+import NoteDialog from 'src/modules/notes/containers/NoteDialog.vue';
 
 const $q = useQuasar();
 
