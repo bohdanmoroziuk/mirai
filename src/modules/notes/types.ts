@@ -4,3 +4,8 @@ export interface Note {
   text: string;
   createdAt: number;
 }
+
+export interface Topic {
+  id: string;
+  name: string;
+}

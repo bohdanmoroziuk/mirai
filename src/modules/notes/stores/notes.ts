@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 
 import { firestore } from 'src/firebase';
-import { Note } from 'src/modules/notes/types';
+import { Note, Topic } from 'src/modules/notes/types';
 
 export type View = 'list' | 'grid';
 
@@ -19,6 +19,7 @@ export type SortDirection = 'asc' | 'desc';
 
 export interface State {
   notes: Note[];
+  topics: Topic[];
   searchTerm: string;
   view: View;
   isDialogOpen: boolean;
@@ -33,10 +34,16 @@ export const createNote = (name: string, text: string): Note => ({
   createdAt: new Date().getTime(),
 });
 
+export const createTopic = (name: string): Topic => ({
+  id: uid(),
+  name,
+});
+
 export const useNotesStore = defineStore('notes', {
   state(): State {
     return {
       notes: [],
+      topics: [],
       searchTerm: '',
       view: 'grid',
       isDialogOpen: false,
@@ -111,6 +118,27 @@ export const useNotesStore = defineStore('notes', {
     },
     toggleDialog() {
       this.isDialogOpen = !this.isDialogOpen;
+    },
+    async getTopics() {
+      const snapshot = await getDocs(collection(firestore, 'topics'));
+
+      this.topics = snapshot.docs.map((doc) => doc.data() as Topic);
+    },
+    async addTopic(name: string) {
+      const isAlreadyExist = this.topics.find((topic) => topic.name === name);
+
+      if (isAlreadyExist) throw new Error('A topic with that name already exists');
+
+      const topic = createTopic(name);
+
+      await setDoc(doc(firestore, 'topics', topic.id), topic);
+
+      this.topics = [topic, ...this.topics];
+    },
+    async deleteTopic(id: string) {
+      await deleteDoc(doc(firestore, 'topics', id));
+
+      this.topics = this.topics.filter((topic) => topic.id !== id);
     },
   },
 });
