@@ -23,20 +23,31 @@ export interface State {
   searchTerm: string;
   view: View;
   isDialogOpen: boolean;
+  isTopicDialogOpen: boolean;
   sortKey: SortKey;
   sortDirection: SortDirection;
 }
 
+const getTimestamp = () => new Date().getTime();
+
+const getRandomColor = () => {
+  const colors = ['primary', 'secondary', 'dark', 'info', 'positive', 'negative'];
+
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
 export const createNote = (name: string, text: string): Note => ({
-  id: uid(),
   name,
   text,
-  createdAt: new Date().getTime(),
+  id: uid(),
+  createdAt: getTimestamp(),
 });
 
 export const createTopic = (name: string): Topic => ({
-  id: uid(),
   name,
+  id: uid(),
+  color: getRandomColor(),
+  createdAt: getTimestamp(),
 });
 
 export const useNotesStore = defineStore('notes', {
@@ -47,6 +58,7 @@ export const useNotesStore = defineStore('notes', {
       searchTerm: '',
       view: 'grid',
       isDialogOpen: false,
+      isTopicDialogOpen: false,
       sortKey: 'name',
       sortDirection: 'asc',
     };
@@ -118,6 +130,15 @@ export const useNotesStore = defineStore('notes', {
     },
     toggleDialog() {
       this.isDialogOpen = !this.isDialogOpen;
+    },
+    openTopicDialog() {
+      this.isTopicDialogOpen = true;
+    },
+    closeTopicDialog() {
+      this.isTopicDialogOpen = false;
+    },
+    toggleTopicDialog() {
+      this.isTopicDialogOpen = !this.isTopicDialogOpen;
     },
     async getTopics() {
       const snapshot = await getDocs(collection(firestore, 'topics'));

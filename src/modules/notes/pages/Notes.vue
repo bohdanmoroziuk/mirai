@@ -6,6 +6,7 @@
     <q-separator spaced="16px" />
     <NotesView />
     <NoteDialog />
+    <TopicDialog />
   </div>
 </template>
 
@@ -19,6 +20,7 @@ import ToolBox from 'src/modules/notes/containers/ToolBox.vue';
 import NotesView from 'src/modules/notes/containers/NotesView.vue';
 import NoteDialog from 'src/modules/notes/containers/NoteDialog.vue';
 import TopicCloud from 'src/modules/notes/containers/TopicCloud.vue';
+import TopicDialog from 'src/modules/notes/containers/TopicDialog.vue';
 
 const $q = useQuasar();
 

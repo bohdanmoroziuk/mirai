@@ -3,7 +3,7 @@
     <q-chip
       v-for="topic of topics"
       :key="topic.id"
-      :color="getRandomColor()"
+      :color="topic.color"
       text-color="white"
       icon="topic"
       removable
@@ -34,11 +34,5 @@ const emits = defineEmits<Emits>();
 
 const deleteTopic = (id: string) => {
   emits('delete', id);
-};
-
-const getRandomColor = () => {
-  const colors = ['primary', 'secondary', 'dark', 'info', 'positive', 'negative'];
-
-  return colors[Math.floor(Math.random() * colors.length)];
 };
 </script>
