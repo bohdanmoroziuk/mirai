@@ -20,6 +20,7 @@ export type SortDirection = 'asc' | 'desc';
 export interface State {
   notes: Note[];
   topics: Topic[];
+  selectedTopic: string | null;
   searchTerm: string;
   view: View;
   isDialogOpen: boolean;
@@ -56,6 +57,7 @@ export const useNotesStore = defineStore('notes', {
     return {
       notes: [],
       topics: [],
+      selectedTopic: null,
       searchTerm: '',
       view: 'grid',
       isDialogOpen: false,
@@ -65,8 +67,14 @@ export const useNotesStore = defineStore('notes', {
     };
   },
   getters: {
+    topicNotes(state: State): Note[] {
+      if (!state.selectedTopic) return state.notes;
+
+      return state.notes.filter((note) => note.topic === state.selectedTopic);
+    },
     sortedNotes(state: State): Note[] {
-      const { notes, sortKey, sortDirection } = state;
+      const { sortKey, sortDirection } = state;
+      const notes = this.topicNotes;
 
       return notes.slice().sort((a, b) => {
         if (a[sortKey] > b[sortKey]) {
@@ -124,6 +132,9 @@ export const useNotesStore = defineStore('notes', {
       await deleteDoc(doc(firestore, 'notes', id));
 
       this.notes = this.notes.filter((note) => note.id !== id);
+    },
+    selectTopic(id: string | null) {
+      this.selectedTopic = id;
     },
     setSearchTerm(searchTerm: string) {
       this.searchTerm = searchTerm;

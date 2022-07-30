@@ -5,6 +5,7 @@
   >
     <TopicList
       :topics="topics"
+      @select="selectTopic"
       @delete="deleteTopic"
     />
   </div>
@@ -19,6 +20,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useQuasar } from 'quasar';
+import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 
 import { useNotesStore } from 'src/modules/notes/stores/notes';
@@ -26,11 +28,23 @@ import TopicList from 'src/modules/notes/components/TopicList.vue';
 
 const $q = useQuasar();
 
+const router = useRouter();
+
 const notesStore = useNotesStore();
 
 const { topics } = storeToRefs(notesStore);
 
 const hasTopics = computed(() => topics.value.length > 0);
+
+const selectTopic = async (id: string | null) => {
+  notesStore.selectTopic(id);
+
+  if (id) {
+    await router.push({ name: 'notes', query: { topic: id } });
+  } else {
+    await router.push(router.currentRoute.value.path);
+  }
+};
 
 const deleteTopic = async (id: string) => {
   try {
