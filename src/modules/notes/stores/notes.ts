@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 
 import { firestore } from 'src/firebase';
-import { Note, Topic } from 'src/modules/notes/types';
+import { Note, Topic, DisplayNote } from 'src/modules/notes/types';
 
 export type View = 'list' | 'grid';
 
@@ -36,9 +36,10 @@ const getRandomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-export const createNote = (name: string, text: string): Note => ({
+export const createNote = (name: string, text: string, topic: string | null): Note => ({
   name,
   text,
+  topic,
   id: uid(),
   createdAt: getTimestamp(),
 });
@@ -91,6 +92,20 @@ export const useNotesStore = defineStore('notes', {
         return false;
       });
     },
+    displayNotes(state: State): DisplayNote[] {
+      const { topics } = state;
+      const { filteredNotes: notes } = this;
+
+      return notes.map((note) => {
+        if (!note.topic) return { ...note, topic: null };
+
+        const topic = topics.find((topic) => topic.id === note.topic);
+
+        if (!topic) return { ...note, topic: null };
+
+        return { ...note, topic };
+      });
+    },
   },
   actions: {
     async getNotes() {
@@ -98,8 +113,8 @@ export const useNotesStore = defineStore('notes', {
 
       this.notes = snapshot.docs.map((doc) => doc.data() as Note);
     },
-    async addNote(name: string, text: string) {
-      const note = createNote(name, text);
+    async addNote(name: string, text: string, topic: string | null) {
+      const note = createNote(name, text, topic);
 
       await setDoc(doc(firestore, 'notes', note.id), note);
 

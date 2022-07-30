@@ -20,6 +20,15 @@
             clearable
             dense
           />
+          <q-select
+            v-model="topic"
+            :options="topicOptions"
+            label="Topic"
+            clearable
+            map-options
+            emit-value
+            dense
+          />
         </div>
       </q-card-section>
 
@@ -42,7 +51,18 @@ const $q = useQuasar();
 
 const notesStore = useNotesStore();
 
-const { isDialogOpen } = storeToRefs(notesStore);
+const { isDialogOpen, topics } = storeToRefs(notesStore);
+
+const name = ref('');
+
+const text = ref('');
+
+const topic = ref<string | null>(null);
+
+const topicOptions = computed(() => topics.value.map((topic) => ({
+  value: topic.id,
+  label: topic.name,
+})));
 
 const dialog = computed({
   get() {
@@ -53,15 +73,12 @@ const dialog = computed({
   },
 });
 
-const name = ref('');
-
-const text = ref('');
-
 const cannotAddNote = computed(() => name.value === '');
 
 const hideDialog = () => {
   name.value = '';
   text.value = '';
+  topic.value = null;
   notesStore.closeDialog();
 };
 
@@ -69,7 +86,7 @@ const addNote = async () => {
   try {
     $q.loadingBar.start();
 
-    await notesStore.addNote(name.value, text.value);
+    await notesStore.addNote(name.value, text.value, topic.value);
 
     $q.notify({ type: 'positive', message: 'New note added' });
   } catch (error) {

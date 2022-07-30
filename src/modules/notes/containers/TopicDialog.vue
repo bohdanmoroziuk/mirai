@@ -38,6 +38,8 @@ const notesStore = useNotesStore();
 
 const { isTopicDialogOpen } = storeToRefs(notesStore);
 
+const name = ref('');
+
 const dialog = computed({
   get() {
     return isTopicDialogOpen.value;
@@ -46,8 +48,6 @@ const dialog = computed({
     notesStore.toggleTopicDialog();
   },
 });
-
-const name = ref('');
 
 const cannotAddTopic = computed(() => name.value === '');
 
