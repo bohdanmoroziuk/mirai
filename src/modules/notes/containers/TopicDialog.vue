@@ -2,7 +2,7 @@
   <q-dialog v-model="dialog" persistent>
     <q-card style="min-width: 350px;">
       <q-card-section>
-        <div class="text-h6">Add note</div>
+        <div class="text-h6">Add topic</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -14,27 +14,12 @@
             autofocus
             dense
           />
-          <q-input
-            v-model.trim="text"
-            placeholder="Text"
-            clearable
-            dense
-          />
-          <q-select
-            v-model="topic"
-            :options="topicOptions"
-            label="Topic"
-            clearable
-            map-options
-            emit-value
-            dense
-          />
         </div>
       </q-card-section>
 
       <q-card-actions align="right" class="text-primary">
         <q-btn flat label="Cancel" @click="hideDialog" />
-        <q-btn flat label="Add" :disable="cannotAddNote" @click="addNote" />
+        <q-btn flat label="Add" :disable="cannotAddTopic" @click="addTopic" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -51,44 +36,33 @@ const $q = useQuasar();
 
 const notesStore = useNotesStore();
 
-const { isDialogOpen, topics } = storeToRefs(notesStore);
+const { isTopicDialogOpen } = storeToRefs(notesStore);
 
 const name = ref('');
 
-const text = ref('');
-
-const topic = ref<string | null>(null);
-
-const topicOptions = computed(() => topics.value.map((topic) => ({
-  value: topic.id,
-  label: topic.name,
-})));
-
 const dialog = computed({
   get() {
-    return isDialogOpen.value;
+    return isTopicDialogOpen.value;
   },
   set() {
-    notesStore.toggleDialog();
+    notesStore.toggleTopicDialog();
   },
 });
 
-const cannotAddNote = computed(() => name.value === '');
+const cannotAddTopic = computed(() => name.value === '');
 
 const hideDialog = () => {
   name.value = '';
-  text.value = '';
-  topic.value = null;
-  notesStore.closeDialog();
+  notesStore.closeTopicDialog();
 };
 
-const addNote = async () => {
+const addTopic = async () => {
   try {
     $q.loadingBar.start();
 
-    await notesStore.addNote(name.value, text.value, topic.value);
+    await notesStore.addTopic(name.value);
 
-    $q.notify({ type: 'positive', message: 'New note added' });
+    $q.notify({ type: 'positive', message: 'New topic added' });
   } catch (error) {
     $q.notify({ type: 'negative', message: (error as Error).message });
   } finally {

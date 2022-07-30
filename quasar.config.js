@@ -115,6 +115,7 @@ module.exports = configure((ctx) => ({
 
     // Quasar plugins
     plugins: [
+      'Dialog',
       'Notify',
       'LoadingBar',
     ],

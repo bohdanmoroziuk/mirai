@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 
 import { firestore } from 'src/firebase';
-import { Note } from 'src/modules/notes/types';
+import { Note, Topic, DisplayNote } from 'src/modules/notes/types';
 
 export type View = 'list' | 'grid';
 
@@ -19,34 +19,62 @@ export type SortDirection = 'asc' | 'desc';
 
 export interface State {
   notes: Note[];
+  topics: Topic[];
+  selectedTopic: string | null;
   searchTerm: string;
   view: View;
   isDialogOpen: boolean;
+  isTopicDialogOpen: boolean;
   sortKey: SortKey;
   sortDirection: SortDirection;
 }
 
-export const createNote = (name: string, text: string): Note => ({
-  id: uid(),
+const getTimestamp = () => new Date().getTime();
+
+const getRandomColor = () => {
+  const colors = ['primary', 'secondary', 'dark', 'info', 'positive', 'negative'];
+
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
+export const createNote = (name: string, text: string, topic: string | null): Note => ({
   name,
   text,
-  createdAt: new Date().getTime(),
+  topic,
+  id: uid(),
+  createdAt: getTimestamp(),
+});
+
+export const createTopic = (name: string): Topic => ({
+  name,
+  id: uid(),
+  color: getRandomColor(),
+  createdAt: getTimestamp(),
 });
 
 export const useNotesStore = defineStore('notes', {
   state(): State {
     return {
       notes: [],
+      topics: [],
+      selectedTopic: null,
       searchTerm: '',
       view: 'grid',
       isDialogOpen: false,
+      isTopicDialogOpen: false,
       sortKey: 'name',
       sortDirection: 'asc',
     };
   },
   getters: {
+    topicNotes(state: State): Note[] {
+      if (!state.selectedTopic) return state.notes;
+
+      return state.notes.filter((note) => note.topic === state.selectedTopic);
+    },
     sortedNotes(state: State): Note[] {
-      const { notes, sortKey, sortDirection } = state;
+      const { sortKey, sortDirection } = state;
+      const notes = this.topicNotes;
 
       return notes.slice().sort((a, b) => {
         if (a[sortKey] > b[sortKey]) {
@@ -72,6 +100,20 @@ export const useNotesStore = defineStore('notes', {
         return false;
       });
     },
+    displayNotes(state: State): DisplayNote[] {
+      const { topics } = state;
+      const { filteredNotes: notes } = this;
+
+      return notes.map((note) => {
+        if (!note.topic) return { ...note, topic: null };
+
+        const topic = topics.find((topic) => topic.id === note.topic);
+
+        if (!topic) return { ...note, topic: null };
+
+        return { ...note, topic };
+      });
+    },
   },
   actions: {
     async getNotes() {
@@ -79,8 +121,8 @@ export const useNotesStore = defineStore('notes', {
 
       this.notes = snapshot.docs.map((doc) => doc.data() as Note);
     },
-    async addNote(name: string, text: string) {
-      const note = createNote(name, text);
+    async addNote(name: string, text: string, topic: string | null) {
+      const note = createNote(name, text, topic);
 
       await setDoc(doc(firestore, 'notes', note.id), note);
 
@@ -90,6 +132,9 @@ export const useNotesStore = defineStore('notes', {
       await deleteDoc(doc(firestore, 'notes', id));
 
       this.notes = this.notes.filter((note) => note.id !== id);
+    },
+    selectTopic(id: string | null) {
+      this.selectedTopic = id;
     },
     setSearchTerm(searchTerm: string) {
       this.searchTerm = searchTerm;
@@ -111,6 +156,36 @@ export const useNotesStore = defineStore('notes', {
     },
     toggleDialog() {
       this.isDialogOpen = !this.isDialogOpen;
+    },
+    openTopicDialog() {
+      this.isTopicDialogOpen = true;
+    },
+    closeTopicDialog() {
+      this.isTopicDialogOpen = false;
+    },
+    toggleTopicDialog() {
+      this.isTopicDialogOpen = !this.isTopicDialogOpen;
+    },
+    async getTopics() {
+      const snapshot = await getDocs(collection(firestore, 'topics'));
+
+      this.topics = snapshot.docs.map((doc) => doc.data() as Topic);
+    },
+    async addTopic(name: string) {
+      const isAlreadyExist = this.topics.find((topic) => topic.name === name);
+
+      if (isAlreadyExist) throw new Error('A topic with that name already exists');
+
+      const topic = createTopic(name);
+
+      await setDoc(doc(firestore, 'topics', topic.id), topic);
+
+      this.topics = [topic, ...this.topics];
+    },
+    async deleteTopic(id: string) {
+      await deleteDoc(doc(firestore, 'topics', id));
+
+      this.topics = this.topics.filter((topic) => topic.id !== id);
     },
   },
 });

@@ -1,9 +1,9 @@
 <template>
   <component
-    :is="viewMap[view]"
-    :notes="filteredNotes"
-    @delete="deleteNote"
     v-if="hasNotes"
+    :is="viewMap[view]"
+    :notes="displayNotes"
+    @delete="deleteNote"
   />
   <div v-else class="text-grey">No notes. Try to add your first one...</div>
 </template>
@@ -22,26 +22,33 @@ const $q = useQuasar();
 
 const notesStore = useNotesStore();
 
-const { filteredNotes, view } = storeToRefs(notesStore);
+const { displayNotes, view } = storeToRefs(notesStore);
 
 const viewMap = {
   list: NoteList,
   grid: NoteGrid,
 };
 
-const hasNotes = computed(() => filteredNotes.value.length > 0);
+const hasNotes = computed(() => displayNotes.value.length > 0);
 
-const deleteNote = async (id: string) => {
-  try {
-    $q.loadingBar.start();
+const deleteNote = (id: string) => {
+  $q.dialog({
+    title: 'Confirm',
+    message: 'Are you sure you want to delete this note?',
+    cancel: true,
+    persistent: true,
+  }).onOk(async () => {
+    try {
+      $q.loadingBar.start();
 
-    await notesStore.deleteNote(id);
+      await notesStore.deleteNote(id);
 
-    $q.notify({ type: 'positive', message: 'Note deleted' });
-  } catch (error) {
-    $q.notify({ type: 'negative', message: (error as Error).message });
-  } finally {
-    $q.loadingBar.stop();
-  }
+      $q.notify({ type: 'positive', message: 'Note deleted' });
+    } catch (error) {
+      $q.notify({ type: 'negative', message: (error as Error).message });
+    } finally {
+      $q.loadingBar.stop();
+    }
+  });
 };
 </script>

@@ -5,7 +5,13 @@
         color="primary"
         icon="add"
         label="Add note"
-        @click="openDialog"
+        @click="openNoteDialog"
+      />
+      <q-btn
+        color="primary"
+        icon="add"
+        label="Add topic"
+        @click="openTopicDialog"
       />
     </div>
     <div class="toolbox-group" style="flex: 1;">
@@ -107,7 +113,11 @@ const sortDirectionModel = computed({
   },
 });
 
-const openDialog = () => {
+const openNoteDialog = () => {
   notesStore.openDialog();
+};
+
+const openTopicDialog = () => {
+  notesStore.openTopicDialog();
 };
 </script>
