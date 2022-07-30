@@ -46,17 +46,24 @@ const selectTopic = async (id: string | null) => {
   }
 };
 
-const deleteTopic = async (id: string) => {
-  try {
-    $q.loadingBar.start();
+const deleteTopic = (id: string) => {
+  $q.dialog({
+    title: 'Confirm',
+    message: 'Are you sure you want to delete this topic?',
+    cancel: true,
+    persistent: true,
+  }).onOk(async () => {
+    try {
+      $q.loadingBar.start();
 
-    await notesStore.deleteTopic(id);
+      await notesStore.deleteTopic(id);
 
-    $q.notify({ type: 'positive', message: 'Topic deleted' });
-  } catch (error) {
-    $q.notify({ type: 'negative', message: (error as Error).message });
-  } finally {
-    $q.loadingBar.stop();
-  }
+      $q.notify({ type: 'positive', message: 'Topic deleted' });
+    } catch (error) {
+      $q.notify({ type: 'negative', message: (error as Error).message });
+    } finally {
+      $q.loadingBar.stop();
+    }
+  });
 };
 </script>

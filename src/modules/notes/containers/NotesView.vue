@@ -31,17 +31,24 @@ const viewMap = {
 
 const hasNotes = computed(() => displayNotes.value.length > 0);
 
-const deleteNote = async (id: string) => {
-  try {
-    $q.loadingBar.start();
+const deleteNote = (id: string) => {
+  $q.dialog({
+    title: 'Confirm',
+    message: 'Are you sure you want to delete this note?',
+    cancel: true,
+    persistent: true,
+  }).onOk(async () => {
+    try {
+      $q.loadingBar.start();
 
-    await notesStore.deleteNote(id);
+      await notesStore.deleteNote(id);
 
-    $q.notify({ type: 'positive', message: 'Note deleted' });
-  } catch (error) {
-    $q.notify({ type: 'negative', message: (error as Error).message });
-  } finally {
-    $q.loadingBar.stop();
-  }
+      $q.notify({ type: 'positive', message: 'Note deleted' });
+    } catch (error) {
+      $q.notify({ type: 'negative', message: (error as Error).message });
+    } finally {
+      $q.loadingBar.stop();
+    }
+  });
 };
 </script>
