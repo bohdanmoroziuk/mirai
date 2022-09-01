@@ -57,6 +57,13 @@
               </q-item-section>
               <q-item-section>Weather</q-item-section>
             </q-item>
+            <q-item-label header>Tools</q-item-label>
+            <q-item clickable v-ripple :to="{ name: 'tools' }">
+              <q-item-section avatar>
+                <q-icon color="primary" name="handyman" />
+              </q-item-section>
+              <q-item-section>Tools</q-item-section>
+            </q-item>
           </q-list>
         </div>
         <q-separator />

@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 import tasksRoutes from 'src/modules/tasks/routes';
 import notesRoutes from 'src/modules/notes/routes';
 import weatherRoutes from 'src/modules/weather/routes';
+import { routes as tools } from 'src/modules/tools';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -22,6 +23,7 @@ const routes: RouteRecordRaw[] = [
       ...tasksRoutes,
       ...notesRoutes,
       ...weatherRoutes,
+      ...tools,
     ],
   },
 
