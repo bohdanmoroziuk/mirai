@@ -15,7 +15,10 @@
           v-for="tool of tools"
           :key="tool.id"
         >
-          <tool-card :tool="tool" />
+          <tool-card
+            :tool="tool"
+            @delete="deleteTool"
+          />
         </div>
       </div>
     </div>
@@ -25,8 +28,11 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useQuasar } from 'quasar';
 
-import { useToolsStore } from 'src/modules/tools';
+import { useToolsStore, ToolCard, ToolId } from 'src/modules/tools';
+
+const $q = useQuasar();
 
 const toolsStore = useToolsStore();
 
@@ -34,6 +40,22 @@ const { tools } = storeToRefs(toolsStore);
 
 const getTools = async () => {
   await toolsStore.getTools();
+};
+
+const deleteTool = async (id: ToolId) => {
+  try {
+    await toolsStore.deleteTool(id);
+
+    $q.notify({
+      type: 'positive',
+      message: 'Tool successfully deleted',
+    });
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: (error as Error).message,
+    });
+  }
 };
 
 onMounted(getTools);
