@@ -59,4 +59,16 @@ describe('ToolCard', () => {
 
     expect(openExternalUrl).toHaveBeenCalledWith(mockTool.url);
   });
+
+  it('triggers the delete event when the icon is clicked', async () => {
+    const wrapper = mount(ToolCard, {
+      props: {
+        tool: mockTool,
+      },
+    });
+
+    await wrapper.find('button').trigger('click');
+
+    expect(wrapper.emitted('delete')).toEqual([[mockTool.id]]);
+  });
 });
