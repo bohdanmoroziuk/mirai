@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-import { toSystemDate } from 'src/utils/date';
+import { toSystemDate } from 'src/utils';
 import { Task } from 'src/modules/tasks/types';
 
 export interface State {

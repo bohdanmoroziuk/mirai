@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToolCard renders successfully 1`] = `
+<div class="q-card q-card--bordered q-card--flat no-shadow cursor-pointer">
+  <div class="q-card__section q-card__section--vert q-pa-xs q-pl-md">
+    <div class="flex items-center no-wrap q-col-gutter-xs">
+      <div class="text-caption text-primary">React Official Website</div>
+      <div class="q-space"></div><button class="q-btn q-btn-item non-selectable no-outline q-btn--flat q-btn--round text-red q-btn--actionable q-focusable q-hoverable" tabindex="0" type="button"><span class="q-focus-helper"></span><span class="q-btn__content text-center col items-center q-anchor--skip justify-center row"><i class="q-icon notranslate material-icons" aria-hidden="true" role="img">delete</i></span></button>
+    </div>
+  </div>
+</div>
+`;
