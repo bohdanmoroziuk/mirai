@@ -5,28 +5,13 @@
     bordered
     @click.stop="handleClick"
   >
-    <q-card-section class="q-pa-none q-pl-md">
-      <div class="row items-center no-wrap q-col-gutter-xs">
-        <div class="col">
-          <div class="text-caption">
-            {{ tool.name }}
-          </div>
+    <q-card-section class="q-pa-xs q-pl-md">
+      <div class="flex items-center no-wrap q-col-gutter-xs">
+        <div class="text-caption text-primary">
+          {{ tool.name }}
         </div>
-
-        <div class="col-auto">
-          <q-btn color="grey-7" round flat icon="more_vert" @click.stop="">
-            <q-menu cover auto-close>
-              <q-list>
-                <q-item clickable @click="handleUpdate">
-                  <q-item-section>Update</q-item-section>
-                </q-item>
-                <q-item clickable @click="handleDelete">
-                  <q-item-section>Delete</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
-        </div>
+        <q-space />
+        <q-btn color="red" round flat icon="delete" @click.stop="handleDelete" />
       </div>
     </q-card-section>
   </q-card>
@@ -43,7 +28,6 @@ interface Props {
 }
 
 interface Emits {
-  (event: 'update', payload: ToolId): void;
   (event: 'delete', payload: ToolId): void;
 }
 
@@ -53,10 +37,6 @@ const emits = defineEmits<Emits>();
 
 const handleClick = () => {
   openExternalUrl(props.tool.url);
-};
-
-const handleUpdate = () => {
-  emits('update', props.tool.id);
 };
 
 const handleDelete = () => {
