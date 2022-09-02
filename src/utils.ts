@@ -1,3 +1,5 @@
+import format from 'date-fns/format';
+
 export { getLinkPreview } from 'link-preview-js';
 
 export const validateUrl = (url: string) => {
@@ -9,3 +11,5 @@ export const validateUrl = (url: string) => {
 export const openExternalUrl = (url: string) => {
   window.open(url, '_blank');
 };
+
+export const toSystemDate = (date: Date) => format(date, 'yyyy-MM-dd');
