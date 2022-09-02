@@ -1,11 +1,7 @@
 <template>
   <div class="tools q-pa-md q-gutter-y-md">
     <div class="flex items-center">
-      <q-btn
-        color="primary"
-        icon="add"
-        label="Add tool"
-      />
+      <new-tool-dialog @add="addTool" />
     </div>
 
     <div class="tool-list">
@@ -30,7 +26,13 @@ import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useQuasar } from 'quasar';
 
-import { useToolsStore, ToolCard, ToolId } from 'src/modules/tools';
+import {
+  useToolsStore,
+  NewToolDialog,
+  ToolCard,
+  ToolId,
+  ToolBody,
+} from 'src/modules/tools';
 
 const $q = useQuasar();
 
@@ -40,6 +42,22 @@ const { tools } = storeToRefs(toolsStore);
 
 const getTools = async () => {
   await toolsStore.getTools();
+};
+
+const addTool = async (body: ToolBody) => {
+  try {
+    await toolsStore.addTool(body);
+
+    $q.notify({
+      type: 'positive',
+      message: 'Added a new tool',
+    });
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: (error as Error).message,
+    });
+  }
 };
 
 const deleteTool = async (id: ToolId) => {
