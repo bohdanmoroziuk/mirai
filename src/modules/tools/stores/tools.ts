@@ -1,18 +1,12 @@
 import { uid } from 'quasar';
 import { defineStore } from 'pinia';
 
-import { toolsService } from 'src/modules/tools';
-
-export interface Tool {
-  id: string;
-  name: string;
-  url: string;
-  image: string;
-}
-
-export type ToolId = Tool['id'];
-
-export type ToolBody = Omit<Tool, 'id'>;
+import {
+  Tool,
+  ToolId,
+  ToolBody,
+  toolsService,
+} from 'src/modules/tools';
 
 export interface ToolsStoreState {
   tools: Tool[];
