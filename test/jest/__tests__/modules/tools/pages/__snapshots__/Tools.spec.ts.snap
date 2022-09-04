@@ -9,8 +9,11 @@ exports[`Tools renders successfully 1`] = `
     <div class="row q-col-gutter-sm">
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <div class="q-card q-card--bordered q-card--flat no-shadow cursor-pointer">
+          <div class="q-card__section q-card__section--vert q-px-xs q-py-md">
+            <div class="flex justify-center"><img class="image" src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" alt="React"></div>
+          </div>
           <div class="q-card__section q-card__section--vert q-pa-xs q-pl-md">
-            <div class="flex items-center no-wrap q-col-gutter-xs">
+            <div class="flex items-center no-wrap">
               <div class="text-caption text-primary">React</div>
               <div class="q-space"></div><button class="q-btn q-btn-item non-selectable no-outline q-btn--flat q-btn--round text-red q-btn--actionable q-focusable q-hoverable" tabindex="0" type="button"><span class="q-focus-helper"></span><span class="q-btn__content text-center col items-center q-anchor--skip justify-center row"><i class="q-icon notranslate material-icons" aria-hidden="true" role="img">delete</i></span></button>
             </div>
@@ -19,8 +22,11 @@ exports[`Tools renders successfully 1`] = `
       </div>
       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <div class="q-card q-card--bordered q-card--flat no-shadow cursor-pointer">
+          <div class="q-card__section q-card__section--vert q-px-xs q-py-md">
+            <div class="flex justify-center"><img class="image" src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" alt="Vue"></div>
+          </div>
           <div class="q-card__section q-card__section--vert q-pa-xs q-pl-md">
-            <div class="flex items-center no-wrap q-col-gutter-xs">
+            <div class="flex items-center no-wrap">
               <div class="text-caption text-primary">Vue</div>
               <div class="q-space"></div><button class="q-btn q-btn-item non-selectable no-outline q-btn--flat q-btn--round text-red q-btn--actionable q-focusable q-hoverable" tabindex="0" type="button"><span class="q-focus-helper"></span><span class="q-btn__content text-center col items-center q-anchor--skip justify-center row"><i class="q-icon notranslate material-icons" aria-hidden="true" role="img">delete</i></span></button>
             </div>

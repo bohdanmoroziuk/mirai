@@ -7,6 +7,7 @@ export interface Tool {
   id: string;
   name: string;
   url: string;
+  image: string;
 }
 
 export type ToolId = Tool['id'];

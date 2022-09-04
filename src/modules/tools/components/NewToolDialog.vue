@@ -23,6 +23,11 @@
           label="Url"
           v-model.trim="body.url"
         />
+        <q-input
+          dense
+          label="Image"
+          v-model.trim="body.image"
+        />
       </q-card-section>
 
       <q-card-actions align="right" class="text-primary">
@@ -48,6 +53,7 @@ const emits = defineEmits<Emits>();
 const body = ref<ToolBody>({
   name: '',
   url: '',
+  image: '',
 });
 
 const { dialog, open, close } = useDialog();
@@ -56,6 +62,7 @@ const reset = () => {
   body.value = {
     name: '',
     url: '',
+    image: '',
   };
 };
 

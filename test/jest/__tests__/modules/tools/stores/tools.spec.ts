@@ -53,6 +53,7 @@ describe('useToolsStore', () => {
     const mockToolBody = {
       name: 'Quasar',
       url: 'https://quasar.dev/',
+      image: '',
     };
 
     await store.addTool(mockToolBody);

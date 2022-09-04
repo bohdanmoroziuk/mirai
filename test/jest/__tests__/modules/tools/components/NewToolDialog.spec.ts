@@ -15,6 +15,7 @@ describe('NewToolDialog', () => {
     const mockToolBody = {
       name: 'React',
       url: 'https://uk.reactjs.org/',
+      image: '',
     };
 
     const wrapper = mount(NewToolDialog);
