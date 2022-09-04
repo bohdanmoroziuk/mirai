@@ -10,6 +10,7 @@ import {
 
 export interface ToolsStoreState {
   tools: Tool[];
+  searchTerm: string,
 }
 
 export const createTool = (body: ToolBody): Tool => ({
@@ -21,7 +22,23 @@ export const useToolsStore = defineStore('tools', {
   persist: true,
   state: (): ToolsStoreState => ({
     tools: [],
+    searchTerm: '',
   }),
+  getters: {
+    filteredTools(): Tool[] {
+      const { tools, searchTerm } = this;
+
+      if (tools.length === 0) return [];
+
+      if (searchTerm.length === 0) return tools;
+
+      const needle = searchTerm.toLowerCase();
+
+      return tools.filter((tool) => (
+        tool.name.toLowerCase().includes(needle)
+      ));
+    },
+  },
   actions: {
     async getTools() {
       this.tools = await toolsService.getTools();
@@ -37,6 +54,9 @@ export const useToolsStore = defineStore('tools', {
       await toolsService.deleteTool(id);
 
       this.tools = this.tools.filter((tool) => tool.id !== id);
+    },
+    setSearchTerm(value: string) {
+      this.searchTerm = value;
     },
   },
 });

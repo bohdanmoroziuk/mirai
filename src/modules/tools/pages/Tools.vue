@@ -1,8 +1,29 @@
 <template>
   <div class="tools q-pa-md q-gutter-y-md">
-    <div class="flex items-center q-gutter-x-sm">
-      <new-tool-dialog @add="addTool" />
-      <new-group-dialog @add="addGroup" />
+    <div class="flex items-center justify-between q-gutter-x-md">
+      <div class="flex items-center q-gutter-x-sm">
+        <new-tool-dialog @add="addTool" />
+        <new-group-dialog @add="addGroup" />
+      </div>
+      <div>
+        <q-input
+          v-model.trim="searchTerm"
+          label="Search by name"
+          debounce="500"
+          outlined
+          dense
+        >
+          <template v-slot:append>
+            <q-icon
+              v-if="searchTerm"
+              name="close"
+              class="cursor-pointer"
+              @click="resetSearchTerm"
+            />
+            <q-icon name="search" />
+          </template>
+        </q-input>
+      </div>
     </div>
 
     <div class="group-list">
@@ -45,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useQuasar } from 'quasar';
 
@@ -67,9 +88,22 @@ const toolsStore = useToolsStore();
 
 const groupsStore = useGroupsStore();
 
-const { tools } = storeToRefs(toolsStore);
+const { filteredTools: tools } = storeToRefs(toolsStore);
 
 const { groups } = storeToRefs(groupsStore);
+
+const searchTerm = computed({
+  get() {
+    return toolsStore.searchTerm;
+  },
+  set(value: string) {
+    toolsStore.setSearchTerm(value);
+  },
+});
+
+const resetSearchTerm = () => {
+  toolsStore.setSearchTerm('');
+};
 
 const getTools = async () => {
   await toolsStore.getTools();
