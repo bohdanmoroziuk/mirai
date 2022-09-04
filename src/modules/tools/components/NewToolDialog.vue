@@ -15,19 +15,30 @@
         <q-input
           dense
           autofocus
-          label="Name"
+          label="Name *"
+          ref="nameInputRef"
+          :rules="[required]"
+          lazy-rules="ondemand"
           v-model.trim="body.name"
         />
         <q-input
           dense
-          label="Url"
+          label="Url *"
+          ref="urlInputRef"
+          :rules="[required, url]"
+          lazy-rules="ondemand"
           v-model.trim="body.url"
+        />
+        <q-input
+          dense
+          label="Image"
+          v-model.trim="body.image"
         />
       </q-card-section>
 
       <q-card-actions align="right" class="text-primary">
-        <q-btn flat label="Cancel" v-close-popup @click="cancel" color="red" />
-        <q-btn flat label="Add" v-close-popup @click="add" />
+        <q-btn flat label="Cancel" @click="cancel" color="red" />
+        <q-btn flat label="Add" @click="add" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -35,7 +46,9 @@
 
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue';
+import { QInput } from 'quasar';
 
+import { required, url } from 'src/rules';
 import { useDialog } from 'src/composables';
 import { ToolBody } from 'src/modules/tools';
 
@@ -48,7 +61,12 @@ const emits = defineEmits<Emits>();
 const body = ref<ToolBody>({
   name: '',
   url: '',
+  image: '',
 });
+
+const nameInputRef = ref<QInput>();
+
+const urlInputRef = ref<QInput>();
 
 const { dialog, open, close } = useDialog();
 
@@ -56,10 +74,21 @@ const reset = () => {
   body.value = {
     name: '',
     url: '',
+    image: '',
   };
+
+  nameInputRef.value?.resetValidation();
+  urlInputRef.value?.resetValidation();
 };
 
 const add = () => {
+  const isNameValid = nameInputRef.value?.validate();
+  const isUrlValid = urlInputRef.value?.validate();
+
+  const hasError = !isNameValid || !isUrlValid;
+
+  if (hasError) return;
+
   emits('add', body.value);
   reset();
   close();
