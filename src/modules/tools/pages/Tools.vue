@@ -1,7 +1,51 @@
 <template>
   <div class="tools q-pa-md q-gutter-y-md">
-    <div class="flex items-center">
-      <new-tool-dialog @add="addTool" />
+    <div class="flex items-center justify-between q-gutter-x-md">
+      <div class="flex items-center q-gutter-x-sm">
+        <new-tool-dialog @add="addTool" />
+        <new-group-dialog @add="addGroup" />
+      </div>
+      <div>
+        <q-input
+          v-model.trim="searchTerm"
+          label="Search by name"
+          debounce="500"
+          outlined
+          dense
+        >
+          <template v-slot:append>
+            <q-icon
+              v-if="searchTerm"
+              name="close"
+              class="cursor-pointer"
+              @click="resetSearchTerm"
+            />
+            <q-icon name="search" />
+          </template>
+        </q-input>
+      </div>
+    </div>
+
+    <div class="group-list">
+      <div
+        class="flex items-center no-wrap"
+        v-for="group of groups"
+        :key="group.id"
+      >
+        <q-chip color="primary" text-color="white" :ripple="false">
+          {{ group.name }}
+        </q-chip>
+        <q-separator style="flex: 1;" horizontal spaced="lg" inset />
+        <div class="actions">
+          <q-btn
+            color="red"
+            round
+            flat
+            icon="delete"
+            @click="deleteGroup(group.id)"
+          />
+        </div>
+      </div>
     </div>
 
     <div class="tool-list">
@@ -22,23 +66,44 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useQuasar } from 'quasar';
 
 import {
   useToolsStore,
+  useGroupsStore,
   NewToolDialog,
+  NewGroupDialog,
   ToolCard,
   ToolId,
   ToolBody,
+  GroupName,
+  GroupId,
 } from 'src/modules/tools';
 
 const $q = useQuasar();
 
 const toolsStore = useToolsStore();
 
-const { tools } = storeToRefs(toolsStore);
+const groupsStore = useGroupsStore();
+
+const { filteredTools: tools } = storeToRefs(toolsStore);
+
+const { groups } = storeToRefs(groupsStore);
+
+const searchTerm = computed({
+  get() {
+    return toolsStore.searchTerm;
+  },
+  set(value: string) {
+    toolsStore.setSearchTerm(value);
+  },
+});
+
+const resetSearchTerm = () => {
+  toolsStore.setSearchTerm('');
+};
 
 const getTools = async () => {
   await toolsStore.getTools();
@@ -76,5 +141,46 @@ const deleteTool = async (id: ToolId) => {
   }
 };
 
-onMounted(getTools);
+const getGroups = async () => {
+  await groupsStore.getGroups();
+};
+
+const addGroup = async (name: GroupName) => {
+  try {
+    await groupsStore.addGroup(name);
+
+    $q.notify({
+      type: 'positive',
+      message: 'Group successfully deleted',
+    });
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: (error as Error).message,
+    });
+  }
+};
+
+const deleteGroup = async (id: GroupId) => {
+  try {
+    await groupsStore.deleteGroup(id);
+
+    $q.notify({
+      type: 'positive',
+      message: 'Group successfully deleted',
+    });
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: (error as Error).message,
+    });
+  }
+};
+
+const getToolsAndGroups = async () => {
+  await getTools();
+  await getGroups();
+};
+
+onMounted(getToolsAndGroups);
 </script>
