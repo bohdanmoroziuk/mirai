@@ -9,6 +9,7 @@ import {
 import { mount, flushPromises } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 
+import { ToolCard } from 'src/modules/tools';
 import Tools from 'src/modules/tools/pages/Tools.vue';
 
 installQuasarPlugin();
@@ -70,5 +71,6 @@ describe('Tools', () => {
 
     expect(wrapper.text()).toContain(mockTools[0].name);
     expect(wrapper.text()).toContain(mockTools[1].name);
+    expect(wrapper.findAllComponents(ToolCard).length).toBe(mockTools.length);
   });
 });
