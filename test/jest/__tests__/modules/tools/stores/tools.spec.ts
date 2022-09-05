@@ -76,4 +76,31 @@ describe('useToolsStore', () => {
     expect(store.tools.find((tool) => tool.id === mockTools[0].id)).toBe(undefined);
     expect(toolsService.deleteTool).toHaveBeenCalled();
   });
+
+  it('filters tools by a given search term', async () => {
+    const store = useToolsStore();
+
+    expect(store.searchTerm).toBe('');
+    expect(store.filteredTools).toEqual([]);
+
+    await store.getTools();
+
+    expect(store.filteredTools).toEqual(mockTools);
+
+    store.setSearchTerm('re');
+
+    expect(store.filteredTools).toEqual([mockTools[0]]);
+
+    store.setSearchTerm('vu');
+
+    expect(store.filteredTools).toEqual([mockTools[1]]);
+
+    store.setSearchTerm('e');
+
+    expect(store.filteredTools).toEqual(mockTools);
+
+    store.setSearchTerm('quasar');
+
+    expect(store.filteredTools).toEqual([]);
+  });
 });
