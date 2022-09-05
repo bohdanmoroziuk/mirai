@@ -52,7 +52,7 @@ describe('Tools', () => {
 
     await flushPromises();
 
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(wrapper.exists()).toBeTruthy();
   });
 
   it('displays a list of tools', async () => {
