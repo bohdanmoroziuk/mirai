@@ -17,8 +17,13 @@
 
     <q-card-section class="q-pa-xs q-pl-md">
       <div class="flex items-center no-wrap">
-        <div class="text-caption text-primary">
-          {{ tool.name }}
+        <div class="column">
+          <span class="text-primary">
+            {{ tool.name }}
+          </span>
+          <span class="text-caption text-secondary" v-if="tool.group">
+            {{ tool.group.name }}
+          </span>
         </div>
         <q-space />
         <q-btn

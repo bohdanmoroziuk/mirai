@@ -2,7 +2,7 @@
   <div class="tools q-pa-md q-gutter-y-md">
     <div class="flex items-center justify-between q-gutter-x-md">
       <div class="flex items-center q-gutter-x-sm">
-        <new-tool-dialog @add="addTool" />
+        <new-tool-dialog :groups="groups" @add="addTool" />
         <new-group-dialog @add="addGroup" />
       </div>
       <div>

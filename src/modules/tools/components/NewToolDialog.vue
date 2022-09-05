@@ -11,7 +11,7 @@
         <div class="text-h6">Tool</div>
       </q-card-section>
 
-      <q-card-section class="q-pt-none q-gutter-y-md">
+      <q-card-section class="q-pt-none">
         <q-input
           dense
           autofocus
@@ -30,9 +30,20 @@
           v-model.trim="body.url"
         />
         <q-input
+          class="q-mb-lg"
           dense
           label="Image"
           v-model.trim="body.image"
+        />
+        <q-select
+          dense
+          :options="groups"
+          label="Group"
+          clearable
+          option-label="name"
+          option-value="id"
+          v-model="body.group"
+          @clear="clearGroupSelect"
         />
       </q-card-section>
 
@@ -45,16 +56,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue';
+import {
+  ref,
+  defineEmits,
+  defineProps,
+} from 'vue';
 import { QInput } from 'quasar';
 
 import { required, url } from 'src/rules';
 import { useDialog } from 'src/composables';
-import { ToolBody } from 'src/modules/tools';
+import { ToolBody, Group } from 'src/modules/tools';
+
+interface Props {
+  groups: Group[];
+}
 
 interface Emits {
   (event: 'add', payload: ToolBody): void;
 }
+
+defineProps<Props>();
 
 const emits = defineEmits<Emits>();
 
@@ -62,6 +83,7 @@ const body = ref<ToolBody>({
   name: '',
   url: '',
   image: '',
+  group: null,
 });
 
 const nameInputRef = ref<QInput>();
@@ -75,6 +97,7 @@ const reset = () => {
     name: '',
     url: '',
     image: '',
+    group: null,
   };
 
   nameInputRef.value?.resetValidation();
@@ -97,5 +120,9 @@ const add = () => {
 const cancel = () => {
   reset();
   close();
+};
+
+const clearGroupSelect = () => {
+  body.value.group = null;
 };
 </script>

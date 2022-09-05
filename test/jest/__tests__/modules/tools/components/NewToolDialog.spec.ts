@@ -16,6 +16,7 @@ describe('NewToolDialog', () => {
       name: 'React',
       url: 'https://uk.reactjs.org/',
       image: '',
+      group: null,
     };
 
     const wrapper = mount(NewToolDialog);
