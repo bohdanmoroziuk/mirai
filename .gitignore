@@ -34,3 +34,4 @@ yarn-error.log*
 
 # Sensitive data
 /src/config/firebase.ts
+.vercel

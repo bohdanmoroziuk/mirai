@@ -1,53 +1,23 @@
 <template>
-  <div class="tools q-pa-md q-gutter-y-md">
-    <div class="flex items-center justify-between q-gutter-x-md">
-      <div class="flex items-center q-gutter-x-sm">
-        <new-tool-dialog :groups="groups" @add="addTool" />
-        <new-group-dialog @add="addGroup" />
-      </div>
-      <div>
-        <q-input
-          v-model.trim="searchTerm"
-          label="Search by name"
-          debounce="500"
-          outlined
-          dense
-        >
-          <template v-slot:append>
-            <q-icon
-              v-if="searchTerm"
-              name="close"
-              class="cursor-pointer"
-              @click="resetSearchTerm"
-            />
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </div>
-    </div>
-
-    <div
-      v-for="(items, group) in tools"
-      :key="group"
-    >
-      <div class="flex items-center no-wrap">
-        <q-chip color="primary" text-color="white" :ripple="false">
-          {{ group }}
-        </q-chip>
-        <q-separator style="flex: 1;" horizontal spaced="lg" inset />
-        <div class="actions">
-          <q-btn
-            color="red"
-            round
-            flat
-            icon="delete"
-          />
+  <div class="tools row q-col-gutter-y-md q-pa-md">
+    <div class="col-12">
+      <div class="toolbar row items-center q-col-gutter-sm">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <new-tool-dialog :groups="groups" @add="addTool" />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <new-group-dialog @add="addGroup" />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 offset-lg-3">
+          <tool-search-form />
         </div>
       </div>
-      <div class="row q-col-gutter-sm">
+    </div>
+    <div class="col-12">
+      <div class="tool-list row q-col-gutter-sm">
         <div
           class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-          v-for="tool of items"
+          v-for="tool of tools"
           :key="tool.id"
         >
           <tool-card
@@ -58,20 +28,39 @@
       </div>
     </div>
   </div>
+
+  <!-- <div
+    v-for="group of groups"
+    :key="group.id"
+  >
+    <div class="flex items-center no-wrap">
+      <q-chip color="primary" text-color="white" :ripple="false">
+        {{ group }}
+      </q-chip>
+      <q-separator style="flex: 1;" horizontal spaced="lg" inset />
+      <div class="actions">
+        <q-btn
+          color="red"
+          round
+          flat
+          icon="delete"
+        />
+      </div>
+    </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useQuasar } from 'quasar';
-
-import groupBy from 'lodash/fp/groupBy';
 
 import {
   useToolsStore,
   useGroupsStore,
   NewToolDialog,
   NewGroupDialog,
+  ToolSearchForm,
   ToolCard,
   ToolId,
   ToolBody,
@@ -85,24 +74,9 @@ const toolsStore = useToolsStore();
 
 const groupsStore = useGroupsStore();
 
-const { filteredTools } = storeToRefs(toolsStore);
+const { filteredTools: tools } = storeToRefs(toolsStore);
 
 const { groups } = storeToRefs(groupsStore);
-
-const tools = computed(() => groupBy('group.name', filteredTools.value));
-
-const searchTerm = computed({
-  get() {
-    return toolsStore.searchTerm;
-  },
-  set(value: string) {
-    toolsStore.setSearchTerm(value);
-  },
-});
-
-const resetSearchTerm = () => {
-  toolsStore.setSearchTerm('');
-};
 
 const getTools = async () => {
   await toolsStore.getTools();
