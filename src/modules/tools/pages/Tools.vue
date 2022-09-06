@@ -6,23 +6,7 @@
         <new-group-dialog @add="addGroup" />
       </div>
       <div>
-        <q-input
-          v-model.trim="searchTerm"
-          label="Search by name"
-          debounce="500"
-          outlined
-          dense
-        >
-          <template v-slot:append>
-            <q-icon
-              v-if="searchTerm"
-              name="close"
-              class="cursor-pointer"
-              @click="resetSearchTerm"
-            />
-            <q-icon name="search" />
-          </template>
-        </q-input>
+        <tool-search-form />
       </div>
     </div>
 
@@ -72,6 +56,7 @@ import {
   useGroupsStore,
   NewToolDialog,
   NewGroupDialog,
+  ToolSearchForm,
   ToolCard,
   ToolId,
   ToolBody,
@@ -90,19 +75,6 @@ const { filteredTools } = storeToRefs(toolsStore);
 const { groups } = storeToRefs(groupsStore);
 
 const tools = computed(() => groupBy('group.name', filteredTools.value));
-
-const searchTerm = computed({
-  get() {
-    return toolsStore.searchTerm;
-  },
-  set(value: string) {
-    toolsStore.setSearchTerm(value);
-  },
-});
-
-const resetSearchTerm = () => {
-  toolsStore.setSearchTerm('');
-};
 
 const getTools = async () => {
   await toolsStore.getTools();
