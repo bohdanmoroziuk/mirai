@@ -1,48 +1,53 @@
 <template>
-  <div class="tools q-pa-md q-gutter-y-md">
-    <div class="flex items-center justify-between q-gutter-x-md">
-      <div class="flex items-center q-gutter-x-sm">
-        <new-tool-dialog :groups="groups" @add="addTool" />
-        <new-group-dialog @add="addGroup" />
-      </div>
-      <div>
-        <tool-search-form />
-      </div>
-    </div>
-
-    <div class="tool-list row q-col-gutter-sm">
-      <div
-        class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-        v-for="tool of tools"
-        :key="tool.id"
-      >
-        <tool-card
-          :tool="tool"
-          @delete="deleteTool"
-        />
+  <div class="tools row q-col-gutter-y-md q-pa-md">
+    <div class="col-12">
+      <div class="toolbar row items-center q-col-gutter-sm">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <new-tool-dialog :groups="groups" @add="addTool" />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <new-group-dialog @add="addGroup" />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 offset-lg-3">
+          <tool-search-form />
+        </div>
       </div>
     </div>
-
-    <!-- <div
-      v-for="group of groups"
-      :key="group.id"
-    >
-      <div class="flex items-center no-wrap">
-        <q-chip color="primary" text-color="white" :ripple="false">
-          {{ group }}
-        </q-chip>
-        <q-separator style="flex: 1;" horizontal spaced="lg" inset />
-        <div class="actions">
-          <q-btn
-            color="red"
-            round
-            flat
-            icon="delete"
+    <div class="col-12">
+      <div class="tool-list row q-col-gutter-sm">
+        <div
+          class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+          v-for="tool of tools"
+          :key="tool.id"
+        >
+          <tool-card
+            :tool="tool"
+            @delete="deleteTool"
           />
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
+
+  <!-- <div
+    v-for="group of groups"
+    :key="group.id"
+  >
+    <div class="flex items-center no-wrap">
+      <q-chip color="primary" text-color="white" :ripple="false">
+        {{ group }}
+      </q-chip>
+      <q-separator style="flex: 1;" horizontal spaced="lg" inset />
+      <div class="actions">
+        <q-btn
+          color="red"
+          round
+          flat
+          icon="delete"
+        />
+      </div>
+    </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">

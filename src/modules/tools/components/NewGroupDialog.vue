@@ -1,12 +1,13 @@
 <template>
   <q-btn
+    class="full-width"
     color="primary"
     icon="add"
     label="Add group"
     @click="open"
   />
   <q-dialog v-model="dialog" persistent>
-    <q-card style="min-width: 350px">
+    <q-card class="container">
       <q-card-section>
         <div class="text-h6">Group</div>
       </q-card-section>
@@ -72,3 +73,10 @@ const cancel = () => {
   close();
 };
 </script>
+
+<style scoped>
+.container {
+  max-width: 360px;
+  width: 100%;
+}
+</style>
