@@ -2,7 +2,7 @@
   <div class="tools q-pa-md q-gutter-y-md">
     <div class="flex items-center justify-between q-gutter-x-md">
       <div class="flex items-center q-gutter-x-sm">
-        <new-tool-dialog @add="addTool" />
+        <new-tool-dialog :groups="groups" @add="addTool" />
         <new-group-dialog @add="addGroup" />
       </div>
       <div>
@@ -26,14 +26,13 @@
       </div>
     </div>
 
-    <div class="group-list">
-      <div
-        class="flex items-center no-wrap"
-        v-for="group of groups"
-        :key="group.id"
-      >
+    <div
+      v-for="(items, group) in tools"
+      :key="group"
+    >
+      <div class="flex items-center no-wrap">
         <q-chip color="primary" text-color="white" :ripple="false">
-          {{ group.name }}
+          {{ group }}
         </q-chip>
         <q-separator style="flex: 1;" horizontal spaced="lg" inset />
         <div class="actions">
@@ -42,17 +41,13 @@
             round
             flat
             icon="delete"
-            @click="deleteGroup(group.id)"
           />
         </div>
       </div>
-    </div>
-
-    <div class="tool-list">
       <div class="row q-col-gutter-sm">
         <div
           class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-          v-for="tool of tools"
+          v-for="tool of items"
           :key="tool.id"
         >
           <tool-card
@@ -69,6 +64,8 @@
 import { onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useQuasar } from 'quasar';
+
+import groupBy from 'lodash/fp/groupBy';
 
 import {
   useToolsStore,
@@ -88,9 +85,11 @@ const toolsStore = useToolsStore();
 
 const groupsStore = useGroupsStore();
 
-const { filteredTools: tools } = storeToRefs(toolsStore);
+const { filteredTools } = storeToRefs(toolsStore);
 
 const { groups } = storeToRefs(groupsStore);
+
+const tools = computed(() => groupBy('group.name', filteredTools.value));
 
 const searchTerm = computed({
   get() {

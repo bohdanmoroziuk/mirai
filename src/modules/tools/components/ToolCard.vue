@@ -1,12 +1,12 @@
 <template>
   <q-card
-    class="cursor-pointer"
+    class="column full-height cursor-pointer"
     flat
     bordered
     @click.stop="handleClick"
   >
     <q-card-section class="q-px-xs q-py-md">
-      <div class="flex justify-center">
+      <div class="image-container flex items-center justify-center">
         <img
           class="image"
           :src="tool.image || fallbackImage"
@@ -15,10 +15,15 @@
       </div>
     </q-card-section>
 
-    <q-card-section class="q-pa-xs q-pl-md">
+    <q-card-section class="q-pa-xs q-pl-md q-mt-auto">
       <div class="flex items-center no-wrap">
-        <div class="text-caption text-primary">
-          {{ tool.name }}
+        <div class="column">
+          <span class="text-primary">
+            {{ tool.name }}
+          </span>
+          <span class="text-caption text-secondary" v-if="tool.group">
+            {{ tool.group.name }}
+          </span>
         </div>
         <q-space />
         <q-btn
@@ -63,8 +68,12 @@ const handleDelete = () => {
 </script>
 
 <style scoped>
+.image-container {
+  height: 64px;
+}
+
 .image {
-  width: 64px;
+  max-width: 64px;
   height: auto;
 }
 </style>
