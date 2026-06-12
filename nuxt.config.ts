@@ -1,5 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from 'node:url'
+
+const resolveLayerPath = (name: string) => {
+  return fileURLToPath(new URL(`./layers/${name}/`, import.meta.url))
+}
+
 export default defineNuxtConfig({
+  extends: [
+    './layers/10-core',
+  ],
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
@@ -15,6 +25,10 @@ export default defineNuxtConfig({
 
   ui: {
     colorMode: false,
+  },
+
+  alias: {
+    '@core': resolveLayerPath('10-core'),
   },
 
   compatibilityDate: '2025-07-15',
