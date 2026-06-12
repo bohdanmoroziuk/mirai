@@ -1,9 +1,9 @@
-export const invariant = (
+export function invariant(
   condition: unknown,
   statusCode = 500,
   statusMessage = 'Something went wrong',
-  data?: unknown,
-): asserts condition => {
+  data?: Record<string, unknown>,
+): asserts condition {
   if (!condition) {
     throw createError({
       statusCode,

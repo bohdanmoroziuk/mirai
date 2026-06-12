@@ -8,6 +8,7 @@ const resolveLayerPath = (name: string) => {
 export default defineNuxtConfig({
   extends: [
     './layers/10-core',
+    './layers/20-infra',
   ],
 
   modules: [
@@ -27,8 +28,13 @@ export default defineNuxtConfig({
     colorMode: false,
   },
 
+  runtimeConfig: {
+    mongodbUri: process.env.MONGODB_URI,
+  },
+
   alias: {
     '@core': resolveLayerPath('10-core'),
+    '@infra': resolveLayerPath('20-infra'),
   },
 
   compatibilityDate: '2025-07-15',

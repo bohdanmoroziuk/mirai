@@ -25,7 +25,8 @@
   "compilerOptions": {
     "types": ["node"],
     "paths": {
-      "@core/*": ["./layers/10-core/*"]
+      "@core/*": ["./layers/10-core/*"],
+      "@infra/*": ["./layers/20-infra/*"]
     }
   }
 }
