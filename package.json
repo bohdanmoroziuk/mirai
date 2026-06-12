@@ -1,0 +1,22 @@
+{
+  "name": "mirai",
+  "description": "A personal command center for organizing bookmarks, tasks, notes, and everyday resources.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^4.4.8",
+    "vue": "^3.5.35",
+    "vue-router": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22 <23",
+    "npm": ">=10"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "files.watcherExclude": {
+    "**/.nuxt/**": true,
+    "**/.output/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true,
+    "**/.git/**": true,
+    "**/.cache/**": true,
+    "**/coverage/**": true
+  },
+  "search.exclude": {
+    "**/.nuxt": true,
+    "**/.output": true,
+    "**/dist": true,
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/.cache": true,
+    "**/coverage": true
+  }
+}
