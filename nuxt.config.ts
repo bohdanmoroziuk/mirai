@@ -9,6 +9,7 @@ export default defineNuxtConfig({
   extends: [
     './layers/10-core',
     './layers/20-infra',
+    './layers/30-user',
   ],
 
   modules: [
@@ -35,6 +36,7 @@ export default defineNuxtConfig({
   alias: {
     '@core': resolveLayerPath('10-core'),
     '@infra': resolveLayerPath('20-infra'),
+    '@user': resolveLayerPath('30-user'),
   },
 
   compatibilityDate: '2025-07-15',

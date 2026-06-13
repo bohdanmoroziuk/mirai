@@ -17,6 +17,8 @@ export const connectMongoose = async (uri: string) => {
   }
 
   try {
+    console.log('Connecting to MongoDB...')
+
     await mongoose.connect(uri)
 
     console.log('Connected to MongoDB')
@@ -38,6 +40,8 @@ export const disconnectMongoose = async () => {
   }
 
   try {
+    console.log('Disconnecting from MongoDB...')
+
     await mongoose.disconnect()
 
     console.log('Disconnected from MongoDB')
