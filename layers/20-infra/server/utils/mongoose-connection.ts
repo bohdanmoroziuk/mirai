@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { databaseLogger } from '@infra/shared/services/logger.service'
 
 export const MONGOOSE_READY_STATE = {
   DISCONNECTED: 0,
@@ -17,14 +18,14 @@ export const connectMongoose = async (uri: string) => {
   }
 
   try {
-    console.log('Connecting to MongoDB...')
+    databaseLogger.info('Connecting to MongoDB...')
 
     await mongoose.connect(uri)
 
-    console.log('Connected to MongoDB')
+    databaseLogger.success('Connected to MongoDB')
   }
   catch (error) {
-    console.error('Failed to connect to MongoDB', error)
+    databaseLogger.error('Failed to connect to MongoDB', error)
 
     throw error
   }
@@ -40,14 +41,14 @@ export const disconnectMongoose = async () => {
   }
 
   try {
-    console.log('Disconnecting from MongoDB...')
+    databaseLogger.info('Disconnecting from MongoDB...')
 
     await mongoose.disconnect()
 
-    console.log('Disconnected from MongoDB')
+    databaseLogger.success('Disconnected from MongoDB')
   }
   catch (error) {
-    console.error('Failed to disconnect from MongoDB', error)
+    databaseLogger.error('Failed to disconnect from MongoDB', error)
 
     throw error
   }

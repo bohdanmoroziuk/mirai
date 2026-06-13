@@ -1,3 +1,6 @@
+import { defineSafeEventHandler } from '@core/server/utils/define-safe-event-handler'
+import { reportServerError } from '@infra/server/utils/report-server-error'
+
 defineRouteMeta({
   openAPI: {
     tags: ['Health'],
@@ -25,8 +28,10 @@ defineRouteMeta({
   },
 })
 
-export default defineEventHandler(() => {
+export default defineSafeEventHandler(() => {
   return {
     status: 'ok',
   }
+}, {
+  reportError: reportServerError,
 })
