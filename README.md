@@ -74,3 +74,13 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## API Documentation
+
+The project uses Nitro OpenAPI integration to generate API documentation for server routes.
+
+Available documentation links in development:
+
+* OpenAPI JSON: [`http://localhost:3000/_openapi.json`](http://localhost:3000/_openapi.json)
+* Scalar UI: [`http://localhost:3000/_scalar`](http://localhost:3000/_scalar)
+* Swagger UI: [`http://localhost:3000/_swagger`](http://localhost:3000/_swagger)

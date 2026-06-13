@@ -15,6 +15,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
+    '@scalar/nuxt',
   ],
 
   devtools: {
@@ -40,6 +41,20 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2025-07-15',
+
+  nitro: {
+    experimental: {
+      openAPI: true,
+    },
+
+    openAPI: {
+      meta: {
+        title: 'Mirai API',
+        description: 'API Documentation for Mirai.',
+        version: '0.1.0',
+      },
+    },
+  },
 
   typescript: {
     typeCheck: false,
