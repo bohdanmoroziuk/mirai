@@ -1,5 +1,6 @@
 import type { Nullable } from '@core/shared/types/common'
 import type { CreateUserInput, User } from '@user/shared/types/user'
+import type { UserDocument } from '@user/server/types/user'
 import { userRepository } from '@user/server/repositories/user.repository'
 import { mapUser } from '@user/server/mappers/user.mapper'
 
@@ -23,4 +24,10 @@ export const getUserByEmail = async (email: string): Promise<Nullable<User>> => 
   }
 
   return null
+}
+
+export const getUserDocumentByEmail = async (email: string): Promise<Nullable<UserDocument>> => {
+  const userDocument = await userRepository.findOneByEmail(email)
+
+  return userDocument
 }

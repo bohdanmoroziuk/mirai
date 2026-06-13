@@ -1,28 +1,23 @@
-import { createResponse } from '@core/server/utils/response'
-import { signupBodySchema } from '@auth/server/schemas/auth.schema'
-import { signupUser } from '@auth/server/services/auth.service'
+import { loginBodySchema } from '@auth/server/schemas/auth.schema'
+import { loginUser } from '@auth/server/services/auth.service'
 
 defineRouteMeta({
   openAPI: {
     tags: ['Auth'],
-    summary: 'Sign up',
-    description: 'Creates a new user account.',
+    summary: 'Login user',
+    description: 'Authenticates a user and creates a session.',
     requestBody: {
       required: true,
       content: {
         'application/json': {
           schema: {
             type: 'object',
-            required: ['name', 'email', 'password'],
+            required: ['email', 'password'],
             properties: {
-              name: {
-                type: 'string',
-                example: 'John Doe',
-              },
               email: {
                 type: 'string',
                 format: 'email',
-                example: 'john@example.com',
+                example: 'john.doe@example.com',
               },
               password: {
                 type: 'string',
@@ -35,8 +30,8 @@ defineRouteMeta({
       },
     },
     responses: {
-      201: {
-        description: 'User signed up successfully',
+      200: {
+        description: 'User logged in successfully',
         content: {
           'application/json': {
             schema: {
@@ -45,11 +40,11 @@ defineRouteMeta({
               properties: {
                 data: {
                   type: 'object',
-                  required: ['id', 'name', 'email', 'avatarUrl'],
+                  required: ['id', 'name', 'email'],
                   properties: {
                     id: {
                       type: 'string',
-                      example: '665f1b8e1b7c2f0012a4c123',
+                      example: '665f1f77bcf86cd799439011',
                     },
                     name: {
                       type: 'string',
@@ -58,7 +53,7 @@ defineRouteMeta({
                     email: {
                       type: 'string',
                       format: 'email',
-                      example: 'john@example.com',
+                      example: 'john.doe@example.com',
                     },
                     avatarUrl: {
                       type: 'string',
@@ -75,8 +70,8 @@ defineRouteMeta({
       400: {
         description: 'Validation error',
       },
-      409: {
-        description: 'User with this email already exists',
+      401: {
+        description: 'Invalid email or password',
       },
       500: {
         description: 'Internal server error',
@@ -86,11 +81,11 @@ defineRouteMeta({
 })
 
 export default defineSafeEventHandler(async (event) => {
-  const body = await validateBody(event, signupBodySchema)
-  const user = await signupUser(body)
+  const body = await validateBody(event, loginBodySchema)
+  const user = await loginUser(body)
 
   await setUserSession(event, { user })
-  setResponseStatus(event, 201)
+  setResponseStatus(event, 200)
 
   return createResponse(user)
 }, {
