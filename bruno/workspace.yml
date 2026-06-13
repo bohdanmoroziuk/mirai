@@ -1,0 +1,12 @@
+opencollection: 1.0.0
+info:
+  name: "Mirai"
+  type: workspace
+
+collections:
+  - name: "Personal Command Center"
+    path: "collections/Personal Command Center"
+
+specs:
+
+docs: ''
