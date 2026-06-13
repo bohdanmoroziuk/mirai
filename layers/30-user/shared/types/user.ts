@@ -20,5 +20,6 @@ export type CreateUserInput = Pick<
   UserEntity,
   | 'name'
   | 'email'
-  | 'password'
->
+> & {
+  passwordHash: string
+}

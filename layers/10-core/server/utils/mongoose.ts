@@ -1,4 +1,6 @@
-import { model, models, type Model, type Schema } from 'mongoose'
+import mongoose, { type Model, type Schema } from 'mongoose'
+
+const { model, models } = mongoose
 
 export const createMongooseModel = <T>(
   name: string,

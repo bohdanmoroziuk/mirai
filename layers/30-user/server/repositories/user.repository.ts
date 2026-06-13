@@ -5,4 +5,10 @@ export const userRepository = {
   createOne(input: CreateUserRecordInput): Promise<UserDocument> {
     return UserModel.create(input)
   },
+
+  getMany(): Promise<UserDocument[]> {
+    return UserModel
+      .find()
+      .exec()
+  },
 }
