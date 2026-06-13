@@ -10,12 +10,14 @@ export default defineNuxtConfig({
     './layers/10-core',
     './layers/20-infra',
     './layers/30-user',
+    './layers/40-auth',
   ],
 
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
     '@scalar/nuxt',
+    'nuxt-auth-utils',
   ],
 
   devtools: {
@@ -38,6 +40,7 @@ export default defineNuxtConfig({
     '@core': resolveLayerPath('10-core'),
     '@infra': resolveLayerPath('20-infra'),
     '@user': resolveLayerPath('30-user'),
+    '@auth': resolveLayerPath('40-auth'),
   },
 
   compatibilityDate: '2025-07-15',

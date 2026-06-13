@@ -1,0 +1,23 @@
+info:
+  name: Signup a user
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/auth/signup"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Jordan Wild",
+        "email": "jordan.wild@test.com",
+        "password": "jordan.wild"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
