@@ -32,3 +32,27 @@ export const useSignupMutation = () => {
     signup,
   }
 }
+
+export const useLogoutMutation = () => {
+  const queryClient = useQueryClient()
+  const userSession = useUserSession()
+
+  const {
+    isPending: loading,
+    mutateAsync: logout,
+  } = useMutation({
+    mutationKey: ['auth', 'logout'],
+    mutationFn: authRepository.logout,
+    onSuccess: async () => {
+      await userSession.clear()
+      queryClient.removeQueries({
+        queryKey: ['auth', 'me'],
+      })
+    },
+  })
+
+  return {
+    loading,
+    logout,
+  }
+}
