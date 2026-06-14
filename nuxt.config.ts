@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     './layers/20-infra',
     './layers/30-user',
     './layers/40-auth',
+    './layers/60-collection',
   ],
 
   modules: [
@@ -41,6 +42,7 @@ export default defineNuxtConfig({
     '@infra': resolveLayerPath('20-infra'),
     '@user': resolveLayerPath('30-user'),
     '@auth': resolveLayerPath('40-auth'),
+    '@collection': resolveLayerPath('60-collection'),
   },
 
   compatibilityDate: '2025-07-15',
