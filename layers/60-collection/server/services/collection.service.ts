@@ -12,3 +12,9 @@ export const createCollection = async (input: CreateCollectionInput): Promise<Co
 
   return mapCollection(collectionDocument)
 }
+
+export const getUserCollections = async (userId: string): Promise<Collection[]> => {
+  const collectionDocuments = await collectionRepository.findManyByUserId(toObjectId(userId))
+
+  return collectionDocuments.map(mapCollection)
+}
