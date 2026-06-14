@@ -1,0 +1,9 @@
+import type { PageAccess } from '@auth/shared/types/auth'
+
+declare module '#app' {
+  interface PageMeta {
+    access?: PageAccess
+  }
+}
+
+export {}

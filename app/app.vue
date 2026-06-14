@@ -4,7 +4,9 @@
     <NuxtLoadingIndicator />
 
     <UApp>
-      <NuxtPage />
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
     </UApp>
   </div>
 </template>

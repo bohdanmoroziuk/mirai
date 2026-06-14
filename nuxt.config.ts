@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   ],
 
   devtools: {
-    enabled: true,
+    enabled: false,
   },
 
   css: [
@@ -56,6 +56,14 @@ export default defineNuxtConfig({
         description: 'API Documentation for Mirai.',
         version: '0.1.0',
       },
+    },
+  },
+
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@tanstack/vue-query',
+      ],
     },
   },
 
