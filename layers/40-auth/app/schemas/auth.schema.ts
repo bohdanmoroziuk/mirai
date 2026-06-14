@@ -5,3 +5,8 @@ export const signupFormSchema = z.object({
   email: z.email().trim(),
   password: z.string().min(8),
 })
+
+export const loginFormSchema = z.object({
+  email: z.email().trim(),
+  password: z.string().min(8),
+})

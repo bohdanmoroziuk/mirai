@@ -23,13 +23,44 @@ export const useSignupMutation = () => {
   })
 
   const errorMessage = computed(() => {
-    return isError.value ? getErrorMessage(error) : null
+    return isError.value ? getErrorMessage(error.value) : null
   })
 
   return {
     errorMessage,
     loading,
     signup,
+  }
+}
+
+export const useLoginMutation = () => {
+  const queryClient = useQueryClient()
+  const userSession = useUserSession()
+
+  const {
+    error,
+    isError,
+    isPending: loading,
+    mutateAsync: login,
+  } = useMutation({
+    mutationKey: ['auth', 'login'],
+    mutationFn: authRepository.login,
+    onSuccess: async () => {
+      await userSession.fetch()
+      await queryClient.invalidateQueries({
+        queryKey: ['auth', 'me'],
+      })
+    },
+  })
+
+  const errorMessage = computed(() => {
+    return isError.value ? getErrorMessage(error.value) : null
+  })
+
+  return {
+    errorMessage,
+    loading,
+    login,
   }
 }
 
