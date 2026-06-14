@@ -63,6 +63,7 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: [
         '@tanstack/vue-query',
+        'zod',
       ],
     },
   },
