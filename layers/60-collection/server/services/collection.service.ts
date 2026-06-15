@@ -1,5 +1,11 @@
 import type { Collection } from '@collection/shared/types/collection'
-import type { CreateCollectionInput, DeleteCollectionInput, DeleteCollectionOutput, GetCollectionInput } from '@collection/server/types/collection'
+import type {
+  CreateCollectionInput,
+  DeleteCollectionInput,
+  DeleteCollectionOutput,
+  GetCollectionInput,
+  UpdateCollectionInput,
+} from '@collection/server/types/collection'
 import { collectionRepository } from '@collection/server/repositories/collection.repository'
 import { mapCollection } from '@collection/server/mappers/collection.mapper'
 
@@ -25,6 +31,22 @@ export const getCollection = async (input: GetCollectionInput): Promise<Nullable
   const collectionDocument = await collectionRepository.findOne({
     collectionId: toObjectId(input.collectionId),
     userId: toObjectId(input.userId),
+  })
+
+  invariant(
+    isPresent(collectionDocument),
+    404,
+    'Collection not found',
+  )
+
+  return mapCollection(collectionDocument)
+}
+
+export const updateCollection = async (input: UpdateCollectionInput): Promise<Collection> => {
+  const collectionDocument = await collectionRepository.updateOne({
+    title: input.title,
+    userId: toObjectId(input.userId),
+    collectionId: toObjectId(input.collectionId),
   })
 
   invariant(

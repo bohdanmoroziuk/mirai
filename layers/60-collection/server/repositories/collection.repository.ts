@@ -5,6 +5,7 @@ import type {
   FindManyCollectionsInput,
   FindOneCollectionInput,
   DeleteOneCollectionInput,
+  UpdateOneCollectionInput,
 } from '@collection/server/types/collection'
 import { CollectionModel } from '@collection/server/models/collection.model'
 
@@ -24,6 +25,22 @@ export const collectionRepository = {
       .findOne({
         _id: input.collectionId,
         userId: input.userId,
+      })
+      .exec()
+  },
+
+  updateOne(input: UpdateOneCollectionInput): Promise<Nullable<CollectionDocument>> {
+    return CollectionModel
+      .findOneAndUpdate({
+        _id: input.collectionId,
+        userId: input.userId,
+      }, {
+        $set: {
+          title: input.title,
+        },
+      }, {
+        runValidators: true,
+        returnDocument: 'after',
       })
       .exec()
   },

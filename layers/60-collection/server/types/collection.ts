@@ -30,23 +30,35 @@ export type FindManyCollectionsInput = {
 }
 
 export type FindOneCollectionInput = {
-  collectionId: Types.ObjectId
   userId: Types.ObjectId
+  collectionId: Types.ObjectId
 }
 
 export type GetCollectionInput = {
-  collectionId: string
   userId: string
+  collectionId: string
+}
+
+export type UpdateOneCollectionInput = {
+  title: string
+  userId: Types.ObjectId
+  collectionId: Types.ObjectId
+}
+
+export type UpdateCollectionInput = {
+  title: string
+  userId: string
+  collectionId: string
 }
 
 export type DeleteOneCollectionInput = {
-  collectionId: Types.ObjectId
   userId: Types.ObjectId
+  collectionId: Types.ObjectId
 }
 
 export type DeleteCollectionInput = {
-  collectionId: string
   userId: string
+  collectionId: string
 }
 
 export type DeleteCollectionOutput = SuccessOutput
