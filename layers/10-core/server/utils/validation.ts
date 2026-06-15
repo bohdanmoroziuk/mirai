@@ -19,3 +19,22 @@ export const validateBody = async <TSchema extends z.ZodType>(
 
   return result.data
 }
+
+export const validateParams = async <TSchema extends z.ZodType>(
+  event: H3Event,
+  schema: TSchema,
+): Promise<z.output<TSchema>> => {
+  const dirtyParams = getRouterParams(event)
+  const result = schema.safeParse(dirtyParams)
+
+  invariant(
+    result.success,
+    400,
+    'Validation error',
+    {
+      issues: result.error?.issues,
+    },
+  )
+
+  return result.data
+}

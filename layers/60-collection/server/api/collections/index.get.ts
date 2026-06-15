@@ -1,4 +1,4 @@
-import { getUserCollections } from '@collection/server/services/collection.service'
+import { getCollections } from '@collection/server/services/collection.service'
 
 defineRouteMeta({
   openAPI: {
@@ -76,7 +76,7 @@ defineRouteMeta({
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)
-  const collections = await getUserCollections(session.user.id)
+  const collections = await getCollections(session.user.id)
 
   return createResponse(collections)
 }, {

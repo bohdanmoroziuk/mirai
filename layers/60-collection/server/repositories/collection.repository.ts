@@ -1,5 +1,6 @@
 import type { Types } from 'mongoose'
-import type { CreateCollectionRecordInput, CollectionDocument } from '@collection/server/types/collection'
+import type { Nullable } from '@core/shared/types/common'
+import type { CreateCollectionRecordInput, DeleteCollectionRecordInput, CollectionDocument } from '@collection/server/types/collection'
 import { CollectionModel } from '@collection/server/models/collection.model'
 
 export const collectionRepository = {
@@ -10,6 +11,15 @@ export const collectionRepository = {
   findManyByUserId(userId: Types.ObjectId): Promise<CollectionDocument[]> {
     return CollectionModel
       .find({ userId })
+      .exec()
+  },
+
+  deleteOneById(input: DeleteCollectionRecordInput): Promise<Nullable<CollectionDocument>> {
+    return CollectionModel
+      .findOneAndDelete({
+        _id: input.collectionId,
+        userId: input.userId,
+      })
       .exec()
   },
 }

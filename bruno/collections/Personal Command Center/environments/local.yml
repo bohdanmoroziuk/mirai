@@ -6,3 +6,5 @@ variables:
     name: USER_EMAIL
   - secret: true
     name: USER_PASSWORD
+  - secret: true
+    name: COLLECTION_ID
