@@ -1,5 +1,16 @@
 import { getCollections } from '@collection/server/services/collection.service'
 
+export default defineSafeEventHandler(async (event) => {
+  const session = await requireUserSession(event)
+  const collections = await getCollections({
+    userId: session.user.id,
+  })
+
+  return createResponse(collections)
+}, {
+  reportError: reportServerError,
+})
+
 defineRouteMeta({
   openAPI: {
     tags: ['Collections'],
@@ -72,13 +83,4 @@ defineRouteMeta({
       },
     },
   },
-})
-
-export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
-  const collections = await getCollections(session.user.id)
-
-  return createResponse(collections)
-}, {
-  reportError: reportServerError,
 })

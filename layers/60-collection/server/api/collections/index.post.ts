@@ -1,6 +1,22 @@
 import { createCollectionBodySchema } from '@collection/server/schemas/collection.schema'
 import { createCollection } from '@collection/server/services/collection.service'
 
+export default defineSafeEventHandler(async (event) => {
+  const session = await requireUserSession(event)
+  const body = await validateBody(event, createCollectionBodySchema)
+  const collection = await createCollection({
+    title: body.title,
+    userId: session.user.id,
+    parentId: body.parentId,
+  })
+
+  setResponseStatus(event, 201)
+
+  return createResponse(collection)
+}, {
+  reportError: reportServerError,
+})
+
 defineRouteMeta({
   openAPI: {
     tags: ['Collections'],
@@ -107,20 +123,4 @@ defineRouteMeta({
       },
     },
   },
-})
-
-export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
-  const body = await validateBody(event, createCollectionBodySchema)
-  const collection = await createCollection({
-    title: body.title,
-    userId: session.user.id,
-    parentId: body.parentId,
-  })
-
-  setResponseStatus(event, 201)
-
-  return createResponse(collection)
-}, {
-  reportError: reportServerError,
 })

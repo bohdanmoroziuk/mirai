@@ -2,6 +2,19 @@ import { validateParams } from '@core/server/utils/validation'
 import { deleteCollectionParamsSchema } from '@collection/server/schemas/collection.schema'
 import { deleteCollection } from '@collection/server/services/collection.service'
 
+export default defineSafeEventHandler(async (event) => {
+  const session = await requireUserSession(event)
+  const params = await validateParams(event, deleteCollectionParamsSchema)
+  const result = await deleteCollection({
+    collectionId: params.collectionId,
+    userId: session.user.id,
+  })
+
+  return createResponse(result)
+}, {
+  reportError: reportServerError,
+})
+
 defineRouteMeta({
   openAPI: {
     tags: ['Collections'],
@@ -59,18 +72,4 @@ defineRouteMeta({
       },
     },
   },
-})
-
-export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
-  const params = await validateParams(event, deleteCollectionParamsSchema)
-
-  const result = await deleteCollection({
-    collectionId: params.collectionId,
-    userId: session.user.id,
-  })
-
-  return createResponse(result)
-}, {
-  reportError: reportServerError,
 })

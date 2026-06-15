@@ -1,10 +1,11 @@
 import type { Collection } from '@collection/shared/types/collection'
 import type {
+  DeleteCollectionOutput,
   CreateCollectionInput,
   DeleteCollectionInput,
-  DeleteCollectionOutput,
-  GetCollectionInput,
   UpdateCollectionInput,
+  GetCollectionsInput,
+  GetCollectionInput,
 } from '@collection/server/types/collection'
 import { collectionRepository } from '@collection/server/repositories/collection.repository'
 import { mapCollection } from '@collection/server/mappers/collection.mapper'
@@ -19,9 +20,9 @@ export const createCollection = async (input: CreateCollectionInput): Promise<Co
   return mapCollection(collectionDocument)
 }
 
-export const getCollections = async (userId: string): Promise<Collection[]> => {
+export const getCollections = async (input: GetCollectionsInput): Promise<Collection[]> => {
   const collectionDocuments = await collectionRepository.findMany({
-    userId: toObjectId(userId),
+    userId: toObjectId(input.userId),
   })
 
   return collectionDocuments.map(mapCollection)

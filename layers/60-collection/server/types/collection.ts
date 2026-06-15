@@ -29,6 +29,10 @@ export type FindManyCollectionsInput = {
   userId: Types.ObjectId
 }
 
+export type GetCollectionsInput = {
+  userId: string
+}
+
 export type FindOneCollectionInput = {
   userId: Types.ObjectId
   collectionId: Types.ObjectId
