@@ -9,8 +9,10 @@ export default defineNuxtConfig({
   extends: [
     './layers/10-core',
     './layers/20-infra',
+    './layers/25-shared',
     './layers/30-user',
     './layers/40-auth',
+    './layers/60-collection',
   ],
 
   modules: [
@@ -21,7 +23,7 @@ export default defineNuxtConfig({
   ],
 
   devtools: {
-    enabled: true,
+    enabled: false,
   },
 
   css: [
@@ -39,8 +41,10 @@ export default defineNuxtConfig({
   alias: {
     '@core': resolveLayerPath('10-core'),
     '@infra': resolveLayerPath('20-infra'),
+    '@shared': resolveLayerPath('25-shared'),
     '@user': resolveLayerPath('30-user'),
     '@auth': resolveLayerPath('40-auth'),
+    '@collection': resolveLayerPath('60-collection'),
   },
 
   compatibilityDate: '2025-07-15',
@@ -56,6 +60,15 @@ export default defineNuxtConfig({
         description: 'API Documentation for Mirai.',
         version: '0.1.0',
       },
+    },
+  },
+
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@tanstack/vue-query',
+        'zod',
+      ],
     },
   },
 

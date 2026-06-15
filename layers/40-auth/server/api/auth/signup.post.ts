@@ -89,10 +89,12 @@ export default defineSafeEventHandler(async (event) => {
   const body = await validateBody(event, signupBodySchema)
   const user = await signupUser(body)
 
-  await setUserSession(event, { user })
+  await setUserSession(event, {
+    user,
+    loggedInAt: new Date(),
+  })
+
   setResponseStatus(event, 201)
 
   return createResponse(user)
-}, {
-  reportError: reportServerError,
 })

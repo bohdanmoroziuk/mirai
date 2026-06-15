@@ -1,14 +1,8 @@
 import type { EventHandler, EventHandlerRequest } from 'h3'
-import type { ServerErrorReporter } from '@core/server/types/server-error'
 import { createError, defineEventHandler, isError } from 'h3'
-
-type DefineSafeEventHandler = {
-  reportError?: ServerErrorReporter
-}
 
 export function defineSafeEventHandler<T extends EventHandlerRequest, D>(
   handler: EventHandler<T, D>,
-  options: DefineSafeEventHandler = {},
 ): EventHandler<T, D> {
   return defineEventHandler<T>(async (event) => {
     try {
@@ -19,7 +13,7 @@ export function defineSafeEventHandler<T extends EventHandlerRequest, D>(
         throw error
       }
 
-      options.reportError?.(error, {
+      reportServerError(error, {
         method: event.method,
         url: event.path,
       })

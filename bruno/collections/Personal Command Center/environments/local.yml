@@ -2,3 +2,9 @@ name: local
 variables:
   - name: BASE_URL
     value: http://localhost:3000/api
+  - secret: true
+    name: USER_EMAIL
+  - secret: true
+    name: USER_PASSWORD
+  - secret: true
+    name: COLLECTION_ID

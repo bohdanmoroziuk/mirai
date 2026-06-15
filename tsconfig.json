@@ -27,8 +27,10 @@
     "paths": {
       "@core/*": ["./layers/10-core/*"],
       "@infra/*": ["./layers/20-infra/*"],
+      "@shared/*": ["./layers/25-shared/*"],
       "@user/*": ["./layers/30-user/*"],
-      "@auth/*": ["./layers/40-auth/*"]
+      "@auth/*": ["./layers/40-auth/*"],
+      "@collection/*": ["./layers/60-collection/*"]
     }
   }
 }
