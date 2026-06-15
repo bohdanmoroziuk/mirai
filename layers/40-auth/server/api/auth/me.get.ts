@@ -69,6 +69,4 @@ export default defineSafeEventHandler(async (event) => {
   const session = await getUserSession(event)
 
   return createResponse(session.user ?? null)
-}, {
-  reportError: reportServerError,
 })

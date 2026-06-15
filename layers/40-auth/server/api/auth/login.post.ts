@@ -90,6 +90,4 @@ export default defineSafeEventHandler(async (event) => {
   })
 
   return createResponse(user)
-}, {
-  reportError: reportServerError,
 })

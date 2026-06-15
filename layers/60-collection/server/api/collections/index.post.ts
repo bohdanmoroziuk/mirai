@@ -13,8 +13,6 @@ export default defineSafeEventHandler(async (event) => {
   setResponseStatus(event, 201)
 
   return createResponse(collection)
-}, {
-  reportError: reportServerError,
 })
 
 defineRouteMeta({

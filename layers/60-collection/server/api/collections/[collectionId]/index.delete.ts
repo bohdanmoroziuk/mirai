@@ -1,4 +1,4 @@
-import { validateParams } from '@core/server/utils/validation'
+import { validateParams } from '@shared/server/utils/validation'
 import { deleteCollectionParamsSchema } from '@collection/server/schemas/collection.schema'
 import { deleteCollection } from '@collection/server/services/collection.service'
 
@@ -11,8 +11,6 @@ export default defineSafeEventHandler(async (event) => {
   })
 
   return createResponse(result)
-}, {
-  reportError: reportServerError,
 })
 
 defineRouteMeta({

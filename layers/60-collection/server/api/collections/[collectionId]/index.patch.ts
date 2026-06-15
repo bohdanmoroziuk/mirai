@@ -12,8 +12,6 @@ export default defineSafeEventHandler(async (event) => {
   })
 
   return createResponse(collection)
-}, {
-  reportError: reportServerError,
 })
 
 defineRouteMeta({
