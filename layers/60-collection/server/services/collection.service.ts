@@ -1,5 +1,5 @@
 import type { Collection } from '@collection/shared/types/collection'
-import type { CreateCollectionInput, DeleteCollectionInput, DeleteCollectionOutput } from '@collection/server/types/collection'
+import type { CreateCollectionInput, DeleteCollectionInput, DeleteCollectionOutput, GetCollectionInput } from '@collection/server/types/collection'
 import { collectionRepository } from '@collection/server/repositories/collection.repository'
 import { mapCollection } from '@collection/server/mappers/collection.mapper'
 
@@ -14,13 +14,30 @@ export const createCollection = async (input: CreateCollectionInput): Promise<Co
 }
 
 export const getCollections = async (userId: string): Promise<Collection[]> => {
-  const collectionDocuments = await collectionRepository.findManyByUserId(toObjectId(userId))
+  const collectionDocuments = await collectionRepository.findMany({
+    userId: toObjectId(userId),
+  })
 
   return collectionDocuments.map(mapCollection)
 }
 
+export const getCollection = async (input: GetCollectionInput): Promise<Nullable<Collection>> => {
+  const collectionDocument = await collectionRepository.findOne({
+    collectionId: toObjectId(input.collectionId),
+    userId: toObjectId(input.userId),
+  })
+
+  invariant(
+    isPresent(collectionDocument),
+    404,
+    'Collection not found',
+  )
+
+  return mapCollection(collectionDocument)
+}
+
 export const deleteCollection = async (input: DeleteCollectionInput): Promise<DeleteCollectionOutput> => {
-  const collectionDocument = await collectionRepository.deleteOneById({
+  const collectionDocument = await collectionRepository.deleteOne({
     collectionId: toObjectId(input.collectionId),
     userId: toObjectId(input.userId),
   })

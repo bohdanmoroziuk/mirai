@@ -5,6 +5,10 @@ export const createCollectionBodySchema = z.object({
   parentId: z.string().optional(),
 })
 
+export const getCollectionParamsSchema = z.object({
+  collectionId: z.string().length(24),
+})
+
 export const deleteCollectionParamsSchema = z.object({
   collectionId: z.string().length(24),
 })

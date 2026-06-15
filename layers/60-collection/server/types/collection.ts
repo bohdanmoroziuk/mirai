@@ -13,7 +13,7 @@ export type CollectionSchema = CollectionRecord & Timestamps
 
 export type CollectionDocument = HydratedDocument<CollectionSchema>
 
-export type CreateCollectionRecordInput = {
+export type CreateOneCollectionInput = {
   title: string
   userId: Types.ObjectId
   parentId?: Nullish<Types.ObjectId>
@@ -25,7 +25,21 @@ export type CreateCollectionInput = {
   parentId?: Nullish<string>
 }
 
-export type DeleteCollectionRecordInput = {
+export type FindManyCollectionsInput = {
+  userId: Types.ObjectId
+}
+
+export type FindOneCollectionInput = {
+  collectionId: Types.ObjectId
+  userId: Types.ObjectId
+}
+
+export type GetCollectionInput = {
+  collectionId: string
+  userId: string
+}
+
+export type DeleteOneCollectionInput = {
   collectionId: Types.ObjectId
   userId: Types.ObjectId
 }
