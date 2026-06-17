@@ -1,16 +1,17 @@
 info:
-  name: Update collection
+  name: Create tag
   type: http
-  seq: 5
+  seq: 1
 
 http:
-  method: PATCH
-  url: "{{BASE_URL}}/collections/{{COLLECTION_ID}}"
+  method: POST
+  url: "{{BASE_URL}}/tags"
   body:
     type: json
     data: |-
       {
-        "title": "Movies"
+        "name": "vue",
+        "color": "#41B883"
       }
   auth: inherit
 
