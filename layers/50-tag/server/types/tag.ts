@@ -23,3 +23,11 @@ export type CreateTagInput = {
   name: string
   color?: Nullish<string>
 }
+
+export type FindManyTagsInput = {
+  userId: Types.ObjectId
+}
+
+export type GetTagsInput = {
+  userId: string
+}
