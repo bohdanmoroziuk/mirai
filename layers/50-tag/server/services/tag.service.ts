@@ -3,6 +3,7 @@ import type {
   DeleteTagInput,
   DeleteTagOutput,
   GetTagsInput,
+  UpdateTagInput,
 } from '@tag/server/types/tag'
 import { tagRepository } from '@tag/server/repositories/tag.repository'
 import {
@@ -10,6 +11,7 @@ import {
   toCreateTagDocumentInput,
   toFindManyTagDocumentsQuery,
   toDeleteTagDocumentQuery,
+  toUpdateTagDocumentQuery,
 } from '@tag/server/mappers/tag.mapper'
 
 /**
@@ -39,4 +41,16 @@ export const deleteTag = async (input: DeleteTagInput): Promise<DeleteTagOutput>
   )
 
   return { success: true }
+}
+
+export const updateTag = async (input: UpdateTagInput): Promise<Tag> => {
+  const tagDocument = await tagRepository.updateOne(toUpdateTagDocumentQuery(input))
+
+  invariant(
+    isPresent(tagDocument),
+    404,
+    'Tag not found',
+  )
+
+  return toTag(tagDocument)
 }

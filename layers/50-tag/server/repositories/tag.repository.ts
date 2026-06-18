@@ -1,4 +1,4 @@
-import type { TagDocument, CreateTagDocumentInput, FindManyTagDocumentsQuery, DeleteTagDocumentQuery } from '@tag/server/types/tag'
+import type { TagDocument, CreateTagDocumentInput, FindManyTagDocumentsQuery, DeleteTagDocumentQuery, UpdateTagDocumentQuery } from '@tag/server/types/tag'
 import { TagModel } from '@tag/server/models/tag.model'
 import type { Nullable } from '~~/layers/10-core/shared/types/common'
 
@@ -17,6 +17,16 @@ export const tagRepository = {
   deleteOne(query: DeleteTagDocumentQuery): Promise<Nullable<TagDocument>> {
     return TagModel
       .findOneAndDelete(query.filter)
+      .exec()
+  },
+
+  updateOne(query: UpdateTagDocumentQuery): Promise<Nullable<TagDocument>> {
+    return TagModel
+      .findOneAndUpdate(
+        query.filter,
+        query.update,
+        query.options,
+      )
       .exec()
   },
 }

@@ -9,6 +9,10 @@ import type {
   DeleteTagParams,
   DeleteTagInput,
   DeleteTagDocumentQuery,
+  UpdateTagBody,
+  UpdateTagParams,
+  UpdateTagInput,
+  UpdateTagDocumentQuery,
 } from '@tag/server/types/tag'
 
 export const toTag = (document: TagDocument): Tag => {
@@ -67,6 +71,38 @@ export const toDeleteTagDocumentQuery = (input: DeleteTagInput): DeleteTagDocume
     filter: {
       _id: toObjectId(input.tagId),
       userId: toObjectId(input.userId),
+    },
+  }
+}
+
+export const toUpdateTagInput = (
+  session: UserSessionRequired,
+  params: UpdateTagParams,
+  body: UpdateTagBody,
+): UpdateTagInput => {
+  return {
+    userId: session.user.id,
+    tagId: params.tagId,
+    name: body.name,
+    color: body.color,
+  }
+}
+
+export const toUpdateTagDocumentQuery = (input: UpdateTagInput): UpdateTagDocumentQuery => {
+  return {
+    filter: {
+      _id: toObjectId(input.tagId),
+      userId: toObjectId(input.userId),
+    },
+    update: {
+      $set: {
+        name: input.name,
+        color: input.color,
+      },
+    },
+    options: {
+      runValidators: true,
+      returnDocument: 'after',
     },
   }
 }

@@ -1,9 +1,14 @@
 import type { z } from 'zod'
-import type { Types, HydratedDocument, QueryFilter } from 'mongoose'
+import type { Types, HydratedDocument, QueryFilter, UpdateQuery, QueryOptions } from 'mongoose'
 import type { Nullish } from '@core/shared/types/common'
 import type { SuccessOutput } from '@core/shared/types/api'
 import type { QuerySort } from '@shared/server/types/mongoose'
-import type { createTagBodySchema, deleteTagParamsSchema } from '@tag/server/schemas/tag.schema'
+import type {
+  createTagBodySchema,
+  deleteTagParamsSchema,
+  updateTagBodySchema,
+  updateTagParamsSchema,
+} from '@tag/server/schemas/tag.schema'
 
 export type TagSchema = {
   userId: Types.ObjectId
@@ -49,4 +54,21 @@ export type DeleteTagOutput = SuccessOutput
 
 export type DeleteTagDocumentQuery = {
   filter: QueryFilter<TagSchema>
+}
+
+export type UpdateTagParams = z.infer<typeof updateTagParamsSchema>
+
+export type UpdateTagBody = z.infer<typeof updateTagBodySchema>
+
+export type UpdateTagInput = {
+  userId: string
+  tagId: string
+  name?: Nullish<string>
+  color?: Nullish<string>
+}
+
+export type UpdateTagDocumentQuery = {
+  filter: QueryFilter<TagSchema>
+  update: UpdateQuery<TagSchema>
+  options: QueryOptions<TagSchema>
 }
