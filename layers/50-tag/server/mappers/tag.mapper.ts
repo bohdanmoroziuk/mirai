@@ -6,6 +6,9 @@ import type {
   CreateTagDocumentInput,
   GetTagsInput,
   FindManyTagDocumentsQuery,
+  DeleteTagParams,
+  DeleteTagInput,
+  DeleteTagDocumentQuery,
 } from '@tag/server/types/tag'
 
 export const toTag = (document: TagDocument): Tag => {
@@ -48,6 +51,22 @@ export const toFindManyTagDocumentsQuery = (input: GetTagsInput): FindManyTagDoc
     },
     sort: {
       createdAt: -1,
+    },
+  }
+}
+
+export const toDeleteTagInput = (session: UserSessionRequired, params: DeleteTagParams): DeleteTagInput => {
+  return {
+    userId: session.user.id,
+    tagId: params.tagId,
+  }
+}
+
+export const toDeleteTagDocumentQuery = (input: DeleteTagInput): DeleteTagDocumentQuery => {
+  return {
+    filter: {
+      _id: toObjectId(input.tagId),
+      userId: toObjectId(input.userId),
     },
   }
 }

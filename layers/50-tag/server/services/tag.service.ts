@@ -1,6 +1,16 @@
-import type { CreateTagInput, GetTagsInput } from '@tag/server/types/tag'
+import type {
+  CreateTagInput,
+  DeleteTagInput,
+  DeleteTagOutput,
+  GetTagsInput,
+} from '@tag/server/types/tag'
 import { tagRepository } from '@tag/server/repositories/tag.repository'
-import { toCreateTagDocumentInput, toFindManyTagDocumentsQuery, toTag } from '@tag/server/mappers/tag.mapper'
+import {
+  toTag,
+  toCreateTagDocumentInput,
+  toFindManyTagDocumentsQuery,
+  toDeleteTagDocumentQuery,
+} from '@tag/server/mappers/tag.mapper'
 
 /**
  * TODO:
@@ -17,4 +27,16 @@ export const getTags = async (input: GetTagsInput): Promise<Tag[]> => {
   const tagDocuments = await tagRepository.findMany(toFindManyTagDocumentsQuery(input))
 
   return tagDocuments.map(toTag)
+}
+
+export const deleteTag = async (input: DeleteTagInput): Promise<DeleteTagOutput> => {
+  const tagDocument = await tagRepository.deleteOne(toDeleteTagDocumentQuery(input))
+
+  invariant(
+    isPresent(tagDocument),
+    404,
+    'Tag not found',
+  )
+
+  return { success: true }
 }

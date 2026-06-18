@@ -8,3 +8,5 @@ variables:
     name: USER_PASSWORD
   - secret: true
     name: COLLECTION_ID
+  - secret: true
+    name: TAG_ID
