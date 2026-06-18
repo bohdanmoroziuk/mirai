@@ -1,19 +1,15 @@
-import type { TagDocument, CreateOneTagInput, FindManyTagsInput } from '@tag/server/types/tag'
+import type { TagDocument, CreateTagDocumentInput, FindManyTagDocumentsQuery } from '@tag/server/types/tag'
 import { TagModel } from '@tag/server/models/tag.model'
 
 export const tagRepository = {
-  createOne(input: CreateOneTagInput): Promise<TagDocument> {
+  createOne(input: CreateTagDocumentInput): Promise<TagDocument> {
     return TagModel.create(input)
   },
 
-  findMany(input: FindManyTagsInput): Promise<TagDocument[]> {
+  findMany(query: FindManyTagDocumentsQuery): Promise<TagDocument[]> {
     return TagModel
-      .find({
-        userId: input.userId,
-      })
-      .sort({
-        createdAt: -1,
-      })
+      .find(query.filter)
+      .sort(query.sort)
       .exec()
   },
 }

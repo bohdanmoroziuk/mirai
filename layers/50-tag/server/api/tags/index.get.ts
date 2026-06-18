@@ -1,10 +1,9 @@
 import { getTags } from '@tag/server/services/tag.service'
+import { toGetTagsInput } from '@tag/server/mappers/tag.mapper'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)
-  const tags = await getTags({
-    userId: session.user.id,
-  })
+  const tags = await getTags(toGetTagsInput(session))
 
   return createResponse(tags)
 })

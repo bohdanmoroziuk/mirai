@@ -1,14 +1,11 @@
 import { createTagBodySchema } from '@tag/server/schemas/tag.schema'
 import { createTag } from '@tag/server/services/tag.service'
+import { toCreateTagInput } from '@tag/server/mappers/tag.mapper'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)
   const body = await validateBody(event, createTagBodySchema)
-  const tag = await createTag({
-    userId: session.user.id,
-    name: body.name,
-    color: body.color,
-  })
+  const tag = await createTag(toCreateTagInput(session, body))
 
   setResponseStatus(event, 201)
 

@@ -1,6 +1,6 @@
 import type { CreateTagInput, GetTagsInput } from '@tag/server/types/tag'
 import { tagRepository } from '@tag/server/repositories/tag.repository'
-import { mapTag } from '@tag/server/mappers/tag.mapper'
+import { toCreateTagDocumentInput, toFindManyTagDocumentsQuery, toTag } from '@tag/server/mappers/tag.mapper'
 
 /**
  * TODO:
@@ -8,19 +8,13 @@ import { mapTag } from '@tag/server/mappers/tag.mapper'
  */
 
 export const createTag = async (input: CreateTagInput): Promise<Tag> => {
-  const tagDocument = await tagRepository.createOne({
-    userId: toObjectId(input.userId),
-    name: input.name,
-    color: input.color,
-  })
+  const tagDocument = await tagRepository.createOne(toCreateTagDocumentInput(input))
 
-  return mapTag(tagDocument)
+  return toTag(tagDocument)
 }
 
 export const getTags = async (input: GetTagsInput): Promise<Tag[]> => {
-  const tagDocuments = await tagRepository.findMany({
-    userId: toObjectId(input.userId),
-  })
+  const tagDocuments = await tagRepository.findMany(toFindManyTagDocumentsQuery(input))
 
-  return tagDocuments.map(mapTag)
+  return tagDocuments.map(toTag)
 }
