@@ -31,7 +31,8 @@
       "@user/*": ["./layers/30-user/*"],
       "@auth/*": ["./layers/40-auth/*"],
       "@tag/*": ["./layers/50-tag/*"],
-      "@collection/*": ["./layers/60-collection/*"]
+      "@collection/*": ["./layers/60-collection/*"],
+      "@bookmark/*": ["./layers/70-bookmark/*"]
     }
   }
 }

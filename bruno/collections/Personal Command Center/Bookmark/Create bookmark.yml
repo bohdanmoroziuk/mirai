@@ -1,0 +1,24 @@
+info:
+  name: Create bookmark
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/bookmarks"
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Nuxt",
+        "description": "The Full-Stack Vue Framework",
+        "url": "https://nuxt.com/",
+        "tagIds": []
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

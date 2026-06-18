@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     './layers/40-auth',
     './layers/50-tag',
     './layers/60-collection',
+    './layers/70-bookmark',
   ],
 
   modules: [
@@ -48,6 +49,7 @@ export default defineNuxtConfig({
     '@auth': resolveLayerPath('40-auth'),
     '@tag': resolveLayerPath('50-tag'),
     '@collection': resolveLayerPath('60-collection'),
+    '@bookmark': resolveLayerPath('70-bookmark'),
   },
 
   compatibilityDate: '2025-07-15',
