@@ -1,16 +1,16 @@
 info:
-  name: Update collection
+  name: Update tag
   type: http
-  seq: 5
+  seq: 4
 
 http:
   method: PATCH
-  url: "{{BASE_URL}}/collections/{{COLLECTION_ID}}"
+  url: "{{BASE_URL}}/tags/{{TAG_ID}}"
   body:
     type: json
     data: |-
       {
-        "title": "Movies"
+        "color": "#00DC82"
       }
   auth: inherit
 

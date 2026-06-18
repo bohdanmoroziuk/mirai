@@ -12,7 +12,9 @@ export default defineNuxtConfig({
     './layers/25-shared',
     './layers/30-user',
     './layers/40-auth',
+    './layers/50-tag',
     './layers/60-collection',
+    './layers/70-bookmark',
   ],
 
   modules: [
@@ -20,6 +22,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@scalar/nuxt',
     'nuxt-auth-utils',
+    '@vueuse/nuxt',
   ],
 
   devtools: {
@@ -44,7 +47,9 @@ export default defineNuxtConfig({
     '@shared': resolveLayerPath('25-shared'),
     '@user': resolveLayerPath('30-user'),
     '@auth': resolveLayerPath('40-auth'),
+    '@tag': resolveLayerPath('50-tag'),
     '@collection': resolveLayerPath('60-collection'),
+    '@bookmark': resolveLayerPath('70-bookmark'),
   },
 
   compatibilityDate: '2025-07-15',
