@@ -9,3 +9,7 @@ export const createBookmarkBodySchema = z.object({
   collectionId: objectIdSchema.optional(),
   tagIds: z.array(objectIdSchema).default([]),
 })
+
+export const getBookmarkParamsSchema = z.object({
+  bookmarkId: objectIdSchema,
+})

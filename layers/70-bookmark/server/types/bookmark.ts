@@ -2,7 +2,7 @@ import type z from 'zod'
 import type { HydratedDocument, QueryFilter, Types } from 'mongoose'
 import type { Nullish } from '@core/shared/types/common'
 import type { QuerySort } from '@common/server/types/mongoose'
-import type { createBookmarkBodySchema } from '@bookmark/server/schemas/bookmark.schema'
+import type { createBookmarkBodySchema, getBookmarkParamsSchema } from '@bookmark/server/schemas/bookmark.schema'
 
 export type BookmarkSchema = {
   title: string
@@ -47,4 +47,15 @@ export type GetBookmarksInput = {
 export type FindBookmarksDocumentsQuery = {
   filter: QueryFilter<BookmarkSchema>
   sort: QuerySort<BookmarkSchema>
+}
+
+export type GetBookmarkParams = z.infer<typeof getBookmarkParamsSchema>
+
+export type GetBookmarkInput = {
+  bookmarkId: string
+  userId: string
+}
+
+export type FindBookmarkDocumentQuery = {
+  filter: QueryFilter<BookmarkSchema>
 }

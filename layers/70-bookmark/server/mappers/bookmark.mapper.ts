@@ -7,6 +7,9 @@ import type {
   CreateBookmarkDocumentInput,
   GetBookmarksInput,
   FindBookmarksDocumentsQuery,
+  GetBookmarkParams,
+  GetBookmarkInput,
+  FindBookmarkDocumentQuery,
 } from '@bookmark/server/types/bookmark'
 
 export const toBookmark = (document: BookmarkDocument): Bookmark => {
@@ -53,19 +56,44 @@ export const toCreateBookmarkDocumentInput = (
   }
 }
 
-export const toGetBookmarksInput = (session: UserSessionRequired): GetBookmarksInput => {
+export const toGetBookmarksInput = (
+  session: UserSessionRequired,
+): GetBookmarksInput => {
   return {
     userId: session.user.id,
   }
 }
 
-export const toFindBookmarkDocumentsQuery = (input: GetBookmarksInput): FindBookmarksDocumentsQuery => {
+export const toFindBookmarkDocumentsQuery = (
+  input: GetBookmarksInput,
+): FindBookmarksDocumentsQuery => {
   return {
     filter: {
       userId: toObjectId(input.userId),
     },
     sort: {
       createdAt: -1,
+    },
+  }
+}
+
+export const toGetBookmarkInput = (
+  session: UserSessionRequired,
+  params: GetBookmarkParams,
+): GetBookmarkInput => {
+  return {
+    bookmarkId: params.bookmarkId,
+    userId: session.user.id,
+  }
+}
+
+export const toFindBookmarkDocumentQuery = (
+  input: GetBookmarkInput,
+): FindBookmarkDocumentQuery => {
+  return {
+    filter: {
+      _id: toObjectId(input.bookmarkId),
+      userId: toObjectId(input.userId),
     },
   }
 }
