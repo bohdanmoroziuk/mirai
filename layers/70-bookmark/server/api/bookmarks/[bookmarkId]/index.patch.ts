@@ -1,14 +1,12 @@
-import { HttpStatus } from '@core/shared/constants/http'
-import { createBookmarkBodySchema } from '@bookmark/server/schemas/bookmark.schema'
-import { toCreateBookmarkInput } from '@bookmark/server/mappers/bookmark.mapper'
-import { createBookmark } from '@bookmark/server/services/bookmark.service'
+import { toUpdateBookmarkInput } from '@bookmark/server/mappers/bookmark.mapper'
+import { updateBookmarkBodySchema, updateBookmarkParamsSchema } from '@bookmark/server/schemas/bookmark.schema'
+import { updateBookmark } from '@bookmark/server/services/bookmark.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)
-  const body = await validateBody(event, createBookmarkBodySchema)
-  const bookmark = await createBookmark(toCreateBookmarkInput(session, body))
-
-  setResponseStatus(event, HttpStatus.CREATED)
+  const params = await validateParams(event, updateBookmarkParamsSchema)
+  const body = await validateBody(event, updateBookmarkBodySchema)
+  const bookmark = await updateBookmark(toUpdateBookmarkInput(session, params, body))
 
   return createResponse(bookmark)
 })
@@ -16,11 +14,23 @@ export default defineSafeEventHandler(async (event) => {
 defineRouteMeta({
   openAPI: {
     tags: ['Bookmarks'],
-    summary: 'Create bookmark',
-    description: 'Creates a new bookmark for the authenticated user.',
+    summary: 'Update bookmark',
+    description: 'Updates a bookmark by ID or throws a 404 error if the bookmark does not exist.',
     security: [
       {
         cookieAuth: [],
+      },
+    ],
+    parameters: [
+      {
+        name: 'bookmarkId',
+        in: 'path',
+        required: true,
+        description: 'Bookmark ID.',
+        schema: {
+          type: 'string',
+          example: '665f1b8e1b7c2f0012a4c123',
+        },
       },
     ],
     requestBody: {
@@ -29,7 +39,6 @@ defineRouteMeta({
         'application/json': {
           schema: {
             type: 'object',
-            required: ['title', 'description', 'url'],
             properties: {
               title: {
                 type: 'string',
@@ -46,8 +55,7 @@ defineRouteMeta({
               },
               isFavorite: {
                 type: 'boolean',
-                default: false,
-                example: false,
+                example: true,
               },
               collectionId: {
                 type: 'string',
@@ -56,11 +64,10 @@ defineRouteMeta({
               },
               tagIds: {
                 type: 'array',
-                default: [],
                 items: {
                   type: 'string',
                 },
-                example: ['665f1b8e1b7c2f0012a4c123'],
+                example: ['665f1b8e1b7c2f0012a4c456'],
               },
             },
           },
@@ -68,8 +75,8 @@ defineRouteMeta({
       },
     },
     responses: {
-      201: {
-        description: 'Bookmark created successfully',
+      200: {
+        description: 'Bookmark updated successfully',
         content: {
           'application/json': {
             schema: {
@@ -110,7 +117,7 @@ defineRouteMeta({
                     },
                     isFavorite: {
                       type: 'boolean',
-                      example: false,
+                      example: true,
                     },
                     userId: {
                       type: 'string',
@@ -136,7 +143,7 @@ defineRouteMeta({
                     updatedAt: {
                       type: 'string',
                       format: 'date-time',
-                      example: '2026-06-18T10:30:00.000Z',
+                      example: '2026-06-18T10:45:00.000Z',
                     },
                   },
                 },
@@ -152,7 +159,7 @@ defineRouteMeta({
         description: 'Unauthorized',
       },
       404: {
-        description: 'Collection or tag not found',
+        description: 'Bookmark not found',
       },
     },
   },

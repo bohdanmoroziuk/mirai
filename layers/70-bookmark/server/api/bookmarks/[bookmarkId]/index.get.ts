@@ -1,14 +1,11 @@
-import { HttpStatus } from '@core/shared/constants/http'
-import { createBookmarkBodySchema } from '@bookmark/server/schemas/bookmark.schema'
-import { toCreateBookmarkInput } from '@bookmark/server/mappers/bookmark.mapper'
-import { createBookmark } from '@bookmark/server/services/bookmark.service'
+import { toGetBookmarkInput } from '@bookmark/server/mappers/bookmark.mapper'
+import { getBookmarkParamsSchema } from '@bookmark/server/schemas/bookmark.schema'
+import { getBookmark } from '@bookmark/server/services/bookmark.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)
-  const body = await validateBody(event, createBookmarkBodySchema)
-  const bookmark = await createBookmark(toCreateBookmarkInput(session, body))
-
-  setResponseStatus(event, HttpStatus.CREATED)
+  const params = await validateParams(event, getBookmarkParamsSchema)
+  const bookmark = await getBookmark(toGetBookmarkInput(session, params))
 
   return createResponse(bookmark)
 })
@@ -16,60 +13,28 @@ export default defineSafeEventHandler(async (event) => {
 defineRouteMeta({
   openAPI: {
     tags: ['Bookmarks'],
-    summary: 'Create bookmark',
-    description: 'Creates a new bookmark for the authenticated user.',
+    summary: 'Get bookmark',
+    description: 'Returns a bookmark by ID or throws a 404 error if the bookmark does not exist.',
     security: [
       {
         cookieAuth: [],
       },
     ],
-    requestBody: {
-      required: true,
-      content: {
-        'application/json': {
-          schema: {
-            type: 'object',
-            required: ['title', 'description', 'url'],
-            properties: {
-              title: {
-                type: 'string',
-                example: 'Nuxt Documentation',
-              },
-              description: {
-                type: 'string',
-                example: '',
-              },
-              url: {
-                type: 'string',
-                format: 'uri',
-                example: 'https://nuxt.com/docs',
-              },
-              isFavorite: {
-                type: 'boolean',
-                default: false,
-                example: false,
-              },
-              collectionId: {
-                type: 'string',
-                nullable: true,
-                example: null,
-              },
-              tagIds: {
-                type: 'array',
-                default: [],
-                items: {
-                  type: 'string',
-                },
-                example: ['665f1b8e1b7c2f0012a4c123'],
-              },
-            },
-          },
+    parameters: [
+      {
+        name: 'bookmarkId',
+        in: 'path',
+        required: true,
+        description: 'Bookmark ID.',
+        schema: {
+          type: 'string',
+          example: '665f1b8e1b7c2f0012a4c123',
         },
       },
-    },
+    ],
     responses: {
-      201: {
-        description: 'Bookmark created successfully',
+      200: {
+        description: 'Bookmark returned successfully',
         content: {
           'application/json': {
             schema: {
@@ -152,7 +117,7 @@ defineRouteMeta({
         description: 'Unauthorized',
       },
       404: {
-        description: 'Collection or tag not found',
+        description: 'Bookmark not found',
       },
     },
   },

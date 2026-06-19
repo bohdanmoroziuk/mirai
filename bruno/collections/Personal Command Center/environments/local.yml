@@ -10,3 +10,5 @@ variables:
     name: COLLECTION_ID
   - secret: true
     name: TAG_ID
+  - secret: true
+    name: BOOKMARK_ID

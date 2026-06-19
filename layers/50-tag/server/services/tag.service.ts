@@ -1,3 +1,4 @@
+import { HttpStatus } from '@core/shared/constants/http'
 import type {
   CreateTagInput,
   DeleteTagInput,
@@ -36,7 +37,7 @@ export const deleteTag = async (input: DeleteTagInput): Promise<DeleteTagOutput>
 
   invariant(
     isPresent(tagDocument),
-    404,
+    HttpStatus.NOT_FOUND,
     'Tag not found',
   )
 
@@ -48,7 +49,7 @@ export const updateTag = async (input: UpdateTagInput): Promise<Tag> => {
 
   invariant(
     isPresent(tagDocument),
-    404,
+    HttpStatus.NOT_FOUND,
     'Tag not found',
   )
 

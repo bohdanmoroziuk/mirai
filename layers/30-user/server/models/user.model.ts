@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose'
 import type { UserSchema } from '@user/server/types/user'
-import { createMongooseModel } from '@shared/server/utils/mongoose'
+import { createMongooseModel } from '@common/server/utils/mongoose'
 
 export const userSchema = new Schema<UserSchema>({
   name: {

@@ -1,3 +1,4 @@
+import { HttpStatus } from '@core/shared/constants/http'
 import { createCollectionBodySchema } from '@collection/server/schemas/collection.schema'
 import { createCollection } from '@collection/server/services/collection.service'
 
@@ -10,7 +11,7 @@ export default defineSafeEventHandler(async (event) => {
     parentId: body.parentId,
   })
 
-  setResponseStatus(event, 201)
+  setResponseStatus(event, HttpStatus.CREATED)
 
   return createResponse(collection)
 })

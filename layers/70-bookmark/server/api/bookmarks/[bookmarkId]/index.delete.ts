@@ -1,23 +1,20 @@
-import { validateParams } from '@common/server/utils/validation'
-import { deleteCollectionParamsSchema } from '@collection/server/schemas/collection.schema'
-import { deleteCollection } from '@collection/server/services/collection.service'
+import { toDeleteBookmarkInput } from '@bookmark/server/mappers/bookmark.mapper'
+import { deleteBookmarkParamsSchema } from '@bookmark/server/schemas/bookmark.schema'
+import { deleteBookmark } from '@bookmark/server/services/bookmark.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)
-  const params = await validateParams(event, deleteCollectionParamsSchema)
-  const result = await deleteCollection({
-    collectionId: params.collectionId,
-    userId: session.user.id,
-  })
+  const params = await validateParams(event, deleteBookmarkParamsSchema)
+  const result = await deleteBookmark(toDeleteBookmarkInput(session, params))
 
   return createResponse(result)
 })
 
 defineRouteMeta({
   openAPI: {
-    tags: ['Collections'],
-    summary: 'Delete collection',
-    description: 'Deletes a collection that belongs to the authenticated user.',
+    tags: ['Bookmarks'],
+    summary: 'Delete bookmark',
+    description: 'Deletes a bookmark by ID or throws a 404 error if the bookmark does not exist.',
     security: [
       {
         cookieAuth: [],
@@ -25,10 +22,10 @@ defineRouteMeta({
     ],
     parameters: [
       {
-        name: 'collectionId',
+        name: 'bookmarkId',
         in: 'path',
         required: true,
-        description: 'Collection ID.',
+        description: 'Bookmark ID.',
         schema: {
           type: 'string',
           example: '665f1b8e1b7c2f0012a4c123',
@@ -37,7 +34,7 @@ defineRouteMeta({
     ],
     responses: {
       200: {
-        description: 'Collection deleted successfully',
+        description: 'Bookmark deleted successfully',
         content: {
           'application/json': {
             schema: {
@@ -66,7 +63,7 @@ defineRouteMeta({
         description: 'Unauthorized',
       },
       404: {
-        description: 'Collection not found',
+        description: 'Bookmark not found',
       },
     },
   },
