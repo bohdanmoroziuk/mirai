@@ -17,6 +17,6 @@ export const toObjectId = (rawId: string): Types.ObjectId => {
 
 export const toNullableObjectId = (rawId: Nullish<string>): Nullish<Types.ObjectId> => {
   return isNullish(rawId)
-    ? null
+    ? undefined
     : toObjectId(rawId)
 }

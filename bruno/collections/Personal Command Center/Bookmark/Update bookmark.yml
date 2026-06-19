@@ -1,0 +1,21 @@
+info:
+  name: Update bookmark
+  type: http
+  seq: 5
+
+http:
+  method: PATCH
+  url: "{{BASE_URL}}/bookmarks/{{BOOKMARK_ID}}"
+  body:
+    type: json
+    data: |-
+      {
+        "isFavorite": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -5,6 +5,7 @@ import type {
   DeleteBookmarkDocumentQuery,
   FindBookmarkDocumentQuery,
   FindBookmarksDocumentsQuery,
+  UpdateBookmarkDocumentQuery,
 } from '@bookmark/server/types/bookmark'
 import { BookmarkModel } from '@bookmark/server/models/bookmark.model'
 
@@ -29,6 +30,16 @@ export const bookmarkRepository = {
   deleteOne(query: DeleteBookmarkDocumentQuery): Promise<Nullable<BookmarkDocument>> {
     return BookmarkModel
       .findOneAndDelete(query.filter)
+      .exec()
+  },
+
+  updateOne(query: UpdateBookmarkDocumentQuery): Promise<Nullable<BookmarkDocument>> {
+    return BookmarkModel
+      .findOneAndUpdate(
+        query.filter,
+        query.update,
+        query.options,
+      )
       .exec()
   },
 }

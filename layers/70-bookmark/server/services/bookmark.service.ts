@@ -6,6 +6,7 @@ import type {
   DeleteBookmarkOutput,
   GetBookmarkInput,
   GetBookmarksInput,
+  UpdateBookmarkInput,
 } from '@bookmark/server/types/bookmark'
 import {
   toBookmark,
@@ -13,6 +14,7 @@ import {
   toDeleteBookmarkDocumentQuery,
   toFindBookmarkDocumentQuery,
   toFindBookmarkDocumentsQuery,
+  toUpdateBookmarkDocumentQuery,
 } from '@bookmark/server/mappers/bookmark.mapper'
 import { bookmarkRepository } from '@bookmark/server/repositories/bookmark.repository'
 
@@ -50,4 +52,16 @@ export const deleteBookmark = async (input: DeleteBookmarkInput): Promise<Delete
   )
 
   return { success: true }
+}
+
+export const updateBookmark = async (input: UpdateBookmarkInput): Promise<Bookmark> => {
+  const bookmarkDocument = await bookmarkRepository.updateOne(toUpdateBookmarkDocumentQuery(input))
+
+  invariant(
+    isPresent(bookmarkDocument),
+    HttpStatus.NOT_FOUND,
+    'Bookmark not found',
+  )
+
+  return toBookmark(bookmarkDocument)
 }

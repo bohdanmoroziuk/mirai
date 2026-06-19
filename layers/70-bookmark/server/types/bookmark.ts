@@ -1,5 +1,5 @@
 import type z from 'zod'
-import type { HydratedDocument, QueryFilter, Types } from 'mongoose'
+import type { HydratedDocument, QueryFilter, QueryOptions, Types, UpdateQuery } from 'mongoose'
 import type { Nullish } from '@core/shared/types/common'
 import type { SuccessOutput } from '@core/shared/types/api'
 import type { QuerySort } from '@common/server/types/mongoose'
@@ -7,6 +7,8 @@ import type {
   createBookmarkBodySchema,
   getBookmarkParamsSchema,
   deleteBookmarkParamsSchema,
+  updateBookmarkParamsSchema,
+  updateBookmarkBodySchema,
 } from '@bookmark/server/schemas/bookmark.schema'
 
 export type BookmarkSchema = {
@@ -76,4 +78,25 @@ export type DeleteBookmarkOutput = SuccessOutput
 
 export type DeleteBookmarkDocumentQuery = {
   filter: QueryFilter<BookmarkSchema>
+}
+
+export type UpdateBookmarkParams = z.infer<typeof updateBookmarkParamsSchema>
+
+export type UpdateBookmarkBody = z.infer<typeof updateBookmarkBodySchema>
+
+export type UpdateBookmarkInput = {
+  bookmarkId: string
+  userId: string
+  title?: Nullish<string>
+  description?: Nullish<string>
+  url?: Nullish<string>
+  isFavorite?: Nullish<boolean>
+  collectionId?: Nullish<string>
+  tagIds?: Nullish<string[]>
+}
+
+export type UpdateBookmarkDocumentQuery = {
+  filter: QueryFilter<BookmarkSchema>
+  update: UpdateQuery<BookmarkSchema>
+  options: QueryOptions<BookmarkSchema>
 }
