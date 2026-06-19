@@ -10,6 +10,9 @@ import type {
   GetBookmarkParams,
   GetBookmarkInput,
   FindBookmarkDocumentQuery,
+  DeleteBookmarkParams,
+  DeleteBookmarkInput,
+  DeleteBookmarkDocumentQuery,
 } from '@bookmark/server/types/bookmark'
 
 export const toBookmark = (document: BookmarkDocument): Bookmark => {
@@ -90,6 +93,27 @@ export const toGetBookmarkInput = (
 export const toFindBookmarkDocumentQuery = (
   input: GetBookmarkInput,
 ): FindBookmarkDocumentQuery => {
+  return {
+    filter: {
+      _id: toObjectId(input.bookmarkId),
+      userId: toObjectId(input.userId),
+    },
+  }
+}
+
+export const toDeleteBookmarkInput = (
+  session: UserSessionRequired,
+  params: DeleteBookmarkParams,
+): DeleteBookmarkInput => {
+  return {
+    bookmarkId: params.bookmarkId,
+    userId: session.user.id,
+  }
+}
+
+export const toDeleteBookmarkDocumentQuery = (
+  input: DeleteBookmarkInput,
+): DeleteBookmarkDocumentQuery => {
   return {
     filter: {
       _id: toObjectId(input.bookmarkId),

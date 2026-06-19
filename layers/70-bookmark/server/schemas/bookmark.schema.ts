@@ -13,3 +13,7 @@ export const createBookmarkBodySchema = z.object({
 export const getBookmarkParamsSchema = z.object({
   bookmarkId: objectIdSchema,
 })
+
+export const deleteBookmarkParamsSchema = z.object({
+  bookmarkId: objectIdSchema,
+})
