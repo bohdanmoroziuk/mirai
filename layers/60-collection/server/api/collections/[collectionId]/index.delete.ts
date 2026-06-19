@@ -1,4 +1,4 @@
-import { validateParams } from '@shared/server/utils/validation'
+import { validateParams } from '@common/server/utils/validation'
 import { deleteCollectionParamsSchema } from '@collection/server/schemas/collection.schema'
 import { deleteCollection } from '@collection/server/services/collection.service'
 

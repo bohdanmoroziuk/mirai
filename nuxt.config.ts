@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   extends: [
     './layers/10-core',
     './layers/20-infra',
-    './layers/25-shared',
+    './layers/25-common',
     './layers/30-user',
     './layers/40-auth',
     './layers/50-tag',
@@ -44,7 +44,7 @@ export default defineNuxtConfig({
   alias: {
     '@core': resolveLayerPath('10-core'),
     '@infra': resolveLayerPath('20-infra'),
-    '@shared': resolveLayerPath('25-shared'),
+    '@common': resolveLayerPath('25-common'),
     '@user': resolveLayerPath('30-user'),
     '@auth': resolveLayerPath('40-auth'),
     '@tag': resolveLayerPath('50-tag'),

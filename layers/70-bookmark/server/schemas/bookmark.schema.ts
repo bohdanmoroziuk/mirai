@@ -1,5 +1,5 @@
 import z from 'zod'
-import { objectIdSchema } from '@shared/server/schemas/mongoose.schema'
+import { objectIdSchema } from '@common/server/schemas/mongoose.schema'
 
 export const createBookmarkBodySchema = z.object({
   title: z.string().trim().min(3).max(128),
