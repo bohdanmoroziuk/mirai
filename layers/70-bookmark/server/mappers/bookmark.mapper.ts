@@ -5,6 +5,8 @@ import type {
   CreateBookmarkBody,
   CreateBookmarkInput,
   CreateBookmarkDocumentInput,
+  GetBookmarksInput,
+  FindBookmarksDocumentsQuery,
 } from '@bookmark/server/types/bookmark'
 
 export const toBookmark = (document: BookmarkDocument): Bookmark => {
@@ -48,5 +50,22 @@ export const toCreateBookmarkDocumentInput = (
     userId: toObjectId(input.userId),
     collectionId: toNullableObjectId(input.collectionId),
     tagIds: input.tagIds.map(toObjectId),
+  }
+}
+
+export const toGetBookmarksInput = (session: UserSessionRequired): GetBookmarksInput => {
+  return {
+    userId: session.user.id,
+  }
+}
+
+export const toFindBookmarkDocumentsQuery = (input: GetBookmarksInput): FindBookmarksDocumentsQuery => {
+  return {
+    filter: {
+      userId: toObjectId(input.userId),
+    },
+    sort: {
+      createdAt: -1,
+    },
   }
 }
