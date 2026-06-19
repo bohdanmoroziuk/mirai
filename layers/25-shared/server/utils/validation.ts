@@ -1,5 +1,6 @@
-import type { H3Event } from 'h3'
 import type { z } from 'zod'
+import type { H3Event } from 'h3'
+import { HttpStatus } from '@core/shared/constants/http'
 
 export const validateBody = async <TSchema extends z.ZodType>(
   event: H3Event,
@@ -10,7 +11,7 @@ export const validateBody = async <TSchema extends z.ZodType>(
 
   invariant(
     result.success,
-    400,
+    HttpStatus.BAD_REQUEST,
     'Validation error',
     {
       issues: result.error?.issues,
@@ -29,7 +30,7 @@ export const validateParams = async <TSchema extends z.ZodType>(
 
   invariant(
     result.success,
-    400,
+    HttpStatus.BAD_REQUEST,
     'Validation error',
     {
       issues: result.error?.issues,

@@ -1,6 +1,8 @@
+import { type HttpStatusCode, HttpStatus } from '@core/shared/constants/http'
+
 export function invariant(
   condition: unknown,
-  statusCode = 500,
+  statusCode: HttpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR,
   statusMessage = 'Something went wrong',
   data?: Record<string, unknown>,
 ): asserts condition {

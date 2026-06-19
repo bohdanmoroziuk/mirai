@@ -1,4 +1,5 @@
 import { isNullish } from '@core/shared/utils/common'
+import { HttpStatus } from '@core/shared/constants/http'
 import { mapUser } from '@user/server/mappers/user.mapper'
 import { createUser, getUserByEmail, getUserDocumentByEmail } from '@user/server/services/user.service'
 import type { AuthUser } from '@auth/shared/types/auth'
@@ -10,7 +11,7 @@ export const signupUser = async (input: SignupUserInput): Promise<AuthUser> => {
 
   invariant(
     isNullish(existingUser),
-    409,
+    HttpStatus.CONFLICT,
     'User with this email already exists',
   )
 
@@ -32,7 +33,7 @@ export const loginUser = async (input: LoginUserInput): Promise<AuthUser> => {
 
   invariant(
     isPresent(userDocument),
-    401,
+    HttpStatus.UNAUTHORIZED,
     'Invalid email or password',
   )
 
@@ -40,7 +41,7 @@ export const loginUser = async (input: LoginUserInput): Promise<AuthUser> => {
 
   invariant(
     isPasswordValid,
-    401,
+    HttpStatus.UNAUTHORIZED,
     'Invalid email or password',
   )
 

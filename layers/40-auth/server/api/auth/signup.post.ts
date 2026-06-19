@@ -1,6 +1,21 @@
+import { HttpStatus } from '@core/shared/constants/http'
 import { createResponse } from '@core/server/utils/response'
 import { signupBodySchema } from '@auth/server/schemas/auth.schema'
 import { signupUser } from '@auth/server/services/auth.service'
+
+export default defineSafeEventHandler(async (event) => {
+  const body = await validateBody(event, signupBodySchema)
+  const user = await signupUser(body)
+
+  await setUserSession(event, {
+    user,
+    loggedInAt: new Date(),
+  })
+
+  setResponseStatus(event, HttpStatus.CREATED)
+
+  return createResponse(user)
+})
 
 defineRouteMeta({
   openAPI: {
@@ -83,18 +98,4 @@ defineRouteMeta({
       },
     },
   },
-})
-
-export default defineSafeEventHandler(async (event) => {
-  const body = await validateBody(event, signupBodySchema)
-  const user = await signupUser(body)
-
-  await setUserSession(event, {
-    user,
-    loggedInAt: new Date(),
-  })
-
-  setResponseStatus(event, 201)
-
-  return createResponse(user)
 })

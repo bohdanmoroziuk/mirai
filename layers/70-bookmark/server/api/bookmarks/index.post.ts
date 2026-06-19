@@ -1,3 +1,4 @@
+import { HttpStatus } from '@core/shared/constants/http'
 import { createBookmarkBodySchema } from '@bookmark/server/schemas/bookmark.schema'
 import { toCreateBookmarkInput } from '@bookmark/server/mappers/bookmark.mapper'
 import { createBookmark } from '@bookmark/server/services/bookmark.service'
@@ -7,7 +8,7 @@ export default defineSafeEventHandler(async (event) => {
   const body = await validateBody(event, createBookmarkBodySchema)
   const bookmark = await createBookmark(toCreateBookmarkInput(session, body))
 
-  setResponseStatus(event, 201)
+  setResponseStatus(event, HttpStatus.CREATED)
 
   return createResponse(bookmark)
 })

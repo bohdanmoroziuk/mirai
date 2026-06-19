@@ -1,3 +1,4 @@
+import { HttpStatus } from '@core/shared/constants/http'
 import type { Collection } from '@collection/shared/types/collection'
 import type {
   DeleteCollectionOutput,
@@ -36,7 +37,7 @@ export const getCollection = async (input: GetCollectionInput): Promise<Nullable
 
   invariant(
     isPresent(collectionDocument),
-    404,
+    HttpStatus.NOT_FOUND,
     'Collection not found',
   )
 
@@ -52,7 +53,7 @@ export const updateCollection = async (input: UpdateCollectionInput): Promise<Co
 
   invariant(
     isPresent(collectionDocument),
-    404,
+    HttpStatus.NOT_FOUND,
     'Collection not found',
   )
 
@@ -67,7 +68,7 @@ export const deleteCollection = async (input: DeleteCollectionInput): Promise<De
 
   invariant(
     isPresent(collectionDocument),
-    404,
+    HttpStatus.NOT_FOUND,
     'Collection not found',
   )
 

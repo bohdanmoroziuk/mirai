@@ -1,5 +1,6 @@
 import type { EventHandler, EventHandlerRequest } from 'h3'
 import { createError, defineEventHandler, isError } from 'h3'
+import { HttpStatus } from '@core/shared/constants/http'
 
 export function defineSafeEventHandler<T extends EventHandlerRequest, D>(
   handler: EventHandler<T, D>,
@@ -19,7 +20,7 @@ export function defineSafeEventHandler<T extends EventHandlerRequest, D>(
       })
 
       throw createError({
-        statusCode: 500,
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
         statusMessage: 'Internal Server Error',
       })
     }
