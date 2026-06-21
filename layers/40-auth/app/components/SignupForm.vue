@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { SignupFormState } from '@auth/app/types/auth'
-import { signupFormSchema } from '@auth/app/schemas/auth.schema'
+import type { SignupFormState } from '../types/auth'
+import { signupFormSchema } from '../schemas/auth.schema'
 
 defineProps<{
   loading?: boolean

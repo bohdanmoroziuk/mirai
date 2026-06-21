@@ -6,8 +6,8 @@ import type {
   FindOneCollectionInput,
   DeleteOneCollectionInput,
   UpdateOneCollectionInput,
-} from '@collection/server/types/collection'
-import { CollectionModel } from '@collection/server/models/collection.model'
+} from '../types/collection'
+import { CollectionModel } from '../models/collection.model'
 
 export const collectionRepository = {
   createOne(input: CreateOneCollectionInput): Promise<CollectionDocument> {

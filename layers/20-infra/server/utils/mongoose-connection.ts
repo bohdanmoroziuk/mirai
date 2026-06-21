@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { databaseLogger } from '@infra/shared/services/logger.service'
+import { databaseLogger } from '../../shared/services/logger.service'
 
 export const MONGOOSE_READY_STATE = {
   DISCONNECTED: 0,

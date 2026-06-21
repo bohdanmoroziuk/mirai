@@ -1,5 +1,5 @@
 import type { ServerErrorContext } from '@core/server/types/server-error'
-import { serverLogger } from '@infra/shared/services/logger.service'
+import { serverLogger } from '../../shared/services/logger.service'
 
 export const reportServerError = (
   error: unknown,

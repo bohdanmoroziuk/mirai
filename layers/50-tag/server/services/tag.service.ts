@@ -4,15 +4,15 @@ import type {
   DeleteTagOutput,
   GetTagsInput,
   UpdateTagInput,
-} from '@tag/server/types/tag'
-import { tagRepository } from '@tag/server/repositories/tag.repository'
+} from '../types/tag'
+import { tagRepository } from '../repositories/tag.repository'
 import {
   toTag,
   toCreateTagDocumentInput,
   toFindManyTagDocumentsQuery,
   toDeleteTagDocumentQuery,
   toUpdateTagDocumentQuery,
-} from '@tag/server/mappers/tag.mapper'
+} from '../mappers/tag.mapper'
 
 /**
  * TODO:

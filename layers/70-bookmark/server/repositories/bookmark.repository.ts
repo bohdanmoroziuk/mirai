@@ -6,8 +6,8 @@ import type {
   FindBookmarkDocumentQuery,
   FindBookmarksDocumentsQuery,
   UpdateBookmarkDocumentQuery,
-} from '@bookmark/server/types/bookmark'
-import { BookmarkModel } from '@bookmark/server/models/bookmark.model'
+} from '../types/bookmark'
+import { BookmarkModel } from '../models/bookmark.model'
 
 export const bookmarkRepository = {
   createOne(input: CreateBookmarkDocumentInput): Promise<BookmarkDocument> {

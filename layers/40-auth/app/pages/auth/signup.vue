@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { SignupInput } from '@auth/app/types/auth'
-import { useSignupMutation } from '@auth/app/queries/auth.queries'
+import type { SignupInput } from '../../types/auth'
+import { useSignupMutation } from '../../queries/auth.queries'
 
 definePageMeta({
   access: 'guest-only',

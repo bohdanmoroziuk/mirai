@@ -1,5 +1,5 @@
-import { getTags } from '@tag/server/services/tag.service'
-import { toGetTagsInput } from '@tag/server/mappers/tag.mapper'
+import { getTags } from '../../services/tag.service'
+import { toGetTagsInput } from '../../mappers/tag.mapper'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

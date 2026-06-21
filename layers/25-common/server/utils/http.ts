@@ -1,5 +1,5 @@
-import type { Nullish } from '@core/shared/types/common'
 import { HttpStatus } from '@core/shared/constants/http'
+import type { Nullish } from '@core/shared/types/common'
 
 export const ensureResourceFound = <TValue>(
   value: Nullish<TValue>,

@@ -1,5 +1,5 @@
-import { toGetBookmarksInput } from '@bookmark/server/mappers/bookmark.mapper'
-import { getBookmarks } from '@bookmark/server/services/bookmark.service'
+import { toGetBookmarksInput } from '../../mappers/bookmark.mapper'
+import { getBookmarks } from '../../services/bookmark.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

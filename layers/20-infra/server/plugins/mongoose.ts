@@ -1,5 +1,5 @@
-import { connectMongoose, disconnectMongoose } from '@infra/server/utils/mongoose-connection'
-import { requireMongodbUri } from '@infra/server/utils/mongodb-uri'
+import { connectMongoose, disconnectMongoose } from '../../server/utils/mongoose-connection'
+import { requireMongodbUri } from '../../server/utils/mongodb-uri'
 
 export default defineNitroPlugin(async (nitroApp) => {
   await connectMongoose(requireMongodbUri())

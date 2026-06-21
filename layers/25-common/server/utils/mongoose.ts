@@ -1,5 +1,5 @@
-import type { Model, Schema } from 'mongoose'
 import mongoose, { Types } from 'mongoose'
+import type { Model, Schema } from 'mongoose'
 import type { Nullish } from '@core/shared/types/common'
 
 const { model, models } = mongoose

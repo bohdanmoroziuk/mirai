@@ -13,7 +13,7 @@ import type {
   UpdateTagParams,
   UpdateTagInput,
   UpdateTagDocumentQuery,
-} from '@tag/server/types/tag'
+} from '../types/tag'
 
 export const toTag = (document: TagDocument): Tag => {
   return {

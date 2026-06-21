@@ -1,4 +1,4 @@
-import type { Collection } from '@collection/shared/types/collection'
+import type { Collection } from '../../shared/types/collection'
 import type {
   DeleteCollectionOutput,
   CreateCollectionInput,
@@ -6,9 +6,9 @@ import type {
   UpdateCollectionInput,
   GetCollectionsInput,
   GetCollectionInput,
-} from '@collection/server/types/collection'
-import { collectionRepository } from '@collection/server/repositories/collection.repository'
-import { mapCollection } from '@collection/server/mappers/collection.mapper'
+} from '../types/collection'
+import { collectionRepository } from '../repositories/collection.repository'
+import { mapCollection } from '../mappers/collection.mapper'
 
 export const createCollection = async (input: CreateCollectionInput): Promise<Collection> => {
   const collectionDocument = await collectionRepository.createOne({

@@ -1,6 +1,6 @@
 import type { HydratedDocument } from 'mongoose'
 import type { Timestamps } from '@core/shared/types/entity'
-import type { UserEntity } from '@user/shared/types/user'
+import type { UserEntity } from '../../shared/types/user'
 
 // database shape, includes passwordHash
 export type UserRecord = Omit<UserEntity, 'password'> & {

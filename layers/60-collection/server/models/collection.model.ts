@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose'
-import type { CollectionSchema } from '@collection/server/types/collection'
 import { createMongooseModel } from '@common/server/utils/mongoose'
+import type { CollectionSchema } from '../types/collection'
 
 const collectionSchema = new Schema<CollectionSchema>({
   title: {

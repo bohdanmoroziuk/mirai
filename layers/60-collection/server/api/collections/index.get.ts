@@ -1,4 +1,4 @@
-import { getCollections } from '@collection/server/services/collection.service'
+import { getCollections } from '../../services/collection.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

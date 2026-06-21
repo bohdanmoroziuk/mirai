@@ -1,5 +1,5 @@
-import type { Collection } from '@collection/shared/types/collection'
-import type { CollectionDocument } from '@collection/server/types/collection'
+import type { Collection } from '../../shared/types/collection'
+import type { CollectionDocument } from '../types/collection'
 
 export const mapCollection = (document: CollectionDocument): Collection => {
   return {

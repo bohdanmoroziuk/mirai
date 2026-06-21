@@ -1,6 +1,6 @@
 import { validateParams } from '@common/server/utils/validation'
-import { deleteCollectionParamsSchema } from '@collection/server/schemas/collection.schema'
-import { deleteCollection } from '@collection/server/services/collection.service'
+import { deleteCollectionParamsSchema } from '../../../schemas/collection.schema'
+import { deleteCollection } from '../../../services/collection.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

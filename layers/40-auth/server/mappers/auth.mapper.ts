@@ -1,5 +1,5 @@
 import type { User } from '@user/shared/types/user'
-import type { AuthUser } from '@auth/shared/types/auth'
+import type { AuthUser } from '../../shared/types/auth'
 
 export const mapAuthUser = (user: User): AuthUser => {
   return {

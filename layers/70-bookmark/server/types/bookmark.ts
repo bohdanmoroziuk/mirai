@@ -9,7 +9,7 @@ import type {
   deleteBookmarkParamsSchema,
   updateBookmarkParamsSchema,
   updateBookmarkBodySchema,
-} from '@bookmark/server/schemas/bookmark.schema'
+} from '../schemas/bookmark.schema'
 
 export type BookmarkSchema = {
   title: string

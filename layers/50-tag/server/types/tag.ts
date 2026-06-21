@@ -8,7 +8,7 @@ import type {
   deleteTagParamsSchema,
   updateTagBodySchema,
   updateTagParamsSchema,
-} from '@tag/server/schemas/tag.schema'
+} from '../schemas/tag.schema'
 
 export type TagSchema = {
   userId: Types.ObjectId

@@ -1,6 +1,6 @@
 import { HttpStatus } from '@core/shared/constants/http'
-import { createCollectionBodySchema } from '@collection/server/schemas/collection.schema'
-import { createCollection } from '@collection/server/services/collection.service'
+import { createCollectionBodySchema } from '../../schemas/collection.schema'
+import { createCollection } from '../../services/collection.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

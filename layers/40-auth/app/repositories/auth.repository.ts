@@ -1,6 +1,6 @@
 import type { ApiResponse } from '@core/shared/types/api'
-import type { AuthUser } from '@auth/shared/types/auth'
-import type { SignupInput, LoginInput, LogoutOutput } from '@auth/app/types/auth'
+import type { AuthUser } from '../../shared/types/auth'
+import type { SignupInput, LoginInput, LogoutOutput } from '../types/auth'
 
 export const authRepository = {
   signup(input: SignupInput) {

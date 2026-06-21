@@ -1,4 +1,4 @@
-import { getUsers } from '@user/server/services/user.service'
+import { getUsers } from '../../services/user.service'
 
 defineRouteMeta({
   openAPI: {

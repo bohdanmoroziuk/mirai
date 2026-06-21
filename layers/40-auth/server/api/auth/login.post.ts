@@ -1,5 +1,5 @@
-import { loginBodySchema } from '@auth/server/schemas/auth.schema'
-import { loginUser } from '@auth/server/services/auth.service'
+import { loginBodySchema } from '../../schemas/auth.schema'
+import { loginUser } from '../../services/auth.service'
 
 defineRouteMeta({
   openAPI: {

@@ -1,7 +1,7 @@
 import { HttpStatus } from '@core/shared/constants/http'
-import { createTagBodySchema } from '@tag/server/schemas/tag.schema'
-import { createTag } from '@tag/server/services/tag.service'
-import { toCreateTagInput } from '@tag/server/mappers/tag.mapper'
+import { createTagBodySchema } from '../../schemas/tag.schema'
+import { toCreateTagInput } from '../../mappers/tag.mapper'
+import { createTag } from '../../services/tag.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)
