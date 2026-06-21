@@ -1,6 +1,6 @@
-import { deleteTagParamsSchema } from '@tag/server/schemas/tag.schema'
-import { deleteTag } from '@tag/server/services/tag.service'
-import { toDeleteTagInput } from '@tag/server/mappers/tag.mapper'
+import { deleteTagParamsSchema } from '../../../schemas/tag.schema'
+import { toDeleteTagInput } from '../../../mappers/tag.mapper'
+import { deleteTag } from '../../../services/tag.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

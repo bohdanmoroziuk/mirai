@@ -1,21 +1,24 @@
 import type { HydratedDocument } from 'mongoose'
-import type { Timestamps } from '@core/shared/types/entity'
-import type { UserEntity } from '@user/shared/types/user'
 
-// database shape, includes passwordHash
-export type UserRecord = Omit<UserEntity, 'password'> & {
+export type UserSchema = {
+  name: string
+  email: string
+  passwordHash: string
+  avatarUrl: Nullish<string>
+  updatedAt: Date
+  createdAt: Date
+}
+
+export type UserDocument = HydratedDocument<UserSchema>
+
+export type CreateUserInput = {
+  name: string
+  email: string
   passwordHash: string
 }
 
-export type UserSchema = UserRecord & Timestamps
-
-// hydrated Mongoose document with timestamps
-export type UserDocument = HydratedDocument<UserSchema>
-
-// persistence input after hashing
-export type CreateUserRecordInput = Pick<
-  UserRecord,
-  | 'name'
-  | 'email'
-  | 'passwordHash'
->
+export type CreateUserDocumentInput = {
+  name: string
+  email: string
+  passwordHash: string
+}

@@ -1,19 +1,18 @@
-import { HttpStatus } from '@core/shared/constants/http'
 import type {
   CreateTagInput,
   DeleteTagInput,
   DeleteTagOutput,
   GetTagsInput,
   UpdateTagInput,
-} from '@tag/server/types/tag'
-import { tagRepository } from '@tag/server/repositories/tag.repository'
+} from '../types/tag'
+import { tagRepository } from '../repositories/tag.repository'
 import {
   toTag,
   toCreateTagDocumentInput,
-  toFindManyTagDocumentsQuery,
+  toFindTagDocumentsQuery,
   toDeleteTagDocumentQuery,
   toUpdateTagDocumentQuery,
-} from '@tag/server/mappers/tag.mapper'
+} from '../mappers/tag.mapper'
 
 /**
  * TODO:
@@ -27,7 +26,7 @@ export const createTag = async (input: CreateTagInput): Promise<Tag> => {
 }
 
 export const getTags = async (input: GetTagsInput): Promise<Tag[]> => {
-  const tagDocuments = await tagRepository.findMany(toFindManyTagDocumentsQuery(input))
+  const tagDocuments = await tagRepository.findMany(toFindTagDocumentsQuery(input))
 
   return tagDocuments.map(toTag)
 }
@@ -35,11 +34,7 @@ export const getTags = async (input: GetTagsInput): Promise<Tag[]> => {
 export const deleteTag = async (input: DeleteTagInput): Promise<DeleteTagOutput> => {
   const tagDocument = await tagRepository.deleteOne(toDeleteTagDocumentQuery(input))
 
-  invariant(
-    isPresent(tagDocument),
-    HttpStatus.NOT_FOUND,
-    'Tag not found',
-  )
+  ensureResourceFound(tagDocument, 'Tag not found')
 
   return { success: true }
 }
@@ -47,11 +42,7 @@ export const deleteTag = async (input: DeleteTagInput): Promise<DeleteTagOutput>
 export const updateTag = async (input: UpdateTagInput): Promise<Tag> => {
   const tagDocument = await tagRepository.updateOne(toUpdateTagDocumentQuery(input))
 
-  invariant(
-    isPresent(tagDocument),
-    HttpStatus.NOT_FOUND,
-    'Tag not found',
-  )
+  ensureResourceFound(tagDocument, 'Tag not found')
 
   return toTag(tagDocument)
 }

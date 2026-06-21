@@ -1,5 +1,4 @@
-import { HttpStatus } from '@core/shared/constants/http'
-import type { Collection } from '@collection/shared/types/collection'
+import type { Collection } from '../../shared/types/collection'
 import type {
   DeleteCollectionOutput,
   CreateCollectionInput,
@@ -7,9 +6,9 @@ import type {
   UpdateCollectionInput,
   GetCollectionsInput,
   GetCollectionInput,
-} from '@collection/server/types/collection'
-import { collectionRepository } from '@collection/server/repositories/collection.repository'
-import { mapCollection } from '@collection/server/mappers/collection.mapper'
+} from '../types/collection'
+import { collectionRepository } from '../repositories/collection.repository'
+import { mapCollection } from '../mappers/collection.mapper'
 
 export const createCollection = async (input: CreateCollectionInput): Promise<Collection> => {
   const collectionDocument = await collectionRepository.createOne({
@@ -35,11 +34,7 @@ export const getCollection = async (input: GetCollectionInput): Promise<Nullable
     userId: toObjectId(input.userId),
   })
 
-  invariant(
-    isPresent(collectionDocument),
-    HttpStatus.NOT_FOUND,
-    'Collection not found',
-  )
+  ensureResourceFound(collectionDocument, 'Collection not found')
 
   return mapCollection(collectionDocument)
 }
@@ -51,11 +46,7 @@ export const updateCollection = async (input: UpdateCollectionInput): Promise<Co
     collectionId: toObjectId(input.collectionId),
   })
 
-  invariant(
-    isPresent(collectionDocument),
-    HttpStatus.NOT_FOUND,
-    'Collection not found',
-  )
+  ensureResourceFound(collectionDocument, 'Collection not found')
 
   return mapCollection(collectionDocument)
 }
@@ -66,11 +57,7 @@ export const deleteCollection = async (input: DeleteCollectionInput): Promise<De
     userId: toObjectId(input.userId),
   })
 
-  invariant(
-    isPresent(collectionDocument),
-    HttpStatus.NOT_FOUND,
-    'Collection not found',
-  )
+  ensureResourceFound(collectionDocument, 'Collection not found')
 
   return { success: true }
 }

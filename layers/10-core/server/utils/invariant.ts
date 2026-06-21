@@ -1,4 +1,4 @@
-import { type HttpStatusCode, HttpStatus } from '@core/shared/constants/http'
+import { type HttpStatusCode, HttpStatus } from '../../shared/constants/http'
 
 export function invariant(
   condition: unknown,

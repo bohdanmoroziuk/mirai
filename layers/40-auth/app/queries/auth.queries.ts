@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { getErrorMessage } from '@core/shared/utils/error'
-import { authRepository } from '@auth/app/repositories/auth.repository'
+import { getErrorMessage } from '@common/shared/utils/error'
+import { authRepository } from '../repositories/auth.repository'
 
 export const useSignupMutation = () => {
   const queryClient = useQueryClient()

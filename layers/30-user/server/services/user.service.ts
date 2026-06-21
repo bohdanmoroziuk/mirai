@@ -1,8 +1,8 @@
 import type { Nullable } from '@core/shared/types/common'
-import type { CreateUserInput, User } from '@user/shared/types/user'
-import type { UserDocument } from '@user/server/types/user'
-import { userRepository } from '@user/server/repositories/user.repository'
-import { mapUser } from '@user/server/mappers/user.mapper'
+import type { User } from '../../shared/types/user'
+import type { UserDocument, CreateUserInput } from '../types/user'
+import { userRepository } from '../repositories/user.repository'
+import { mapUser } from '../mappers/user.mapper'
 
 export const createUser = async (input: CreateUserInput): Promise<User> => {
   const userDocument = await userRepository.createOne(input)

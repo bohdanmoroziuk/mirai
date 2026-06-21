@@ -1,5 +1,5 @@
-import type { User } from '@user/shared/types/user'
-import type { UserDocument } from '@user/server/types/user'
+import type { User } from '../../shared/types/user'
+import type { UserDocument } from '../types/user'
 
 export const mapUser = (document: UserDocument): User => {
   return {
@@ -7,7 +7,7 @@ export const mapUser = (document: UserDocument): User => {
     name: document.name,
     email: document.email,
     avatarUrl: document.avatarUrl,
-    createdAt: document.createdAt,
-    updatedAt: document.updatedAt,
+    createdAt: document.createdAt.toISOString(),
+    updatedAt: document.updatedAt.toISOString(),
   }
 }

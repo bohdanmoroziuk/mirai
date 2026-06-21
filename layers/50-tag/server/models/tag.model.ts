@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose'
-import type { TagSchema } from '@tag/server/types/tag'
+import type { TagSchema } from '../types/tag'
 
 const tagSchema = new Schema<TagSchema>({
   userId: {

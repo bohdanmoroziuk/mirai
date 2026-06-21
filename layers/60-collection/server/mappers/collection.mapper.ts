@@ -1,5 +1,5 @@
-import type { Collection } from '@collection/shared/types/collection'
-import type { CollectionDocument } from '@collection/server/types/collection'
+import type { Collection } from '../../shared/types/collection'
+import type { CollectionDocument } from '../types/collection'
 
 export const mapCollection = (document: CollectionDocument): Collection => {
   return {
@@ -7,7 +7,7 @@ export const mapCollection = (document: CollectionDocument): Collection => {
     title: document.title,
     userId: document.userId.toString(),
     parentId: document.parentId?.toString() ?? null,
-    updatedAt: document.updatedAt,
-    createdAt: document.createdAt,
+    updatedAt: document.updatedAt.toISOString(),
+    createdAt: document.createdAt.toISOString(),
   }
 }

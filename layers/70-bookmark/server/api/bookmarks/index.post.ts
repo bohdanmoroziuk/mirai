@@ -1,7 +1,7 @@
 import { HttpStatus } from '@core/shared/constants/http'
-import { createBookmarkBodySchema } from '@bookmark/server/schemas/bookmark.schema'
-import { toCreateBookmarkInput } from '@bookmark/server/mappers/bookmark.mapper'
-import { createBookmark } from '@bookmark/server/services/bookmark.service'
+import { createBookmarkBodySchema } from '../../schemas/bookmark.schema'
+import { toCreateBookmarkInput } from '../../mappers/bookmark.mapper'
+import { createBookmark } from '../../services/bookmark.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

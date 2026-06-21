@@ -5,7 +5,7 @@ import type {
   CreateTagInput,
   CreateTagDocumentInput,
   GetTagsInput,
-  FindManyTagDocumentsQuery,
+  FindTagDocumentsQuery,
   DeleteTagParams,
   DeleteTagInput,
   DeleteTagDocumentQuery,
@@ -13,7 +13,7 @@ import type {
   UpdateTagParams,
   UpdateTagInput,
   UpdateTagDocumentQuery,
-} from '@tag/server/types/tag'
+} from '../types/tag'
 
 export const toTag = (document: TagDocument): Tag => {
   return {
@@ -48,7 +48,7 @@ export const toGetTagsInput = (session: UserSessionRequired): GetTagsInput => {
   }
 }
 
-export const toFindManyTagDocumentsQuery = (input: GetTagsInput): FindManyTagDocumentsQuery => {
+export const toFindTagDocumentsQuery = (input: GetTagsInput): FindTagDocumentsQuery => {
   return {
     filter: {
       userId: toObjectId(input.userId),

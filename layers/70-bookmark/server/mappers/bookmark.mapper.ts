@@ -1,5 +1,5 @@
 import type { UserSessionRequired } from '#auth-utils'
-import type { Bookmark } from '@bookmark/shared/types/bookmark'
+import type { Bookmark } from '../../shared/types/bookmark'
 import type {
   BookmarkDocument,
   CreateBookmarkBody,
@@ -17,7 +17,7 @@ import type {
   UpdateBookmarkParams,
   UpdateBookmarkBody,
   UpdateBookmarkDocumentQuery,
-} from '@bookmark/server/types/bookmark'
+} from '../types/bookmark'
 
 export const toBookmark = (document: BookmarkDocument): Bookmark => {
   return {

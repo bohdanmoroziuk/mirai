@@ -1,6 +1,6 @@
-import { toUpdateBookmarkInput } from '@bookmark/server/mappers/bookmark.mapper'
-import { updateBookmarkBodySchema, updateBookmarkParamsSchema } from '@bookmark/server/schemas/bookmark.schema'
-import { updateBookmark } from '@bookmark/server/services/bookmark.service'
+import { updateBookmarkBodySchema, updateBookmarkParamsSchema } from '../../../schemas/bookmark.schema'
+import { toUpdateBookmarkInput } from '../../../mappers/bookmark.mapper'
+import { updateBookmark } from '../../../services/bookmark.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

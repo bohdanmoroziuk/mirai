@@ -1,5 +1,5 @@
-import { getCollectionParamsSchema } from '@collection/server/schemas/collection.schema'
-import { getCollection } from '@collection/server/services/collection.service'
+import { getCollectionParamsSchema } from '../../../schemas/collection.schema'
+import { getCollection } from '../../../services/collection.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

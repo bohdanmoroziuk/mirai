@@ -1,6 +1,6 @@
+import { isError as isH3Error } from 'h3'
 import type { H3Error } from 'h3'
 import { FetchError } from 'ofetch'
-import { isError as isH3Error } from 'h3'
 
 export const isNativeError = (value: unknown): value is Error => {
   return value instanceof Error

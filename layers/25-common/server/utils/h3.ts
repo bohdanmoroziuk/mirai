@@ -1,5 +1,5 @@
-import type { EventHandler, EventHandlerRequest } from 'h3'
 import { createError, defineEventHandler, isError } from 'h3'
+import type { EventHandler, EventHandlerRequest } from 'h3'
 import { HttpStatus } from '@core/shared/constants/http'
 
 export function defineSafeEventHandler<T extends EventHandlerRequest, D>(

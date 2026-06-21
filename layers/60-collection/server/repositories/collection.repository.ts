@@ -1,26 +1,26 @@
 import type { Nullable } from '@core/shared/types/common'
 import type {
   CollectionDocument,
-  CreateOneCollectionInput,
-  FindManyCollectionsInput,
-  FindOneCollectionInput,
-  DeleteOneCollectionInput,
-  UpdateOneCollectionInput,
-} from '@collection/server/types/collection'
-import { CollectionModel } from '@collection/server/models/collection.model'
+  CreateCollectionDocumentInput,
+  FindCollectionDocumentsInput,
+  FindCollectionDocumentInput,
+  DeleteCollectionDocumentInput,
+  UpdateCollectionDocumentInput,
+} from '../types/collection'
+import { CollectionModel } from '../models/collection.model'
 
 export const collectionRepository = {
-  createOne(input: CreateOneCollectionInput): Promise<CollectionDocument> {
+  createOne(input: CreateCollectionDocumentInput): Promise<CollectionDocument> {
     return CollectionModel.create(input)
   },
 
-  findMany(input: FindManyCollectionsInput): Promise<CollectionDocument[]> {
+  findMany(input: FindCollectionDocumentsInput): Promise<CollectionDocument[]> {
     return CollectionModel
       .find({ userId: input.userId })
       .exec()
   },
 
-  findOne(input: FindOneCollectionInput): Promise<Nullable<CollectionDocument>> {
+  findOne(input: FindCollectionDocumentInput): Promise<Nullable<CollectionDocument>> {
     return CollectionModel
       .findOne({
         _id: input.collectionId,
@@ -29,7 +29,7 @@ export const collectionRepository = {
       .exec()
   },
 
-  updateOne(input: UpdateOneCollectionInput): Promise<Nullable<CollectionDocument>> {
+  updateOne(input: UpdateCollectionDocumentInput): Promise<Nullable<CollectionDocument>> {
     return CollectionModel
       .findOneAndUpdate({
         _id: input.collectionId,
@@ -45,7 +45,7 @@ export const collectionRepository = {
       .exec()
   },
 
-  deleteOne(input: DeleteOneCollectionInput): Promise<Nullable<CollectionDocument>> {
+  deleteOne(input: DeleteCollectionDocumentInput): Promise<Nullable<CollectionDocument>> {
     return CollectionModel
       .findOneAndDelete({
         _id: input.collectionId,

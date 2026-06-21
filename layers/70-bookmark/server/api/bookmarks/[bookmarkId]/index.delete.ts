@@ -1,6 +1,6 @@
-import { toDeleteBookmarkInput } from '@bookmark/server/mappers/bookmark.mapper'
-import { deleteBookmarkParamsSchema } from '@bookmark/server/schemas/bookmark.schema'
-import { deleteBookmark } from '@bookmark/server/services/bookmark.service'
+import { deleteBookmarkParamsSchema } from '../../../schemas/bookmark.schema'
+import { toDeleteBookmarkInput } from '../../../mappers/bookmark.mapper'
+import { deleteBookmark } from '../../../services/bookmark.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)

@@ -8,7 +8,7 @@ import type {
   deleteTagParamsSchema,
   updateTagBodySchema,
   updateTagParamsSchema,
-} from '@tag/server/schemas/tag.schema'
+} from '../schemas/tag.schema'
 
 export type TagSchema = {
   userId: Types.ObjectId
@@ -38,7 +38,7 @@ export type GetTagsInput = {
   userId: string
 }
 
-export type FindManyTagDocumentsQuery = {
+export type FindTagDocumentsQuery = {
   filter: QueryFilter<TagSchema>
   sort: QuerySort<TagSchema>
 }

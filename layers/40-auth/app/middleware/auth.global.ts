@@ -1,4 +1,4 @@
-import { PageAccess } from '@auth/shared/types/auth'
+import { PageAccess } from '../../shared/types/auth'
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const { loggedIn, fetch } = useUserSession()
