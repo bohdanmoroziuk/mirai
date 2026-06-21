@@ -1,4 +1,3 @@
-import { HttpStatus } from '@core/shared/constants/http'
 import type { Collection } from '@collection/shared/types/collection'
 import type {
   DeleteCollectionOutput,
@@ -35,11 +34,7 @@ export const getCollection = async (input: GetCollectionInput): Promise<Nullable
     userId: toObjectId(input.userId),
   })
 
-  invariant(
-    isPresent(collectionDocument),
-    HttpStatus.NOT_FOUND,
-    'Collection not found',
-  )
+  ensureResourceFound(collectionDocument, 'Collection not found')
 
   return mapCollection(collectionDocument)
 }
@@ -51,11 +46,7 @@ export const updateCollection = async (input: UpdateCollectionInput): Promise<Co
     collectionId: toObjectId(input.collectionId),
   })
 
-  invariant(
-    isPresent(collectionDocument),
-    HttpStatus.NOT_FOUND,
-    'Collection not found',
-  )
+  ensureResourceFound(collectionDocument, 'Collection not found')
 
   return mapCollection(collectionDocument)
 }
@@ -66,11 +57,7 @@ export const deleteCollection = async (input: DeleteCollectionInput): Promise<De
     userId: toObjectId(input.userId),
   })
 
-  invariant(
-    isPresent(collectionDocument),
-    HttpStatus.NOT_FOUND,
-    'Collection not found',
-  )
+  ensureResourceFound(collectionDocument, 'Collection not found')
 
   return { success: true }
 }

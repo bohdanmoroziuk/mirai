@@ -1,4 +1,3 @@
-import { HttpStatus } from '@core/shared/constants/http'
 import type { Bookmark } from '@bookmark/shared/types/bookmark'
 import type {
   CreateBookmarkInput,
@@ -33,11 +32,7 @@ export const getBookmarks = async (input: GetBookmarksInput): Promise<Bookmark[]
 export const getBookmark = async (input: GetBookmarkInput): Promise<Bookmark> => {
   const bookmarkDocument = await bookmarkRepository.findOne(toFindBookmarkDocumentQuery(input))
 
-  invariant(
-    isPresent(bookmarkDocument),
-    HttpStatus.NOT_FOUND,
-    'Bookmark not found',
-  )
+  ensureResourceFound(bookmarkDocument, 'Bookmark not found')
 
   return toBookmark(bookmarkDocument)
 }
@@ -45,11 +40,7 @@ export const getBookmark = async (input: GetBookmarkInput): Promise<Bookmark> =>
 export const deleteBookmark = async (input: DeleteBookmarkInput): Promise<DeleteBookmarkOutput> => {
   const bookmarkDocument = await bookmarkRepository.deleteOne(toDeleteBookmarkDocumentQuery(input))
 
-  invariant(
-    isPresent(bookmarkDocument),
-    HttpStatus.NOT_FOUND,
-    'Bookmark not found',
-  )
+  ensureResourceFound(bookmarkDocument, 'Bookmark not found')
 
   return { success: true }
 }
@@ -57,11 +48,7 @@ export const deleteBookmark = async (input: DeleteBookmarkInput): Promise<Delete
 export const updateBookmark = async (input: UpdateBookmarkInput): Promise<Bookmark> => {
   const bookmarkDocument = await bookmarkRepository.updateOne(toUpdateBookmarkDocumentQuery(input))
 
-  invariant(
-    isPresent(bookmarkDocument),
-    HttpStatus.NOT_FOUND,
-    'Bookmark not found',
-  )
+  ensureResourceFound(bookmarkDocument, 'Bookmark not found')
 
   return toBookmark(bookmarkDocument)
 }
