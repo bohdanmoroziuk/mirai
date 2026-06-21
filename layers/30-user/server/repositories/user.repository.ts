@@ -1,9 +1,9 @@
 import type { Nullable } from '@core/shared/types/common'
-import type { CreateUserRecordInput, UserDocument } from '../types/user'
+import type { CreateUserDocumentInput, UserDocument } from '../types/user'
 import { UserModel } from '../models/user.model'
 
 export const userRepository = {
-  createOne(input: CreateUserRecordInput): Promise<UserDocument> {
+  createOne(input: CreateUserDocumentInput): Promise<UserDocument> {
     return UserModel.create(input)
   },
 

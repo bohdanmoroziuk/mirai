@@ -2,7 +2,7 @@ import type { Nullable } from '@core/shared/types/common'
 import type {
   TagDocument,
   CreateTagDocumentInput,
-  FindManyTagDocumentsQuery,
+  FindTagDocumentsQuery,
   DeleteTagDocumentQuery,
   UpdateTagDocumentQuery,
 } from '../types/tag'
@@ -13,7 +13,7 @@ export const tagRepository = {
     return TagModel.create(input)
   },
 
-  findMany(query: FindManyTagDocumentsQuery): Promise<TagDocument[]> {
+  findMany(query: FindTagDocumentsQuery): Promise<TagDocument[]> {
     return TagModel
       .find(query.filter)
       .sort(query.sort)

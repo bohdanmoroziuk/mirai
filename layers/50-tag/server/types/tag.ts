@@ -38,7 +38,7 @@ export type GetTagsInput = {
   userId: string
 }
 
-export type FindManyTagDocumentsQuery = {
+export type FindTagDocumentsQuery = {
   filter: QueryFilter<TagSchema>
   sort: QuerySort<TagSchema>
 }

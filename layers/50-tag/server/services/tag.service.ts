@@ -9,7 +9,7 @@ import { tagRepository } from '../repositories/tag.repository'
 import {
   toTag,
   toCreateTagDocumentInput,
-  toFindManyTagDocumentsQuery,
+  toFindTagDocumentsQuery,
   toDeleteTagDocumentQuery,
   toUpdateTagDocumentQuery,
 } from '../mappers/tag.mapper'
@@ -26,7 +26,7 @@ export const createTag = async (input: CreateTagInput): Promise<Tag> => {
 }
 
 export const getTags = async (input: GetTagsInput): Promise<Tag[]> => {
-  const tagDocuments = await tagRepository.findMany(toFindManyTagDocumentsQuery(input))
+  const tagDocuments = await tagRepository.findMany(toFindTagDocumentsQuery(input))
 
   return tagDocuments.map(toTag)
 }

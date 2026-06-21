@@ -7,7 +7,7 @@ export const mapCollection = (document: CollectionDocument): Collection => {
     title: document.title,
     userId: document.userId.toString(),
     parentId: document.parentId?.toString() ?? null,
-    updatedAt: document.updatedAt,
-    createdAt: document.createdAt,
+    updatedAt: document.updatedAt.toISOString(),
+    createdAt: document.createdAt.toISOString(),
   }
 }

@@ -1,23 +1,16 @@
 import type { HydratedDocument, Types } from 'mongoose'
 import type { Nullish } from '@core/shared/types/common'
 import type { SuccessOutput } from '@core/shared/types/api'
-import type { Timestamps } from '@core/shared/types/entity'
 
-export type CollectionRecord = {
+export type CollectionSchema = {
   title: string
   userId: Types.ObjectId
   parentId?: Nullish<Types.ObjectId>
+  updatedAt: Date
+  createdAt: Date
 }
-
-export type CollectionSchema = CollectionRecord & Timestamps
 
 export type CollectionDocument = HydratedDocument<CollectionSchema>
-
-export type CreateOneCollectionInput = {
-  title: string
-  userId: Types.ObjectId
-  parentId?: Nullish<Types.ObjectId>
-}
 
 export type CreateCollectionInput = {
   title: string
@@ -25,17 +18,18 @@ export type CreateCollectionInput = {
   parentId?: Nullish<string>
 }
 
-export type FindManyCollectionsInput = {
+export type CreateCollectionDocumentInput = {
+  title: string
   userId: Types.ObjectId
+  parentId?: Nullish<Types.ObjectId>
 }
 
 export type GetCollectionsInput = {
   userId: string
 }
 
-export type FindOneCollectionInput = {
+export type FindCollectionDocumentsInput = {
   userId: Types.ObjectId
-  collectionId: Types.ObjectId
 }
 
 export type GetCollectionInput = {
@@ -43,8 +37,7 @@ export type GetCollectionInput = {
   collectionId: string
 }
 
-export type UpdateOneCollectionInput = {
-  title: string
+export type FindCollectionDocumentInput = {
   userId: Types.ObjectId
   collectionId: Types.ObjectId
 }
@@ -55,7 +48,8 @@ export type UpdateCollectionInput = {
   collectionId: string
 }
 
-export type DeleteOneCollectionInput = {
+export type UpdateCollectionDocumentInput = {
+  title: string
   userId: Types.ObjectId
   collectionId: Types.ObjectId
 }
@@ -66,3 +60,8 @@ export type DeleteCollectionInput = {
 }
 
 export type DeleteCollectionOutput = SuccessOutput
+
+export type DeleteCollectionDocumentInput = {
+  userId: Types.ObjectId
+  collectionId: Types.ObjectId
+}

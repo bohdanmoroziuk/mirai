@@ -1,6 +1,6 @@
 import type { Nullable } from '@core/shared/types/common'
-import type { CreateUserInput, User } from '../../shared/types/user'
-import type { UserDocument } from '../types/user'
+import type { User } from '../../shared/types/user'
+import type { UserDocument, CreateUserInput } from '../types/user'
 import { userRepository } from '../repositories/user.repository'
 import { mapUser } from '../mappers/user.mapper'
 

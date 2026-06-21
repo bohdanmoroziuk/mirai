@@ -7,7 +7,7 @@ export const mapUser = (document: UserDocument): User => {
     name: document.name,
     email: document.email,
     avatarUrl: document.avatarUrl,
-    createdAt: document.createdAt,
-    updatedAt: document.updatedAt,
+    createdAt: document.createdAt.toISOString(),
+    updatedAt: document.updatedAt.toISOString(),
   }
 }
