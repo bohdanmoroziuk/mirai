@@ -10,6 +10,11 @@ const componentLinks = [
     description: 'Password input with visibility toggling.',
     to: '/dev/components/ui-input-password',
   },
+  {
+    label: 'UiQueryState',
+    description: 'Handles fetching, error, empty and success states.',
+    to: '/dev/components/ui-query-state',
+  },
 ]
 </script>
 

@@ -9,6 +9,7 @@ Most basic UI primitives come from Nuxt UI, so this folder should document only 
 | Component           | Description                               | Docs                           | Dev preview                         |
 | ------------------- | ----------------------------------------- | ------------------------------ | ----------------------------------- |
 | `UiInputPassword`   | Password input with visibility toggling.  | [Docs](./ui-input-password.md) | `/dev/components/ui-input-password` |
+| `UiQueryState` | Handles fetching, error, empty and success states for server-state data. | [Docs](./ui-query-state.md) | `/dev/components/ui-query-state` |
 
 ## Rules
 
