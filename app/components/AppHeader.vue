@@ -1,5 +1,10 @@
 <script setup lang="ts">
+const route = useRoute()
 const { toggle } = useAppSidebar()
+
+const pageTitle = computed(() => {
+  return route.meta.pageTitle
+})
 </script>
 
 <template>
@@ -12,8 +17,11 @@ const { toggle } = useAppSidebar()
       @click="toggle"
     />
 
-    <p class="font-medium">
-      Bookmarks
+    <p
+      v-if="pageTitle"
+      class="font-medium"
+    >
+      {{ pageTitle }}
     </p>
   </div>
 </template>

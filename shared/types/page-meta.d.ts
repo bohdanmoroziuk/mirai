@@ -4,6 +4,7 @@ declare module '#app' {
   interface PageMeta {
     access?: PageAccess
     devOnly?: boolean
+    pageTitle?: string
   }
 }
 
