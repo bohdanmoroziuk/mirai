@@ -15,6 +15,11 @@ const componentLinks = [
     description: 'Handles fetching, error, empty and success states.',
     to: '/dev/components/ui-query-state',
   },
+  {
+    label: 'UiLoader',
+    description: 'Simple shared loading spinner.',
+    to: '/dev/components/ui-loader',
+  },
 ]
 </script>
 

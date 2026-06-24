@@ -15,3 +15,7 @@ export const isTruthy = <T>(value: T): value is Truthy<T> => {
 export const isFalsy = (value: unknown): value is Falsy => {
   return !value
 }
+
+export const getHostname = (url: string) => {
+  return new URL(url).hostname
+}

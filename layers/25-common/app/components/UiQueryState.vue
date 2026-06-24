@@ -16,7 +16,7 @@ defineSlots<{
   fetching(): unknown
   error(props: { error: E }): unknown
   empty(): unknown
-  default(props: { data?: T }): unknown
+  default(props: { data: T }): unknown
 }>()
 
 const hasError = computed(() => {
@@ -55,7 +55,7 @@ const isEmpty = computed(() => {
   <template v-else>
     <slot
       name="default"
-      :data
+      :data="data!"
     />
   </template>
 </template>

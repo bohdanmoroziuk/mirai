@@ -40,7 +40,7 @@ type UiQueryStateProps<T, E = Error> = {
 | `fetching` | —              | Rendered while data is being fetched.                                 |
 | `error`    | `{ error: E }` | Rendered when an error exists.                                        |
 | `empty`    | —              | Rendered when `emptyWhen(data)` returns `true`.                       |
-| `default`  | `{ data?: T }` | Rendered when data exists and there is no fetching/error/empty state. |
+| `default`  | `{ data: T }`  | Rendered when data exists and there is no fetching/error/empty state. |
 
 ## Behavior
 
