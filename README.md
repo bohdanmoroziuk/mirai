@@ -84,3 +84,69 @@ Available documentation links in development:
 * OpenAPI JSON: [`http://localhost:3000/_openapi.json`](http://localhost:3000/_openapi.json)
 * Scalar UI: [`http://localhost:3000/_scalar`](http://localhost:3000/_scalar)
 * Swagger UI: [`http://localhost:3000/_swagger`](http://localhost:3000/_swagger)
+
+
+## Development pages and documentation
+
+The project contains two separate places for internal development materials:
+
+```txt
+/dev/**
+/docs/**
+```
+
+### `/dev/**` pages
+
+`/dev/**` pages are development-only Nuxt pages used to preview internal UI components and app states.
+
+Example routes:
+
+```txt
+/dev/components
+/dev/components/ui-query-state
+/dev/components/ui-input-password
+/dev/components/ui-loader
+```
+
+Use these pages to manually check component states, layout behavior and visual consistency during development.
+
+Dev pages should be marked with the `devOnly` page meta:
+
+```ts
+definePageMeta({
+  devOnly: true,
+})
+```
+
+The `dev-only.global` middleware checks this meta field and blocks these pages outside development mode.
+
+### `/docs/**` files
+
+`/docs/**` files contain internal project documentation.
+
+Example files:
+
+```txt
+docs/components/index.md
+docs/components/ui-query-state.md
+docs/components/ui-input-password.md
+docs/components/ui-loader.md
+```
+
+Use these files to document shared components, architecture decisions, API conventions and project-specific rules.
+
+Component documentation should usually include:
+
+* purpose;
+* props;
+* emits;
+* slots;
+* usage examples;
+* important notes;
+* related dev preview route.
+
+### Rule
+
+Use `/dev/**` for interactive previews.
+
+Use `/docs/**` for written documentation.

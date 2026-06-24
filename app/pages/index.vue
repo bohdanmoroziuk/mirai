@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getErrorMessage } from '@core/shared/utils/error'
+import { getErrorMessage } from '@common/shared/utils/error'
 import { useLogoutMutation } from '@auth/app/queries/auth.queries'
 
 const toast = useToast()

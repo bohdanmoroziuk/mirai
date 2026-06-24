@@ -17,6 +17,7 @@ export const collectionRepository = {
   findMany(input: FindCollectionDocumentsInput): Promise<CollectionDocument[]> {
     return CollectionModel
       .find({ userId: input.userId })
+      .sort({ createdAt: -1 })
       .exec()
   },
 
