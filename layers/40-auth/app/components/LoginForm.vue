@@ -57,11 +57,11 @@ defineExpose({
       label="Password"
       name="password"
     >
-      <UInput
+      <UiInputPassword
         v-model="state.password"
-        class="w-full"
         placeholder="Enter your password"
-        type="password"
+        autocomplete="current-password"
+        class="w-full"
       />
     </UFormField>
 
