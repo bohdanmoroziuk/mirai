@@ -5,16 +5,8 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-col gap-2 shadow-xs hover:shadow-md rounded-sm overflow-hidden">
-    <header>
-      <img
-        class="object-cover"
-        src="https://miro.medium.com/v2/resize:fit:3584/format:webp/1*OdZr-XfgTDXBCtU4c1EDxg.png"
-        alt=""
-      >
-    </header>
-
-    <main class="flex-1 px-2">
+  <div class="flex flex-col p-2 gap-2 shadow-xs hover:shadow-md rounded-sm overflow-hidden">
+    <main class="flex-1">
       <h3 class="text-primary">
         {{ bookmark.title }}
       </h3>
@@ -34,7 +26,7 @@ defineProps<{
       </ULink>
     </main>
 
-    <footer class="p-2 pt-0">
+    <footer>
       <div class="flex items-center justify-end gap-2">
         <UButton
           :to="bookmark.url"

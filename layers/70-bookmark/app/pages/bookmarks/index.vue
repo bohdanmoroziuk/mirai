@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useRouteQuery } from '@vueuse/router'
 import { useBookmarkQuery } from '../../queries/bookmark.queries'
 
 definePageMeta({
@@ -6,7 +7,15 @@ definePageMeta({
   pageTitle: 'Bookmarks',
 })
 
-const { bookmarks, error, isFetching } = useBookmarkQuery()
+const collectionId = useRouteQuery<Nullish<string>>('collectionId', undefined)
+
+const bookmarksQuery = computed(() => {
+  return {
+    collectionId: collectionId.value ?? undefined,
+  }
+})
+
+const { bookmarks, error, isFetching } = useBookmarkQuery(bookmarksQuery)
 </script>
 
 <template>

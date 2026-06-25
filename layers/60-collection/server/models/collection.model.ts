@@ -26,4 +26,15 @@ const collectionSchema = new Schema<CollectionSchema>({
   timestamps: true,
 })
 
+collectionSchema.index(
+  {
+    userId: 1,
+    parentId: 1,
+    title: 1,
+  },
+  {
+    unique: true,
+  },
+)
+
 export const CollectionModel = createMongooseModel<CollectionSchema>('Collection', collectionSchema)

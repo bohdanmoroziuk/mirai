@@ -1,9 +1,12 @@
+import { validateQuery } from '@common/server/utils/validation'
+import { getBookmarksQuerySchema } from '../../schemas/bookmark.schema'
 import { toGetBookmarksInput } from '../../mappers/bookmark.mapper'
 import { getBookmarks } from '../../services/bookmark.service'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)
-  const bookmarks = await getBookmarks(toGetBookmarksInput(session))
+  const query = await validateQuery(event, getBookmarksQuerySchema)
+  const bookmarks = await getBookmarks(toGetBookmarksInput(session, query))
 
   return createResponse(bookmarks)
 })
@@ -12,10 +15,22 @@ defineRouteMeta({
   openAPI: {
     tags: ['Bookmarks'],
     summary: 'Get bookmarks',
-    description: 'Returns bookmarks that belong to the authenticated user.',
+    description: 'Returns bookmarks that belong to the authenticated user. If collectionId is provided, returns only bookmarks from the given collection.',
     security: [
       {
         cookieAuth: [],
+      },
+    ],
+    parameters: [
+      {
+        name: 'collectionId',
+        in: 'query',
+        required: false,
+        description: 'Collection ID used to filter bookmarks.',
+        schema: {
+          type: 'string',
+          example: '665f1b8e1b7c2f0012a4c123',
+        },
       },
     ],
     responses: {
@@ -72,7 +87,7 @@ defineRouteMeta({
                       collectionId: {
                         type: 'string',
                         nullable: true,
-                        example: null,
+                        example: '665f1b8e1b7c2f0012a4c123',
                       },
                       tagIds: {
                         type: 'array',
@@ -98,6 +113,9 @@ defineRouteMeta({
             },
           },
         },
+      },
+      400: {
+        description: 'Validation error',
       },
       401: {
         description: 'Unauthorized',

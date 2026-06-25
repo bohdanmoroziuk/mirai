@@ -1,3 +1,7 @@
+export type GetBookmarksQuery = {
+  collectionId?: string
+}
+
 export type CreateBookmarkInput = {
   title: string
   description: string

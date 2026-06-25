@@ -17,6 +17,7 @@ import type {
   UpdateBookmarkParams,
   UpdateBookmarkBody,
   UpdateBookmarkDocumentQuery,
+  GetBookmarksQuery,
 } from '../types/bookmark'
 
 export const toBookmark = (document: BookmarkDocument): Bookmark => {
@@ -65,9 +66,11 @@ export const toCreateBookmarkDocumentInput = (
 
 export const toGetBookmarksInput = (
   session: UserSessionRequired,
+  query: GetBookmarksQuery,
 ): GetBookmarksInput => {
   return {
     userId: session.user.id,
+    collectionId: query.collectionId,
   }
 }
 
@@ -77,6 +80,11 @@ export const toFindBookmarkDocumentsQuery = (
   return {
     filter: {
       userId: toObjectId(input.userId),
+      ...(
+        input.collectionId
+          ? { collectionId: toNullableObjectId(input.collectionId) }
+          : {}
+      ),
     },
     sort: {
       createdAt: -1,

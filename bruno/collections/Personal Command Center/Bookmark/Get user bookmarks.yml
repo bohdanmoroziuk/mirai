@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{BASE_URL}}/bookmarks"
+  url: "{{BASE_URL}}/bookmarks?collectionId={{COLLECTION_ID}}"
+  params:
+    - name: collectionId
+      value: "{{COLLECTION_ID}}"
+      type: query
   auth: inherit
 
 settings:

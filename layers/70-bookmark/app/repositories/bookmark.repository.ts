@@ -1,8 +1,11 @@
-import type { CreateBookmarkInput } from '../types/bookmark'
+import type { CreateBookmarkInput, GetBookmarksQuery } from '../types/bookmark'
 
 export const bookmarkRepository = {
-  getMany() {
-    return $fetch<ApiResponse<Bookmark[]>>('/api/bookmarks')
+  getMany(query: GetBookmarksQuery = {}) {
+    return $fetch<ApiResponse<Bookmark[]>>('/api/bookmarks', {
+      method: 'get',
+      query,
+    })
   },
 
   createOne(input: CreateBookmarkInput) {
