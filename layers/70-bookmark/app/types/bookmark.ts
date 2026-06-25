@@ -19,3 +19,5 @@ export type CreateBookmarkFormState = {
   collectionId: Nullish<string>
   tagIds: string[]
 }
+
+export type DeleteBookmarkOutput = SuccessOutput

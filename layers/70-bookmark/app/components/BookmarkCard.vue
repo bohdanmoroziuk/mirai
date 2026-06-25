@@ -1,7 +1,30 @@
 <script setup lang="ts">
-defineProps<{
+import { useDeleteBookmarkMutation } from '../queries/bookmark.queries'
+
+const props = defineProps<{
   bookmark: Bookmark
 }>()
+
+const toast = useToast()
+const { deleteBookmark, isPending } = useDeleteBookmarkMutation()
+
+const handleBookmarkDelete = async () => {
+  await deleteBookmark(props.bookmark.id)
+
+  try {
+    toast.add({
+      title: 'Bookmark has been deleted successfully',
+      color: 'success',
+    })
+  }
+  catch (error) {
+    toast.add({
+      title: 'Operation failed!',
+      description: getErrorMessage(error),
+      color: 'error',
+    })
+  }
+}
 </script>
 
 <template>
@@ -49,6 +72,8 @@ defineProps<{
           size="sm"
           color="error"
           variant="solid"
+          :loading="isPending"
+          @click.stop="handleBookmarkDelete"
         />
       </div>
     </footer>

@@ -54,3 +54,25 @@ export const useCreateBookmarkMutation = () => {
     createBookmark,
   }
 }
+
+export const useDeleteBookmarkMutation = () => {
+  const queryClient = useQueryClient()
+
+  const {
+    isPending,
+    mutateAsync: deleteBookmark,
+  } = useMutation({
+    mutationKey: ['bookmarks', 'delete'],
+    mutationFn: bookmarkRepository.deleteOne,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['bookmarks'],
+      })
+    },
+  })
+
+  return {
+    isPending,
+    deleteBookmark,
+  }
+}
