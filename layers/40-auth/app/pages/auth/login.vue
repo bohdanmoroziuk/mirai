@@ -7,7 +7,7 @@ definePageMeta({
   layout: 'auth',
 })
 
-const toast = useToast()
+const notification = useNotification()
 const { errorMessage, loading, login } = useLoginMutation()
 
 const handleLogin = async (input: LoginInput) => {
@@ -16,10 +16,9 @@ const handleLogin = async (input: LoginInput) => {
     await navigateTo('/')
   }
   catch {
-    toast.add({
+    notification.error({
       title: 'Login failed!',
       description: errorMessage.value,
-      color: 'error',
     })
   }
 }

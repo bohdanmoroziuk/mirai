@@ -20,6 +20,11 @@ const componentLinks = [
     description: 'Simple shared loading spinner.',
     to: '/dev/components/ui-loader',
   },
+  {
+    label: 'UiConfirmModal',
+    description: 'Shared modal for confirming important user actions.',
+    to: '/dev/components/ui-confirm-modal',
+  },
 ]
 </script>
 

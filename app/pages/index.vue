@@ -2,7 +2,7 @@
 import { getErrorMessage } from '@common/shared/utils/error'
 import { useLogoutMutation } from '@auth/app/queries/auth.queries'
 
-const toast = useToast()
+const notification = useNotification()
 const { loading, logout } = useLogoutMutation()
 
 const handleLogout = async () => {
@@ -11,10 +11,9 @@ const handleLogout = async () => {
     await navigateTo('/auth/signup')
   }
   catch (error) {
-    toast.add({
+    notification.error({
       title: 'Logout failed!',
       description: getErrorMessage(error),
-      color: 'error',
     })
   }
 }

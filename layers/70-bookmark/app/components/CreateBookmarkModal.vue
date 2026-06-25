@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useCreateCollectionMutation } from '../queries/collection.queries'
-import type { CreateCollectionInput } from '../types/collection'
+import { useCreateBookmarkMutation } from '../queries/bookmark.queries'
+import type { CreateBookmarkInput } from '../types/bookmark'
 
 const notification = useNotification()
 const [isOpen, toggle] = useToggle()
-const { isPending, createCollection } = useCreateCollectionMutation()
+const { createBookmark, isPending } = useCreateBookmarkMutation()
 
 const open = () => {
   toggle(true)
@@ -14,12 +14,12 @@ const close = () => {
   toggle(false)
 }
 
-const handleCollectionCreate = async (input: CreateCollectionInput) => {
+const handleBookmarkCreate = async (input: CreateBookmarkInput) => {
   try {
-    await createCollection(input)
+    await createBookmark(input)
 
     notification.success({
-      title: 'Collection has been created',
+      title: 'Bookmark has been created',
     })
 
     close()
@@ -36,21 +36,20 @@ const handleCollectionCreate = async (input: CreateCollectionInput) => {
 <template>
   <UModal
     v-model:open="isOpen"
-    title="Create collection"
+    title="Create bookmark"
   >
     <template #default>
       <UButton
-        label="Create collection"
+        label="Create bookmark"
         color="primary"
-        variant="outline"
         @click="open"
       />
     </template>
 
     <template #body>
-      <CreateCollectionForm
+      <CreateBookmarkForm
         :loading="isPending"
-        @submit="handleCollectionCreate"
+        @submit="handleBookmarkCreate"
         @cancel="close"
       />
     </template>

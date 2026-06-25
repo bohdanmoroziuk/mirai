@@ -38,3 +38,15 @@ export const validateParams = async <TSchema extends z.ZodType>(
 
   return result.data
 }
+
+export const validateQuery = async <TSchema extends z.ZodType>(
+  event: H3Event,
+  schema: TSchema,
+): Promise<z.output<TSchema>> => {
+  const dirtyQuery = getQuery(event)
+  const result = schema.safeParse(dirtyQuery)
+
+  ensureValidResult(result)
+
+  return result.data
+}

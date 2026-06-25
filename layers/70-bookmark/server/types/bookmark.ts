@@ -9,6 +9,7 @@ import type {
   deleteBookmarkParamsSchema,
   updateBookmarkParamsSchema,
   updateBookmarkBodySchema,
+  getBookmarksQuerySchema,
 } from '../schemas/bookmark.schema'
 
 export type BookmarkSchema = {
@@ -47,8 +48,11 @@ export type CreateBookmarkDocumentInput = {
   tagIds: Types.ObjectId[]
 }
 
+export type GetBookmarksQuery = z.infer<typeof getBookmarksQuerySchema>
+
 export type GetBookmarksInput = {
   userId: string
+  collectionId?: string
 }
 
 export type FindBookmarksDocumentsQuery = {
