@@ -2,7 +2,7 @@
 import { useCreateBookmarkMutation } from '../queries/bookmark.queries'
 import type { CreateBookmarkInput } from '../types/bookmark'
 
-const toast = useToast()
+const notification = useNotification()
 const [isOpen, toggle] = useToggle()
 const { createBookmark, isPending } = useCreateBookmarkMutation()
 
@@ -18,18 +18,16 @@ const handleBookmarkCreate = async (input: CreateBookmarkInput) => {
   try {
     await createBookmark(input)
 
-    toast.add({
+    notification.success({
       title: 'Bookmark has been created',
-      color: 'success',
     })
 
     close()
   }
   catch (error) {
-    toast.add({
+    notification.error({
       title: 'Operation failed!',
       description: getErrorMessage(error),
-      color: 'error',
     })
   }
 }

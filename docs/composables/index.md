@@ -9,6 +9,7 @@ Use this folder to document project-specific composables, not every small Vue or
 | Composable        | Description                                                     | Docs                           |
 | ----------------- | --------------------------------------------------------------- | ------------------------------ |
 | `useConfirmModal` | Opens `UiConfirmModal` programmatically for confirmation flows. | [Docs](./use-confirm-modal.md) |
+| `useNotification` | Shows consistent app notifications through Nuxt UI toasts. | [Docs](./use-notification.md) |
 
 ## Rules
 

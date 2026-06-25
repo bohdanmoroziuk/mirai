@@ -2,7 +2,7 @@
 import { useCreateCollectionMutation } from '../queries/collection.queries'
 import type { CreateCollectionInput } from '../types/collection'
 
-const toast = useToast()
+const notification = useNotification()
 const [isOpen, toggle] = useToggle()
 const { isPending, createCollection } = useCreateCollectionMutation()
 
@@ -18,18 +18,16 @@ const handleCollectionCreate = async (input: CreateCollectionInput) => {
   try {
     await createCollection(input)
 
-    toast.add({
+    notification.success({
       title: 'Collection has been created',
-      color: 'success',
     })
 
     close()
   }
   catch (error) {
-    toast.add({
+    notification.error({
       title: 'Operation failed!',
       description: getErrorMessage(error),
-      color: 'error',
     })
   }
 }
