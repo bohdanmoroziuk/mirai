@@ -6,24 +6,32 @@ const props = defineProps<{
 }>()
 
 const toast = useToast()
+const { confirm } = useConfirmModal()
 const { deleteBookmark, isPending } = useDeleteBookmarkMutation()
 
 const handleBookmarkDelete = async () => {
-  await deleteBookmark(props.bookmark.id)
+  await confirm({
+    title: 'Delete bookmark?',
+    description: 'This bookmark will be permanently deleted.',
+    confirmLabel: 'Delete',
 
-  try {
-    toast.add({
-      title: 'Bookmark has been deleted successfully',
-      color: 'success',
-    })
-  }
-  catch (error) {
-    toast.add({
-      title: 'Operation failed!',
-      description: getErrorMessage(error),
-      color: 'error',
-    })
-  }
+    onConfirm: async () => {
+      await deleteBookmark(props.bookmark.id)
+
+      toast.add({
+        title: 'Bookmark has been deleted successfully',
+        color: 'success',
+      })
+    },
+
+    onError: (error) => {
+      toast.add({
+        title: 'Operation failed!',
+        description: getErrorMessage(error),
+        color: 'error',
+      })
+    },
+  })
 }
 </script>
 
