@@ -14,7 +14,7 @@ const { bookmarks, error, isFetching } = useBookmarkQuery()
     <div class="flex items-center gap-4">
       <CreateCollectionModal />
 
-      <UButton>Add bookmark</UButton>
+      <CreateBookmarkModal />
     </div>
 
     <div>

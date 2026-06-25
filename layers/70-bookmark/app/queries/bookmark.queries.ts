@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { bookmarkRepository } from '../repositories/bookmark.repository'
 
 export const useBookmarkQuery = () => {
@@ -22,5 +22,27 @@ export const useBookmarkQuery = () => {
     bookmarks,
     isFetching,
     error,
+  }
+}
+
+export const useCreateBookmarkMutation = () => {
+  const queryClient = useQueryClient()
+
+  const {
+    isPending,
+    mutateAsync: createBookmark,
+  } = useMutation({
+    mutationKey: ['bookmarks', 'create'],
+    mutationFn: bookmarkRepository.createOne,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['bookmarks'],
+      })
+    },
+  })
+
+  return {
+    isPending,
+    createBookmark,
   }
 }
