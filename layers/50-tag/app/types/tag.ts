@@ -11,3 +11,5 @@ export type TagBody = Pick<
 export type TagFormState = TagBody
 
 export type CreateTagInput = TagBody
+
+export type DeleteTagOutput = SuccessOutput

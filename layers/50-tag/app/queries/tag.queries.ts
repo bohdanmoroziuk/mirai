@@ -45,3 +45,25 @@ export const useCreateTagMutation = () => {
     createTag,
   }
 }
+
+export const useDeleteTagMutation = () => {
+  const queryClient = useQueryClient()
+
+  const {
+    isPending: loading,
+    mutateAsync: deleteTag,
+  } = useMutation({
+    mutationKey: ['tags', 'delete'],
+    mutationFn: tagRepository.deleteOne,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['tags'],
+      })
+    },
+  })
+
+  return {
+    loading,
+    deleteTag,
+  }
+}
