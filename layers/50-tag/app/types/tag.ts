@@ -1,15 +1,25 @@
-export type GetTagsQuery = {
-  search?: string
-}
-
-export type TagBody = Pick<
+export type TagPayload = Pick<
   TagEntity,
   | 'name'
   | 'color'
 >
 
-export type TagFormState = TagBody
+export type TagFormState = TagPayload
 
-export type CreateTagInput = TagBody
+export type GetTagsInput = {
+  query?: {
+    search?: string
+  }
+}
+
+export type CreateTagInput = {
+  body: TagPayload
+}
+
+export type DeleteTagInput = {
+  params: {
+    tagId: string
+  }
+}
 
 export type DeleteTagOutput = SuccessOutput

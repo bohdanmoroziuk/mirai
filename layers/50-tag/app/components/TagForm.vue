@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TagFormState, CreateTagInput } from '../types/tag'
+import type { TagFormState } from '../types/tag'
 
 const props = defineProps<{
   loading?: boolean
@@ -7,7 +7,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  submit: [input: CreateTagInput]
+  submit: [state: TagFormState]
   cancel: []
 }>()
 

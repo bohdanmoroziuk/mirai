@@ -1,17 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import type { GetTagsQuery } from '../types/tag'
+import type { GetTagsInput } from '../types/tag'
 import { tagRepository } from '../repositories/tag.repository'
 
 export const useTagsQuery = (
-  query: MaybeRefOrGetter<GetTagsQuery> = {},
+  input: MaybeRefOrGetter<GetTagsInput> = {},
 ) => {
   const { isFetching, error, data: tags } = useQuery<
     ApiResponse<Tag[]>,
     Error,
     Tag[]
   >({
-    queryKey: computed(() => ['tags', toValue(query)]),
-    queryFn: () => tagRepository.getMany(toValue(query)),
+    queryKey: computed(() => ['tags', toValue(input)]),
+    queryFn: () => tagRepository.getMany(toValue(input)),
     initialData: toApiResponse([]),
     initialDataUpdatedAt: 0,
     select: selectApiData,

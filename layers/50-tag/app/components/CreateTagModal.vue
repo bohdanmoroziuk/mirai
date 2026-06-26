@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { DEFAULT_TAG_COLOR } from '../../shared/constants/tag'
+import { toCreateTagInput } from '../mappers/tag-input.mapper'
+import { getTagFormInitialState } from '../mappers/tag.mapper'
 import { useCreateTagMutation } from '../queries/tag.queries'
-import type { CreateTagInput } from '../types/tag'
+import type { TagFormState } from '../types/tag'
 
 const notification = useNotification()
 const [isOpen, toggle] = useToggle()
@@ -15,14 +16,11 @@ const close = () => {
   toggle(false)
 }
 
-const initialState = {
-  name: '',
-  color: DEFAULT_TAG_COLOR,
-}
+const initialState = getTagFormInitialState()
 
-const handleTagCreate = async (input: CreateTagInput) => {
+const handleTagCreate = async (state: TagFormState) => {
   try {
-    await createTag(input)
+    await createTag(toCreateTagInput(state))
 
     notification.success({
       title: 'Tag has been created',

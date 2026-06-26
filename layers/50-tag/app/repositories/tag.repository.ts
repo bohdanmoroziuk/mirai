@@ -1,22 +1,22 @@
-import type { CreateTagInput, DeleteTagOutput, GetTagsQuery } from '../types/tag'
+import type { GetTagsInput, CreateTagInput, DeleteTagInput, DeleteTagOutput } from '../types/tag'
 
 export const tagRepository = {
-  getMany(query: GetTagsQuery) {
+  getMany(input: GetTagsInput) {
     return $fetch <ApiResponse<Tag[]>>('/api/tags', {
       method: 'get',
-      query,
+      query: input.query,
     })
   },
 
   createOne(input: CreateTagInput) {
     return $fetch<ApiResponse<Tag>>('/api/tags', {
       method: 'post',
-      body: input,
+      body: input.body,
     })
   },
 
-  deleteOne(tagId: string) {
-    return $fetch <ApiResponse<DeleteTagOutput>>(`/api/tags/${tagId}`, {
+  deleteOne(input: DeleteTagInput) {
+    return $fetch <ApiResponse<DeleteTagOutput>>(`/api/tags/${input.params.tagId}`, {
       method: 'delete',
     })
   },

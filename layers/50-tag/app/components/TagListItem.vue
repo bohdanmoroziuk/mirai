@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { formatTimeAgo } from '@vueuse/core'
 import { useDeleteTagMutation } from '../queries/tag.queries'
+import { toDeleteTagInput } from '../mappers/tag-input.mapper'
 
 const props = defineProps<{
   tag: Tag
@@ -18,7 +19,7 @@ const handleTagDelete = async () => {
     confirmLabel: 'Delete',
 
     async onConfirm() {
-      await deleteTag(props.tag.id)
+      await deleteTag(toDeleteTagInput(props.tag.id))
 
       notification.success({
         title: 'Tag has been deleted successfully',
