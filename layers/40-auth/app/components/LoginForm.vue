@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { LoginFormState } from '../types/auth'
-import { loginFormSchema } from '../schemas/auth.schema'
+import { loginPayloadSchema } from '../schemas/auth.schema'
 
 defineProps<{
   loading?: boolean
@@ -36,7 +36,7 @@ defineExpose({
 
 <template>
   <UForm
-    :schema="loginFormSchema"
+    :schema="loginPayloadSchema"
     :state="state"
     class="space-y-4"
     @submit="submit"
