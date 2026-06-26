@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { SignupInput } from '../../types/auth'
 import { useSignupMutation } from '../../queries/auth.queries'
+import { toSignupInput } from '../../mappers/auth-input.mapper'
+import type { SignupFormState } from '../../types/auth'
 
 definePageMeta({
   access: 'guest-only',
@@ -10,9 +11,9 @@ definePageMeta({
 const notification = useNotification()
 const { errorMessage, loading, signup } = useSignupMutation()
 
-const handleSignup = async (input: SignupInput) => {
+const handleSignup = async (state: SignupFormState) => {
   try {
-    await signup(input)
+    await signup(toSignupInput(state))
     await navigateTo('/')
   }
   catch {

@@ -6,14 +6,14 @@ export const authRepository = {
   signup(input: SignupInput) {
     return $fetch <ApiResponse<AuthUser>>('/api/auth/signup', {
       method: 'post',
-      body: input,
+      body: input.body,
     })
   },
 
   login(input: LoginInput) {
     return $fetch<ApiResponse<AuthUser>>('/api/auth/login', {
       method: 'post',
-      body: input,
+      body: input.body,
     })
   },
 

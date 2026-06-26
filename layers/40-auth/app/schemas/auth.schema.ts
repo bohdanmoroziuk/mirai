@@ -1,12 +1,23 @@
 import { z } from 'zod'
 
-export const signupFormSchema = z.object({
-  name: z.string().trim().min(3),
-  email: z.email().trim(),
-  password: z.string().min(8),
+const emailSchema = z
+  .email()
+  .trim()
+
+const passwordSchema = z
+  .string()
+  .min(8)
+
+export const signupPayloadSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(3),
+  email: emailSchema,
+  password: passwordSchema,
 })
 
-export const loginFormSchema = z.object({
-  email: z.email().trim(),
-  password: z.string().min(8),
+export const loginPayloadSchema = z.object({
+  email: emailSchema,
+  password: passwordSchema,
 })

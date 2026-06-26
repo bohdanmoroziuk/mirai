@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { LoginInput } from '../../types/auth'
 import { useLoginMutation } from '../../queries/auth.queries'
+import { toLoginInput } from '../../mappers/auth-input.mapper'
+import type { LoginFormState } from '../../types/auth'
 
 definePageMeta({
   access: 'guest-only',
@@ -10,9 +11,9 @@ definePageMeta({
 const notification = useNotification()
 const { errorMessage, loading, login } = useLoginMutation()
 
-const handleLogin = async (input: LoginInput) => {
+const handleLogin = async (state: LoginFormState) => {
   try {
-    await login(input)
+    await login(toLoginInput(state))
     await navigateTo('/')
   }
   catch {
