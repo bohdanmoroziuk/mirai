@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import type { CreateBookmarkInput, CreateBookmarkFormState } from '../types/bookmark'
+import { bookmarkPayloadSchema } from '../schemas/bookmark.schema'
+import type { BookmarkFormState } from '../types/bookmark'
 
-defineProps<{
-  loading?: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    loading?: boolean
+    submitLabel?: string
+    initialState: BookmarkFormState
+  }>(),
+  {
+    loading: false,
+    submitLabel: 'Submit',
+  },
+)
 
 const emit = defineEmits<{
-  submit: [input: CreateBookmarkInput]
+  submit: [input: BookmarkFormState]
   cancel: []
 }>()
 
-const state = reactive<CreateBookmarkFormState>({
-  title: '',
-  description: '',
-  url: '',
-  isFavorite: false,
-  collectionId: undefined,
-  tagIds: [],
-})
+const state = reactive<BookmarkFormState>({ ...props.initialState })
 
 const submit = () => {
   emit('submit', toValue(state))
@@ -30,6 +32,7 @@ const cancel = () => {
 
 <template>
   <UForm
+    :schema="bookmarkPayloadSchema"
     :state="state"
     class="space-y-4"
     @submit="submit"
@@ -94,7 +97,7 @@ const cancel = () => {
         :loading
         type="submit"
       >
-        Submit
+        {{ submitLabel }}
       </UButton>
     </div>
   </UForm>

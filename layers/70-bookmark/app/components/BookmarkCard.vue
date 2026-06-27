@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { toDeleteBookmarkInput } from '../mappers/bookmark-input.mapper'
 import { useDeleteBookmarkMutation } from '../queries/bookmark.queries'
 
 const props = defineProps<{
@@ -7,7 +8,7 @@ const props = defineProps<{
 
 const notification = useNotification()
 const { confirm } = useConfirmModal()
-const { deleteBookmark, isPending } = useDeleteBookmarkMutation()
+const { deleteBookmark, loading } = useDeleteBookmarkMutation()
 
 const handleBookmarkDelete = async () => {
   await confirm({
@@ -16,7 +17,7 @@ const handleBookmarkDelete = async () => {
     confirmLabel: 'Delete',
 
     onConfirm: async () => {
-      await deleteBookmark(props.bookmark.id)
+      await deleteBookmark(toDeleteBookmarkInput(props.bookmark.id))
 
       notification.success({
         title: 'Bookmark has been deleted successfully',
@@ -78,7 +79,7 @@ const handleBookmarkDelete = async () => {
           size="sm"
           color="error"
           variant="solid"
-          :loading="isPending"
+          :loading="loading"
           @click.stop="handleBookmarkDelete"
         />
       </div>

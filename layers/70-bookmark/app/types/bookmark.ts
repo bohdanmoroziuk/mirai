@@ -1,23 +1,26 @@
+import type { z } from 'zod'
+import type { bookmarkPayloadSchema } from '../schemas/bookmark.schema'
+
+export type BookmarkPayload = z.infer<typeof bookmarkPayloadSchema>
+
+export type BookmarkFormState = BookmarkPayload
+
 export type GetBookmarksQuery = {
   collectionId?: string
 }
 
-export type CreateBookmarkInput = {
-  title: string
-  description: string
-  url: string
-  isFavorite: boolean
-  collectionId: Nullish<string>
-  tagIds: string[]
+export type GetBookmarksInput = {
+  query?: GetBookmarksQuery
 }
 
-export type CreateBookmarkFormState = {
-  title: string
-  description: string
-  url: string
-  isFavorite: boolean
-  collectionId: Nullish<string>
-  tagIds: string[]
+export type CreateBookmarkInput = {
+  body: BookmarkPayload
+}
+
+export type DeleteBookmarkInput = {
+  params: {
+    bookmarkId: string
+  }
 }
 
 export type DeleteBookmarkOutput = SuccessOutput

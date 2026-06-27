@@ -15,7 +15,7 @@ const bookmarksQuery = computed(() => {
   }
 })
 
-const { bookmarks, error, isFetching } = useBookmarkQuery(bookmarksQuery)
+const { bookmarks, error, loading } = useBookmarkQuery(bookmarksQuery)
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const { bookmarks, error, isFetching } = useBookmarkQuery(bookmarksQuery)
       <UiQueryState
         :data="bookmarks"
         :error="error"
-        :fetching="isFetching"
+        :fetching="loading"
         :empty-when="(data) => data?.length === 0"
       >
         <template #fetching>
