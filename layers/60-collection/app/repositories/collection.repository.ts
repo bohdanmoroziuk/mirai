@@ -8,7 +8,7 @@ export const collectionRepository = {
   createOne(input: CreateCollectionInput) {
     return $fetch<ApiResponse<Collection>>('/api/collections', {
       method: 'post',
-      body: input,
+      body: input.body,
     })
   },
 }
