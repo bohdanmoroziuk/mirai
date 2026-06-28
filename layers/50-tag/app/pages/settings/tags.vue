@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 definePageMeta({
   access: 'private',
   pageTitle: 'Tag Manager',

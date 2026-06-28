@@ -4,6 +4,7 @@ import type { Nullish } from '@core/shared/types/common'
 import type { SuccessOutput } from '@core/shared/types/api'
 import type { QuerySort } from '@common/server/types/mongoose'
 import type {
+  getTagsQuerySchema,
   createTagBodySchema,
   deleteTagParamsSchema,
   updateTagBodySchema,
@@ -34,8 +35,11 @@ export type CreateTagDocumentInput = {
   color?: Nullish<string>
 }
 
+export type GetTagsQuery = z.infer<typeof getTagsQuerySchema>
+
 export type GetTagsInput = {
   userId: string
+  search?: string
 }
 
 export type FindTagDocumentsQuery = {

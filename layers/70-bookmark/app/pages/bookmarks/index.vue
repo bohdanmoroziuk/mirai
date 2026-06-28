@@ -31,7 +31,7 @@ const { bookmarks, error, loading } = useBookmarkQuery(bookmarksQuery)
         :data="bookmarks"
         :error="error"
         :fetching="loading"
-        :empty-when="(data) => data?.length === 0"
+        :empty-when="isEmpty"
       >
         <template #fetching>
           <div class="flex justify-center">

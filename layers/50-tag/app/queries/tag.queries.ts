@@ -5,7 +5,11 @@ import { tagRepository } from '../repositories/tag.repository'
 export const useTagsQuery = (
   input: MaybeRefOrGetter<GetTagsInput> = {},
 ) => {
-  const { isFetching, error, data: tags } = useQuery<
+  const {
+    isFetching: loading,
+    error,
+    data: tags,
+  } = useQuery<
     ApiResponse<Tag[]>,
     Error,
     Tag[]
@@ -20,7 +24,7 @@ export const useTagsQuery = (
   return {
     tags,
     error,
-    isFetching,
+    loading,
   }
 }
 

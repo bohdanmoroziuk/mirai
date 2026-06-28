@@ -1,8 +1,19 @@
-import type { CreateTagInput, DeleteTagInput, TagFormState } from '../types/tag'
+import type { CreateTagInput, DeleteTagInput, GetTagsInput, GetTagsQuery, TagFormState } from '../types/tag'
+
+export const toGetTagsInput = (query: GetTagsQuery): GetTagsInput => {
+  return {
+    query: compactQuery({
+      search: query.search?.trim() || undefined,
+    }),
+  }
+}
 
 export const toCreateTagInput = (state: TagFormState): CreateTagInput => {
   return {
-    body: state,
+    body: {
+      name: state.name,
+      color: state.color,
+    },
   }
 }
 
