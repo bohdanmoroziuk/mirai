@@ -41,7 +41,7 @@ layers/10-core/
   Pure framework-agnostic TypeScript code.
   Must not depend on Nuxt, Vue, H3, Zod, Mongoose, Sentry, or other libraries.
 
-layers/20-shared/
+layers/20-common/
   Reusable application code that may depend on Nuxt, Vue, H3, Zod, Nuxt UI, and other libraries.
 
 layers/30-user/
@@ -61,7 +61,7 @@ Pure reusable TypeScript logic
 → layers/10-core
 
 Reusable Nuxt/Vue/server/app logic
-→ layers/20-shared
+→ layers/20-common
 
 Feature-specific logic
 → corresponding feature layer
@@ -77,8 +77,8 @@ Pages, layouts, and app shell
 
 ```txt
 core    → depends on nothing project-specific
-shared  → may depend on core and framework/library code
-features → may depend on core and shared
+common  → may depend on core and framework/library code
+features → may depend on core and common
 modules → configure third-party tools for the Nuxt runtime
 ```
 
