@@ -35,7 +35,7 @@ const handleBookmarkDelete = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col p-2 gap-2 min-h-40 shadow-xs hover:shadow-md rounded-sm overflow-hidden">
+  <div class="flex flex-col p-2 gap-2 min-h-44 shadow-xs hover:shadow-md rounded-sm overflow-hidden">
     <main class="flex-1 flex flex-col gap-1">
       <h3
         class="text-primary line-clamp-1"
