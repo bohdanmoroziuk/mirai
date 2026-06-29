@@ -37,9 +37,7 @@ const cancel = () => {
     class="space-y-4"
     @submit="submit"
   >
-    <UFormField
-      label="Title"
-    >
+    <UFormField label="Title">
       <UInput
         v-model="state.title"
         placeholder="Enter title"
@@ -47,9 +45,7 @@ const cancel = () => {
       />
     </UFormField>
 
-    <UFormField
-      label="Description"
-    >
+    <UFormField label="Description">
       <UTextarea
         v-model="state.description"
         :rows="4"
@@ -59,9 +55,7 @@ const cancel = () => {
       />
     </UFormField>
 
-    <UFormField
-      label="Url"
-    >
+    <UFormField label="Url">
       <UInput
         v-model="state.url"
         type="url"
@@ -75,11 +69,16 @@ const cancel = () => {
       label="Favorite"
     />
 
-    <UFormField
-      label="Collection"
-    >
+    <UFormField label="Collection">
       <CollectionSelectMenu
         v-model="state.collectionId"
+        class="w-full"
+      />
+    </UFormField>
+
+    <UFormField label="Tags">
+      <TagSelectMenu
+        v-model="state.tagIds"
         class="w-full"
       />
     </UFormField>
