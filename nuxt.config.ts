@@ -29,6 +29,21 @@ export default defineNuxtConfig({
     enabled: false,
   },
 
+  app: {
+    head: {
+      title: 'Mirai',
+      htmlAttrs: {
+        lang: 'en',
+      },
+      link: [
+        {
+          rel: 'icon',
+          href: '/favicon.ico',
+        },
+      ],
+    },
+  },
+
   css: [
     '~/assets/css/main.css',
   ],

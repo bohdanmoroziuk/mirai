@@ -1,7 +1,17 @@
 <script setup lang="ts">
+import { toGetTagsInput } from '../mappers/tag-input.mapper'
 import { useTagsQuery } from '../queries/tag.queries'
 
-const { tags, isFetching, error } = useTagsQuery()
+const search = ref('')
+const debouncedSearch = refDebounced(search, 500)
+
+const tagsQueryInput = computed(() => {
+  return toGetTagsInput({
+    search: debouncedSearch.value,
+  })
+})
+
+const { tags, loading, error } = useTagsQuery(tagsQueryInput)
 </script>
 
 <template>
@@ -11,17 +21,14 @@ const { tags, isFetching, error } = useTagsQuery()
     </div>
 
     <div>
-      <UInput
-        placeholder="Search..."
-        class="w-full"
-      />
+      <TagSearch v-model="search" />
     </div>
 
     <UiQueryState
       :data="tags"
-      :fetching="isFetching"
+      :fetching="loading"
       :error="error"
-      :empty-when="(data) => data?.length === 0"
+      :empty-when="isEmpty"
     >
       <template #fetching>
         <div class="flex justify-center">

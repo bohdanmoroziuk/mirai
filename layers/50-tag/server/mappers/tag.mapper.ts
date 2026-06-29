@@ -1,4 +1,5 @@
 import type { UserSessionRequired } from '#auth-utils'
+import { escapeRegExp } from '@core/shared/utils/regexp'
 import type {
   TagDocument,
   CreateTagBody,
@@ -13,6 +14,7 @@ import type {
   UpdateTagParams,
   UpdateTagInput,
   UpdateTagDocumentQuery,
+  GetTagsQuery,
 } from '../types/tag'
 
 export const toTag = (document: TagDocument): Tag => {
@@ -42,9 +44,10 @@ export const toCreateTagDocumentInput = (input: CreateTagInput): CreateTagDocume
   }
 }
 
-export const toGetTagsInput = (session: UserSessionRequired): GetTagsInput => {
+export const toGetTagsInput = (session: UserSessionRequired, query: GetTagsQuery): GetTagsInput => {
   return {
     userId: session.user.id,
+    search: query.search,
   }
 }
 
@@ -52,6 +55,14 @@ export const toFindTagDocumentsQuery = (input: GetTagsInput): FindTagDocumentsQu
   return {
     filter: {
       userId: toObjectId(input.userId),
+      ...(input.search
+        ? {
+            name: {
+              $regex: escapeRegExp(input.search),
+              $options: 'i',
+            },
+          }
+        : {}),
     },
     sort: {
       createdAt: -1,

@@ -1,5 +1,10 @@
 import { z } from 'zod'
+import { searchSchema } from '@common/server/schemas/api.schema'
 import { objectIdSchema } from '@common/server/schemas/mongoose.schema'
+
+export const getTagsQuerySchema = z.object({
+  search: searchSchema,
+})
 
 export const createTagBodySchema = z.object({
   name: z.string().trim().toLowerCase().min(3).max(32),

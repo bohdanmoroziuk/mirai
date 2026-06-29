@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{BASE_URL}}/tags"
+  url: "{{BASE_URL}}/tags?search=act"
+  params:
+    - name: search
+      value: act
+      type: query
   auth: inherit
 
 settings:

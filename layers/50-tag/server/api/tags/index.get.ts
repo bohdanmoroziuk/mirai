@@ -1,9 +1,11 @@
 import { getTags } from '../../services/tag.service'
 import { toGetTagsInput } from '../../mappers/tag.mapper'
+import { getTagsQuerySchema } from '../../schemas/tag.schema'
 
 export default defineSafeEventHandler(async (event) => {
   const session = await requireUserSession(event)
-  const tags = await getTags(toGetTagsInput(session))
+  const query = await validateQuery(event, getTagsQuerySchema)
+  const tags = await getTags(toGetTagsInput(session, query))
 
   return createResponse(tags)
 })
@@ -12,10 +14,22 @@ defineRouteMeta({
   openAPI: {
     tags: ['Tags'],
     summary: 'Get tags',
-    description: 'Returns tags that belong to the authenticated user.',
+    description: 'Returns tags that belong to the authenticated user. If search is provided, returns only tags that match the search query.',
     security: [
       {
         cookieAuth: [],
+      },
+    ],
+    parameters: [
+      {
+        name: 'search',
+        in: 'query',
+        required: false,
+        description: 'Search query used to filter tags by name.',
+        schema: {
+          type: 'string',
+          example: 'important',
+        },
       },
     ],
     responses: {
@@ -74,6 +88,9 @@ defineRouteMeta({
             },
           },
         },
+      },
+      400: {
+        description: 'Validation error',
       },
       401: {
         description: 'Unauthorized',

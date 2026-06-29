@@ -17,5 +17,9 @@ const { open } = useAppSidebar()
     <template #default>
       <AppNavigation />
     </template>
+
+    <template #footer>
+      <UserMenu />
+    </template>
   </USidebar>
 </template>

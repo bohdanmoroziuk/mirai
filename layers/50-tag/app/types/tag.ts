@@ -6,10 +6,12 @@ export type TagPayload = Pick<
 
 export type TagFormState = TagPayload
 
+export type GetTagsQuery = {
+  search?: string
+}
+
 export type GetTagsInput = {
-  query?: {
-    search?: string
-  }
+  query?: GetTagsQuery
 }
 
 export type CreateTagInput = {

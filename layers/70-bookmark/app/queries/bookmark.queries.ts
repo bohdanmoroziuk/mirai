@@ -1,13 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { bookmarkRepository } from '../repositories/bookmark.repository'
 import type { GetBookmarksQuery } from '../types/bookmark'
+import { toGetBookmarksInput } from '../mappers/bookmark-input.mapper'
 
 export const useBookmarkQuery = (
   query: MaybeRefOrGetter<GetBookmarksQuery> = {},
 ) => {
+  const input = computed(() => {
+    return toGetBookmarksInput(toValue(query))
+  })
+
   const {
     data: bookmarks,
-    isFetching,
+    isFetching: loading,
     error,
   } = useQuery<
     ApiResponse<Bookmark[]>,
@@ -17,10 +22,10 @@ export const useBookmarkQuery = (
     queryKey: computed(() => {
       return [
         'bookmarks',
-        toValue(query),
+        toValue(input),
       ]
     }),
-    queryFn: () => bookmarkRepository.getMany(toValue(query)),
+    queryFn: () => bookmarkRepository.getMany(toValue(input)),
     initialData: toApiResponse([]),
     initialDataUpdatedAt: 0,
     select: selectApiData,
@@ -28,7 +33,7 @@ export const useBookmarkQuery = (
 
   return {
     bookmarks,
-    isFetching,
+    loading,
     error,
   }
 }
@@ -37,7 +42,7 @@ export const useCreateBookmarkMutation = () => {
   const queryClient = useQueryClient()
 
   const {
-    isPending,
+    isPending: loading,
     mutateAsync: createBookmark,
   } = useMutation({
     mutationKey: ['bookmarks', 'create'],
@@ -50,7 +55,7 @@ export const useCreateBookmarkMutation = () => {
   })
 
   return {
-    isPending,
+    loading,
     createBookmark,
   }
 }
@@ -59,7 +64,7 @@ export const useDeleteBookmarkMutation = () => {
   const queryClient = useQueryClient()
 
   const {
-    isPending,
+    isPending: loading,
     mutateAsync: deleteBookmark,
   } = useMutation({
     mutationKey: ['bookmarks', 'delete'],
@@ -72,7 +77,7 @@ export const useDeleteBookmarkMutation = () => {
   })
 
   return {
-    isPending,
+    loading,
     deleteBookmark,
   }
 }

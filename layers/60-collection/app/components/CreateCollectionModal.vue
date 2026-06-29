@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { toCreateCollectionInput } from '../mappers/collection-input.mapper'
 import { useCreateCollectionMutation } from '../queries/collection.queries'
-import type { CreateCollectionInput } from '../types/collection'
+import type { CollectionFormState } from '../types/collection'
 
 const notification = useNotification()
 const [isOpen, toggle] = useToggle()
-const { isPending, createCollection } = useCreateCollectionMutation()
+const { loading, createCollection } = useCreateCollectionMutation()
 
 const open = () => {
   toggle(true)
@@ -14,9 +15,9 @@ const close = () => {
   toggle(false)
 }
 
-const handleCollectionCreate = async (input: CreateCollectionInput) => {
+const handleCollectionCreate = async (state: CollectionFormState) => {
   try {
-    await createCollection(input)
+    await createCollection(toCreateCollectionInput(state))
 
     notification.success({
       title: 'Collection has been created',
@@ -49,7 +50,8 @@ const handleCollectionCreate = async (input: CreateCollectionInput) => {
 
     <template #body>
       <CreateCollectionForm
-        :loading="isPending"
+        :loading
+        :initial-state="{ title: '' }"
         @submit="handleCollectionCreate"
         @cancel="close"
       />

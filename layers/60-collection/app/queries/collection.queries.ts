@@ -7,7 +7,11 @@ const getInitialCollectionsResponse = (): ApiResponse<Collection[]> => {
 }
 
 export const useCollectionsQuery = () => {
-  const { data, error, isFetching } = useQuery<
+  const {
+    data: collections,
+    error,
+    isFetching: loading,
+  } = useQuery<
     ApiResponse<Collection[]>,
     Error,
     Collection[]
@@ -21,8 +25,8 @@ export const useCollectionsQuery = () => {
 
   return {
     error,
-    isFetching,
-    collections: data,
+    loading,
+    collections,
   }
 }
 
@@ -30,7 +34,7 @@ export const useCreateCollectionMutation = () => {
   const queryClient = useQueryClient()
 
   const {
-    isPending,
+    isPending: loading,
     mutateAsync: createCollection,
   } = useMutation({
     mutationKey: ['collections', 'create'],
@@ -43,7 +47,7 @@ export const useCreateCollectionMutation = () => {
   })
 
   return {
-    isPending,
+    loading,
     createCollection,
   }
 }

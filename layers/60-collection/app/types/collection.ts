@@ -1,7 +1,10 @@
-export type CreateCollectionInput = {
-  title: string
-}
+export type CollectionPayload = Pick<
+  CollectionEntity,
+  | 'title'
+>
 
-export type CreateCollectionFormState = {
-  title: string
+export type CollectionFormState = CollectionPayload
+
+export type CreateCollectionInput = {
+  body: CollectionPayload
 }

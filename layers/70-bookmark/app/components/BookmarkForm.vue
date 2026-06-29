@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import type { CreateBookmarkInput, CreateBookmarkFormState } from '../types/bookmark'
+import { bookmarkPayloadSchema } from '../schemas/bookmark.schema'
+import type { BookmarkFormState } from '../types/bookmark'
 
-defineProps<{
-  loading?: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    loading?: boolean
+    submitLabel?: string
+    initialState: BookmarkFormState
+  }>(),
+  {
+    loading: false,
+    submitLabel: 'Submit',
+  },
+)
 
 const emit = defineEmits<{
-  submit: [input: CreateBookmarkInput]
+  submit: [input: BookmarkFormState]
   cancel: []
 }>()
 
-const state = reactive<CreateBookmarkFormState>({
-  title: '',
-  description: '',
-  url: '',
-  isFavorite: false,
-  collectionId: undefined,
-  tagIds: [],
-})
+const state = reactive<BookmarkFormState>({ ...props.initialState })
 
 const submit = () => {
   emit('submit', toValue(state))
@@ -30,13 +32,12 @@ const cancel = () => {
 
 <template>
   <UForm
+    :schema="bookmarkPayloadSchema"
     :state="state"
     class="space-y-4"
     @submit="submit"
   >
-    <UFormField
-      label="Title"
-    >
+    <UFormField label="Title">
       <UInput
         v-model="state.title"
         placeholder="Enter title"
@@ -44,9 +45,7 @@ const cancel = () => {
       />
     </UFormField>
 
-    <UFormField
-      label="Description"
-    >
+    <UFormField label="Description">
       <UTextarea
         v-model="state.description"
         :rows="4"
@@ -56,9 +55,7 @@ const cancel = () => {
       />
     </UFormField>
 
-    <UFormField
-      label="Url"
-    >
+    <UFormField label="Url">
       <UInput
         v-model="state.url"
         type="url"
@@ -72,11 +69,16 @@ const cancel = () => {
       label="Favorite"
     />
 
-    <UFormField
-      label="Collection"
-    >
+    <UFormField label="Collection">
       <CollectionSelectMenu
         v-model="state.collectionId"
+        class="w-full"
+      />
+    </UFormField>
+
+    <UFormField label="Tags">
+      <TagSelectMenu
+        v-model="state.tagIds"
         class="w-full"
       />
     </UFormField>
@@ -94,7 +96,7 @@ const cancel = () => {
         :loading
         type="submit"
       >
-        Submit
+        {{ submitLabel }}
       </UButton>
     </div>
   </UForm>

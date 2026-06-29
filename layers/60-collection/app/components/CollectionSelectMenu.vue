@@ -2,7 +2,7 @@
 import type { SelectMenuItem } from '@nuxt/ui'
 import { useCollectionsQuery } from '../queries/collection.queries'
 
-const { collections, isFetching } = useCollectionsQuery()
+const { collections, loading } = useCollectionsQuery()
 
 const value = defineModel<Nullish<string>>({ default: undefined })
 
@@ -22,7 +22,7 @@ const menuItems = computed(() => {
   <USelectMenu
     v-model="value"
     :items="menuItems"
-    :loading="isFetching"
+    :loading="loading"
     value-key="value"
     placeholder="Select collection"
     clear

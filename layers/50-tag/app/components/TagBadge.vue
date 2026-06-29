@@ -11,7 +11,7 @@ withDefaults(defineProps<{
 
 <template>
   <span
-    class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium text-white"
+    class="inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-full text-xs font-medium text-white"
     :style="{ backgroundColor: color }"
   >
     <slot>

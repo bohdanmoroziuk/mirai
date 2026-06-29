@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import type { CreateCollectionFormState, CreateCollectionInput } from '../types/collection'
+import type { CollectionFormState } from '../types/collection'
 
-defineProps<{
+const props = defineProps<{
   loading?: boolean
+  initialState: CollectionFormState
 }>()
 
 const emit = defineEmits<{
-  submit: [input: CreateCollectionInput]
+  submit: [state: CollectionFormState]
   cancel: []
 }>()
 
-const state = reactive<CreateCollectionFormState>({
-  title: '',
-})
+const state = reactive({ ...props.initialState })
 
 const submit = () => {
   emit('submit', toValue(state))
