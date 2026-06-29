@@ -2,78 +2,87 @@
 
 > A personal command center for organizing bookmarks, tasks, notes, and everyday resources.
 
+## v0.1.0 Scope
 
-## Setup
+The goal of v0.1.0 is to provide a small but usable bookmark manager.
 
-Make sure to install dependencies:
+### Included
 
-```bash
-# npm
-npm install
+- Auth: sign up, log in, log out
+- Tags: create, view, search, delete
+- Collections: create, view
+- Bookmarks: create, view, open links, filter by collection, delete
 
-# pnpm
-pnpm install
+### Not Included Yet
 
-# yarn
-yarn install
+- Editing tags, collections, or bookmarks
+- Advanced filtering
+- Bookmark import/export
+- Sharing
+- Browser extension
 
-# bun
-bun install
+## Architecture
+
+The project uses a layered Nuxt architecture with a clear separation between application shell, shared logic, feature code, and third-party setup.
+
+```txt
+app/      → Nuxt application shell
+layers/   → core, shared, and feature code
+modules/  → local Nuxt modules for third-party setup
 ```
 
-## Development Server
+### Mental model
 
-Start the development server on `http://localhost:3000`:
+```txt
+app/
+  Pages, layouts, root components, and global application shell.
 
-```bash
-# npm
-npm run dev
+layers/10-core/
+  Pure framework-agnostic TypeScript code.
+  Must not depend on Nuxt, Vue, H3, Zod, Mongoose, Sentry, or other libraries.
 
-# pnpm
-pnpm dev
+layers/20-shared/
+  Reusable application code that may depend on Nuxt, Vue, H3, Zod, Nuxt UI, and other libraries.
 
-# yarn
-yarn dev
+layers/30-user/
+layers/40-bookmark/
+layers/50-tag/
+  Feature layers.
+  Each feature owns its components, composables, queries, routes, schemas, models, repositories, services, mappers, and types.
 
-# bun
-bun run dev
+modules/
+  Local Nuxt modules used to install and configure third-party tools such as Vue Query, Mongoose, and Sentry.
 ```
 
-## Production
+### Rules
 
-Build the application for production:
+```txt
+Pure reusable TypeScript logic
+→ layers/10-core
 
-```bash
-# npm
-npm run build
+Reusable Nuxt/Vue/server/app logic
+→ layers/20-shared
 
-# pnpm
-pnpm build
+Feature-specific logic
+→ corresponding feature layer
 
-# yarn
-yarn build
+Third-party setup and integration
+→ modules
 
-# bun
-bun run build
+Pages, layouts, and app shell
+→ app
 ```
 
-Locally preview production build:
+### Dependency direction
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+```txt
+core    → depends on nothing project-specific
+shared  → may depend on core and framework/library code
+features → may depend on core and shared
+modules → configure third-party tools for the Nuxt runtime
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Feature layers should own their domain implementation. Models, repositories, mappers, services, schemas, and routes stay inside the corresponding feature layer.
 
 ## API Documentation
 
@@ -150,3 +159,75 @@ Component documentation should usually include:
 Use `/dev/**` for interactive previews.
 
 Use `/docs/**` for written documentation.
+
+## Setup
+
+Make sure to install dependencies:
+
+```bash
+# npm
+npm install
+
+# pnpm
+pnpm install
+
+# yarn
+yarn install
+
+# bun
+bun install
+```
+
+## Development Server
+
+Start the development server on `http://localhost:3000`:
+
+```bash
+# npm
+npm run dev
+
+# pnpm
+pnpm dev
+
+# yarn
+yarn dev
+
+# bun
+bun run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+# npm
+npm run build
+
+# pnpm
+pnpm build
+
+# yarn
+yarn build
+
+# bun
+bun run build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm preview
+
+# yarn
+yarn preview
+
+# bun
+bun run preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

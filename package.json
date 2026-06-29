@@ -1,6 +1,7 @@
 {
   "name": "mirai",
   "description": "A personal command center for organizing bookmarks, tasks, notes, and everyday resources.",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "scripts": {
