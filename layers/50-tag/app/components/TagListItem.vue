@@ -54,13 +54,6 @@ const handleTagDelete = async () => {
 
     <div class="flex gap-2">
       <UButton
-        icon="i-lucide-edit"
-        size="sm"
-        color="info"
-        variant="ghost"
-      />
-
-      <UButton
         :loading
         icon="i-lucide-trash-2"
         size="sm"
