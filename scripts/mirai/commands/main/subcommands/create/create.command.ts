@@ -1,5 +1,6 @@
 import { defineCommand } from 'citty'
 import { createComponentCommand } from './subcommands/component/command'
+import { createComposableCommand } from './subcommands/composable/command'
 
 export const createCommand = defineCommand({
   meta: {
@@ -9,5 +10,6 @@ export const createCommand = defineCommand({
 
   subCommands: {
     component: createComponentCommand,
+    composable: createComposableCommand,
   },
 })

@@ -164,10 +164,14 @@ Use `/docs/**` for written documentation.
 
 Mirai includes a local CLI for generating project files according to internal conventions.
 
-Currently supported command:
+Currently supported commands:
 
 ```bash
 npm run mirai create component <name>
+```
+
+```bash
+npm run mirai create composable <name>
 ```
 
 CLI source code is located in:

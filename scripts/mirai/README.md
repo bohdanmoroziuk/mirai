@@ -4,13 +4,19 @@ Local CLI for generating Mirai project files.
 
 ## Current Status
 
-Currently supported command:
+Currently supported commands:
 
 ```bash
 npm run mirai create component <name>
 ```
 
 This command creates a component using the project conventions.
+
+```bash
+npm run mirai create composable <name>
+```
+
+This command creates a composable using the project conventions.
 
 ## Architecture
 
@@ -55,15 +61,16 @@ scripts/mirai/
 * Edge cases should be handled inside handlers or shared utilities.
 * Do not put all logic into `cli.ts`.
 
-## TODO
+## Roadmap
 
-* Add `create composable`
-* Add `create layer`
-* Add `create feature`
-* Add layer args support
-* Add better validation errors
-* Add better filesystem error handling
-* Add protection against overwriting files
-* Add support for existing layer selection
-* Add shared template utilities
-* Add tests for generators
+- [+] Add `create component`
+- [+] Add `create composable`
+- [ ] Add `create layer`
+- [ ] Add `create feature`
+- [ ] Add layer args support
+- [ ] Add better validation errors
+- [ ] Add better filesystem error handling
+- [ ] Add protection against overwriting files
+- [ ] Add support for existing layer selection
+- [ ] Add shared template utilities
+- [ ] Add tests for generators
