@@ -18,6 +18,12 @@ npm run mirai create composable <name>
 
 This command creates a composable using the project conventions.
 
+```bash
+npm run mirai create layer <name>
+```
+
+This command creates a minimal layer directory with a nuxt.config.ts file inside it.
+
 ## Architecture
 
 The CLI uses a command-based structure.
@@ -65,7 +71,7 @@ scripts/mirai/
 
 - [+] Add `create component`
 - [+] Add `create composable`
-- [ ] Add `create layer`
+- [+] Add `create layer`
 - [ ] Add `create feature`
 - [ ] Add layer args support
 - [ ] Add better validation errors

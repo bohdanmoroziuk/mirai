@@ -5,3 +5,7 @@ export const getErrorMessage = (error: unknown): string => {
 
   return String(error)
 }
+
+export const isNodeError = (error: unknown): error is NodeJS.ErrnoException => {
+  return error instanceof Error && 'code' in error
+}

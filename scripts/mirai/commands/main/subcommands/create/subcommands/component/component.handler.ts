@@ -1,6 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises'
 import { join, relative, resolve } from 'pathe'
-import { getCurrentDir } from '#mirai/common/utils/path'
+import { getCurrentDir } from '#mirai/common/utils/process'
 import { createComponentTemplate } from './component.template'
 import type { CreateComponentArgs, CreateComponentResult } from './component.types'
 

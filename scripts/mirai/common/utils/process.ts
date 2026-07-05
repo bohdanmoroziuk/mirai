@@ -1,3 +1,7 @@
+export const getCurrentDir = () => {
+  return process.cwd()
+}
+
 export const setExitCode = (code: number) => {
   process.exitCode = code
 }

@@ -174,6 +174,10 @@ npm run mirai create component <name>
 npm run mirai create composable <name>
 ```
 
+```bash
+npm run mirai create layer <name>
+```
+
 CLI source code is located in:
 
 ```txt
