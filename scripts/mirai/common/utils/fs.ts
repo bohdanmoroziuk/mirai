@@ -1,4 +1,6 @@
 import { stat } from 'node:fs/promises'
+import { resolve } from 'pathe'
+import { getCurrentDir } from '#mirai/common/utils/process'
 import { isPathNotFoundError } from '#mirai/common/utils/error'
 
 export const PathStatus = {
@@ -43,4 +45,8 @@ export const dirExists = async (path: string) => {
 
 export const pathExists = async (path: string) => {
   return (await getPathStatus(path)) !== PathStatus.MISSING
+}
+
+export const resolveLayerPath = (name: string) => {
+  return resolve(getCurrentDir(), 'layers', name)
 }

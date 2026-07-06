@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { layerNameSchema } from '#mirai/common/schemas/args.schema'
 
 export const createComponentArgsSchema = z.object({
   name: z
@@ -19,4 +20,6 @@ export const createComponentArgsSchema = z.object({
     .regex(/^(?:[A-Z][a-z]+|[A-Z])(?:[A-Z][a-z]+)+$/, {
       error: 'Component name must be a multi-word PascalCase Vue component name, e.g. UserTable or LoginForm.',
     }),
+
+  layer: layerNameSchema.optional(),
 })

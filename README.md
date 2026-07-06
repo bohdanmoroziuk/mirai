@@ -168,8 +168,10 @@ Currently supported commands:
 
 ```bash
 npm run mirai create component <name>
+npm run mirai create component <name> --layer <layer>
 npm run mirai create composable <name>
-npm run mirai create layer <name> --description "[description]"
+npm run mirai create layer <name>
+npm run mirai create layer <name> --description "<description>"
 ```
 
 CLI source code is located in:

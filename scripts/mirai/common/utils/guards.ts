@@ -1,6 +1,6 @@
-import { resolve } from 'node:path'
+import { resolve } from 'pathe'
 import { getCurrentDir } from '#mirai/common/utils/process'
-import { fileExists, dirExists } from '#mirai/common/utils/fs'
+import { getPathStatus, fileExists, dirExists, resolveLayerPath, PathStatus } from '#mirai/common/utils/fs'
 
 type ProjectRootPathRequirement = {
   path: string
@@ -27,5 +27,21 @@ export const ensureProjectRoot = async (): Promise<void> => {
 
   if (hasMissingPath) {
     throw new Error('The Mirai CLI must be called from the project root directory.')
+  }
+}
+
+export const ensureLayerDirExists = async (name: string) => {
+  const path = resolveLayerPath(name)
+  const status = await getPathStatus(path)
+
+  switch (status) {
+    case PathStatus.DIRECTORY:
+      return
+    case PathStatus.FILE:
+    case PathStatus.OTHER:
+      throw new Error(`Layer "${name}" exists, but it is not a directory.`)
+    case PathStatus.MISSING:
+    default:
+      throw new Error(`Layer "${name}" does not exist.`)
   }
 }

@@ -16,6 +16,12 @@ export const createComponentCommand = defineCommand({
       description: 'Component name',
       required: true,
     },
+
+    layer: {
+      type: 'string',
+      description: 'Target layer name (optional)',
+      required: false,
+    },
   },
 
   async run(context) {

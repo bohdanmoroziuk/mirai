@@ -7,9 +7,11 @@ Local CLI for generating Mirai project files.
 Currently supported commands:
 
 ```bash
-npm run mirai create component <name>
+npm run mirai create component <name> 
+npm run mirai create component <name> --layer <layer>
 npm run mirai create composable <name>
-npm run mirai create layer <name> --description "[description]"
+npm run mirai create layer <name> 
+npm run mirai create layer <name> --description "<description>"
 ```
 
 ## Commands
@@ -20,7 +22,19 @@ npm run mirai create layer <name> --description "[description]"
 npm run mirai create component <name>
 ```
 
-Creates a new component using project conventions.
+Creates a new component in the root `app/components` directory.
+
+Create a component inside a layer:
+
+```bash
+npm run mirai create component <name> --layer <layer>
+```
+
+Creates a new component in:
+
+```txt
+layers/[layer]/app/components
+```
 
 ### Create Composable
 
@@ -99,7 +113,8 @@ scripts/mirai/
 - [+] Add `create layer`
 - [+] Add description arg support
 - [+] Ensure CLI runs only from the project root directory
-- [ ] Add layer args support
+- [+] Add layer argument support for components
+- [ ] Add layer argument support for composables
 - [ ] Add better validation errors
 - [ ] Add better filesystem error handling
 - [ ] Add tests for generators
