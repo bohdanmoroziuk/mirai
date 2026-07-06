@@ -8,4 +8,9 @@ export const createLayerArgsSchema = z.object({
     .regex(/^(?=.*[a-z])[a-z0-9]+(?:-[a-z0-9]+)*$/, {
       error: 'Layer name must use kebab-case and contain only lowercase letters, numbers, and hyphens.',
     }),
+
+  description: z
+    .string()
+    .trim()
+    .optional(),
 })

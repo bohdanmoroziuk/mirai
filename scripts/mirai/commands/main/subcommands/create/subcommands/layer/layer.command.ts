@@ -16,6 +16,13 @@ export const createLayerCommand = defineCommand({
       description: 'Layer name',
       required: true,
     },
+
+    description: {
+      type: 'string',
+      description: 'Layer description (optional)',
+      required: false,
+      default: '',
+    },
   },
 
   async run(context) {

@@ -8,21 +8,43 @@ Currently supported commands:
 
 ```bash
 npm run mirai create component <name>
+npm run mirai create composable <name>
+npm run mirai create layer <name> --description "[description]"
 ```
 
-This command creates a component using the project conventions.
+## Commands
+
+### Create Component
+
+```bash
+npm run mirai create component <name>
+```
+
+Creates a new component using project conventions.
+
+### Create Composable
 
 ```bash
 npm run mirai create composable <name>
 ```
 
-This command creates a composable using the project conventions.
+Creates a new composable using project conventions.
+
+### Create Layer
 
 ```bash
 npm run mirai create layer <name>
 ```
 
-This command creates a minimal layer directory with a nuxt.config.ts file inside it.
+Creates a new layer directory with a `nuxt.config.ts` file.
+
+Optional description:
+
+```bash
+npm run mirai create layer <name> --description "[description]"
+```
+
+The `--description` option is used as the layer description inside `nuxt.config.ts`.
 
 ## Architecture
 
@@ -45,12 +67,15 @@ scripts/mirai/
   cli.ts
   commands/
     main/
+      command.ts
       main.command.ts
       subcommands/
         create/
+          command.ts
           create.command.ts
           subcommands/
             component/
+              command.ts
               component.command.ts
               component.handler.ts
               component.schema.ts
@@ -72,11 +97,12 @@ scripts/mirai/
 - [+] Add `create component`
 - [+] Add `create composable`
 - [+] Add `create layer`
-- [ ] Add `create feature`
+- [+] Add description arg support
 - [ ] Add layer args support
 - [ ] Add better validation errors
 - [ ] Add better filesystem error handling
+- [ ] Add tests for generators
+- [ ] Add `create feature`
 - [ ] Add protection against overwriting files
 - [ ] Add support for existing layer selection
 - [ ] Add shared template utilities
-- [ ] Add tests for generators

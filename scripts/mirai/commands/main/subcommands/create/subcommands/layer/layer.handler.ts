@@ -8,6 +8,7 @@ import type { CreateLayerArgs, CreateLayerResult } from './layer.types'
 export const createLayer = async (args: CreateLayerArgs): Promise<CreateLayerResult> => {
   const currentDir = getCurrentDir()
   const layerName = args.name
+  const layerDescription = args.description
   const layerDir = resolve(currentDir, 'layers', layerName)
 
   if (await pathExists(layerDir)) {
@@ -15,7 +16,7 @@ export const createLayer = async (args: CreateLayerArgs): Promise<CreateLayerRes
   }
 
   const layerNuxtConfigPath = join(layerDir, 'nuxt.config.ts')
-  const layerNuxtConfigTemplate = createNuxtConfigTemplate(layerName)
+  const layerNuxtConfigTemplate = createNuxtConfigTemplate(layerName, layerDescription)
 
   await mkdir(
     layerDir,
