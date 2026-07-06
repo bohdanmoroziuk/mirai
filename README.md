@@ -169,7 +169,14 @@ Currently supported commands:
 ```bash
 npm run mirai create component <name>
 npm run mirai create component <name> --layer <layer>
+```
+
+```bash
 npm run mirai create composable <name>
+npm run mirai create composable <name> --layer <layer>
+```
+
+```bash
 npm run mirai create layer <name>
 npm run mirai create layer <name> --description "<description>"
 ```

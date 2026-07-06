@@ -1,19 +1,18 @@
 import { mkdir, writeFile } from 'node:fs/promises'
 import { join, relative, resolve } from 'pathe'
 import { getCurrentDir } from '#mirai/common/utils/process'
-import { pathExists } from '#mirai/common/utils/fs'
+import { ensureLayerDirDoesNotExist } from '#mirai/common/utils/guards'
 import { createNuxtConfigTemplate } from './layer.template'
 import type { CreateLayerArgs, CreateLayerResult } from './layer.types'
 
 export const createLayer = async (args: CreateLayerArgs): Promise<CreateLayerResult> => {
-  const currentDir = getCurrentDir()
   const layerName = args.name
+
+  await ensureLayerDirDoesNotExist(layerName)
+
+  const currentDir = getCurrentDir()
   const layerDescription = args.description
   const layerDir = resolve(currentDir, 'layers', layerName)
-
-  if (await pathExists(layerDir)) {
-    throw new Error(`Layer "${layerName}" already exists.`)
-  }
 
   const layerNuxtConfigPath = join(layerDir, 'nuxt.config.ts')
   const layerNuxtConfigTemplate = createNuxtConfigTemplate(layerName, layerDescription)

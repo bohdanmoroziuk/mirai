@@ -16,6 +16,12 @@ export const createComposableCommand = defineCommand({
       description: 'Composable name',
       required: true,
     },
+
+    layer: {
+      type: 'string',
+      description: 'Target layer name (optional)',
+      required: false,
+    },
   },
 
   async run(context) {

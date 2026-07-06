@@ -2,63 +2,43 @@
 
 Local CLI for generating Mirai project files.
 
-## Current Status
-
-Currently supported commands:
-
-```bash
-npm run mirai create component <name> 
-npm run mirai create component <name> --layer <layer>
-npm run mirai create composable <name>
-npm run mirai create layer <name> 
-npm run mirai create layer <name> --description "<description>"
-```
-
 ## Commands
-
-### Create Component
 
 ```bash
 npm run mirai create component <name>
 ```
 
-Creates a new component in the root `app/components` directory.
-
-Create a component inside a layer:
+Creates a component in app/components.
 
 ```bash
 npm run mirai create component <name> --layer <layer>
 ```
 
-Creates a new component in:
-
-```txt
-layers/[layer]/app/components
-```
-
-### Create Composable
+Creates a component in layers/<layer>/app/components.
 
 ```bash
 npm run mirai create composable <name>
 ```
 
-Creates a new composable using project conventions.
+Creates a composable in app/composables.
 
-### Create Layer
+```bash
+npm run mirai create composable <name> --layer <layer>
+```
+
+Creates a composable in layers/<layer>/app/composables.
 
 ```bash
 npm run mirai create layer <name>
 ```
 
-Creates a new layer directory with a `nuxt.config.ts` file.
-
-Optional description:
+Creates a layer with a `nuxt.config.ts` file.
 
 ```bash
-npm run mirai create layer <name> --description "[description]"
+npm run mirai create layer <name> --description "<description>"
 ```
 
-The `--description` option is used as the layer description inside `nuxt.config.ts`.
+Creates a layer with a custom description in `nuxt.config.ts`.
 
 ## Architecture
 
@@ -114,7 +94,7 @@ scripts/mirai/
 - [+] Add description arg support
 - [+] Ensure CLI runs only from the project root directory
 - [+] Add layer argument support for components
-- [ ] Add layer argument support for composables
+- [+] Add layer argument support for composables
 - [ ] Add better validation errors
 - [ ] Add better filesystem error handling
 - [ ] Add tests for generators

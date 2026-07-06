@@ -45,3 +45,19 @@ export const ensureLayerDirExists = async (name: string) => {
       throw new Error(`Layer "${name}" does not exist.`)
   }
 }
+
+export const ensureLayerDirDoesNotExist = async (name: string) => {
+  const path = resolveLayerPath(name)
+  const status = await getPathStatus(path)
+
+  switch (status) {
+    case PathStatus.MISSING:
+      return
+    case PathStatus.DIRECTORY:
+      throw new Error(`Layer "${name}" already exists.`)
+    case PathStatus.FILE:
+    case PathStatus.OTHER:
+    default:
+      throw new Error(`Layer "${name}" exists, but it is not a directory.`)
+  }
+}

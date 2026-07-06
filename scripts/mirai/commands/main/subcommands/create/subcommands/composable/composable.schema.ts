@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { layerNameSchema } from '#mirai/common/schemas/args.schema'
 
 export const createComposableArgsSchema = z.object({
   name: z
@@ -10,4 +11,6 @@ export const createComposableArgsSchema = z.object({
     .regex(/^use[A-Z][A-Za-z]*$/, {
       error: 'Composable name must start with "use" and use only letters, e.g. useNotification.',
     }),
+
+  layer: layerNameSchema.optional(),
 })

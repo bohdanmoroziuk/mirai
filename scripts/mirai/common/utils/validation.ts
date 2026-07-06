@@ -7,7 +7,7 @@ export const parseArgs = async<
   args: TArgs,
   schema: TSchema,
 ): Promise<z.output<TSchema>> => {
-  const result = schema.safeParse(args)
+  const result = await schema.safeParseAsync(args)
 
   if (result.success) {
     return result.data
