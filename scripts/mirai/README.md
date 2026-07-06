@@ -98,6 +98,7 @@ scripts/mirai/
 - [+] Add `create composable`
 - [+] Add `create layer`
 - [+] Add description arg support
+- [+] Ensure CLI runs only from the project root directory
 - [ ] Add layer args support
 - [ ] Add better validation errors
 - [ ] Add better filesystem error handling

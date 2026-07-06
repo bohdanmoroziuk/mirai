@@ -1,5 +1,5 @@
 export const getCurrentDir = () => {
-  return process.cwd()
+  return process.env.INIT_CWD ?? process.cwd()
 }
 
 export const setExitCode = (code: number) => {

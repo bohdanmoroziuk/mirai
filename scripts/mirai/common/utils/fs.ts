@@ -1,17 +1,46 @@
 import { stat } from 'node:fs/promises'
-import { isNodeError } from '#mirai/common/utils/error'
+import { isPathNotFoundError } from '#mirai/common/utils/error'
 
-export const pathExists = async (path: string) => {
+export const PathStatus = {
+  FILE: 'file',
+  DIRECTORY: 'directory',
+  MISSING: 'missing',
+  OTHER: 'other',
+} as const
+
+export type PathStatus = (typeof PathStatus)[keyof typeof PathStatus]
+
+export const getPathStatus = async (path: string): Promise<PathStatus> => {
   try {
-    await stat(path)
+    const stats = await stat(path)
 
-    return true
+    if (stats.isFile()) {
+      return PathStatus.FILE
+    }
+
+    if (stats.isDirectory()) {
+      return PathStatus.DIRECTORY
+    }
+
+    return PathStatus.OTHER
   }
   catch (error) {
-    if (isNodeError(error) && error.code === 'ENOENT') {
-      return false
+    if (isPathNotFoundError(error)) {
+      return PathStatus.MISSING
     }
 
     throw error
   }
+}
+
+export const fileExists = async (path: string) => {
+  return (await getPathStatus(path)) === PathStatus.FILE
+}
+
+export const dirExists = async (path: string) => {
+  return (await getPathStatus(path)) === PathStatus.DIRECTORY
+}
+
+export const pathExists = async (path: string) => {
+  return (await getPathStatus(path)) !== PathStatus.MISSING
 }
