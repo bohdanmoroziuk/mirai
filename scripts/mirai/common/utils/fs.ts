@@ -1,7 +1,7 @@
 import { stat } from 'node:fs/promises'
 import { resolve } from 'pathe'
 import { getCurrentDir } from '#mirai/common/utils/process'
-import { isPathNotFoundError } from '#mirai/common/utils/error'
+import { isPathNotFoundError } from '#mirai/common/errors/node'
 
 export const PathStatus = {
   FILE: 'file',
