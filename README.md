@@ -160,6 +160,29 @@ Use `/dev/**` for interactive previews.
 
 Use `/docs/**` for written documentation.
 
+## Local CLI
+
+Mirai includes a local CLI for generating project files.
+
+Current version: `v0.1.0`
+
+```bash
+npm run mirai -- create component <name>
+npm run mirai -- create component <name> --layer <layer>
+
+npm run mirai -- create composable <name>
+npm run mirai -- create composable <name> --layer <layer>
+
+npm run mirai -- create layer <name>
+npm run mirai -- create layer <name> --description "<description>"
+```
+
+The CLI handles validation, file system, Node.js, and unexpected errors gracefully.
+
+Source code is located in `scripts/mirai/`.
+
+See `scripts/mirai/README.md` for architecture, command details, and roadmap.
+
 ## Setup
 
 Make sure to install dependencies:

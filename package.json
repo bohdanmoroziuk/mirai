@@ -12,7 +12,11 @@
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "mirai": "tsx --tsconfig scripts/mirai/tsconfig.json scripts/mirai/cli.ts"
+  },
+  "imports": {
+    "#mirai/*": "./scripts/mirai/*.ts"
   },
   "dependencies": {
     "@nuxt/eslint": "1.16.0",
@@ -38,6 +42,9 @@
   "devDependencies": {
     "@iconify-json/lucide": "1.2.114",
     "@types/node": "25.9.3",
+    "citty": "0.2.2",
+    "pathe": "2.0.3",
+    "tsx": "4.23.0",
     "typescript": "6.0.3",
     "vue-tsc": "3.3.4"
   }
