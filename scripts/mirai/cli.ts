@@ -1,4 +1,5 @@
 import { runCommand } from 'citty'
+import { ExitCode } from '#mirai/common/constants/process'
 import { getErrorMessage } from '#mirai/common/utils/error'
 import { setExitCode, getRawArgs } from '#mirai/common/utils/process'
 import { logger } from '#mirai/common/utils/logger'
@@ -16,12 +17,12 @@ const run = async (rawArgs: string[]) => {
   catch (error) {
     if (isValidationError(error)) {
       renderValidationError(error)
-      setExitCode(1)
+      setExitCode(ExitCode.FAILURE)
       return
     }
 
     logger.error(getErrorMessage(error))
-    setExitCode(1)
+    setExitCode(ExitCode.FAILURE)
   }
 }
 
