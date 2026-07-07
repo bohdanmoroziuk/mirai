@@ -1,4 +1,5 @@
 import type { z } from 'zod'
+import { ValidationError } from '#mirai/common/errors/validation'
 
 export const parseArgs = async<
   TArgs extends Record<string, unknown>,
@@ -13,5 +14,8 @@ export const parseArgs = async<
     return result.data
   }
 
-  throw new Error('Validation error')
+  throw ValidationError.fromZodError(
+    'Invalid command arguments',
+    result.error,
+  )
 }
