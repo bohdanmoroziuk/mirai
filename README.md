@@ -162,32 +162,26 @@ Use `/docs/**` for written documentation.
 
 ## Local CLI
 
-Mirai includes a local CLI for generating project files according to internal conventions.
+Mirai includes a local CLI for generating project files.
 
-Currently supported commands:
-
-```bash
-npm run mirai create component <name>
-npm run mirai create component <name> --layer <layer>
-```
+Current version: `v0.1.0`
 
 ```bash
-npm run mirai create composable <name>
-npm run mirai create composable <name> --layer <layer>
+npm run mirai -- create component <name>
+npm run mirai -- create component <name> --layer <layer>
+
+npm run mirai -- create composable <name>
+npm run mirai -- create composable <name> --layer <layer>
+
+npm run mirai -- create layer <name>
+npm run mirai -- create layer <name> --description "<description>"
 ```
 
-```bash
-npm run mirai create layer <name>
-npm run mirai create layer <name> --description "<description>"
-```
+The CLI handles validation, file system, Node.js, and unexpected errors gracefully.
 
-CLI source code is located in:
+Source code is located in `scripts/mirai/`.
 
-```txt
-scripts/mirai/
-```
-
-See `scripts/mirai/README.md` for CLI architecture, file structure, and TODO.
+See `scripts/mirai/README.md` for architecture, command details, and roadmap.
 
 ## Setup
 

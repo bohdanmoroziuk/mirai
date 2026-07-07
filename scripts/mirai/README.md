@@ -2,78 +2,73 @@
 
 Local CLI for generating Mirai project files.
 
+## Status
+
+Current version: `v0.1.0`
+
+The CLI supports component, composable, and layer generation.
+
 ## Commands
 
 ```bash
-npm run mirai create component <name>
+npm run mirai -- create component <name>
+npm run mirai -- create component <name> --layer <layer>
 ```
 
-Creates a component in app/components.
+Creates a component in `app/components` or `layers/<layer>/app/components`.
 
 ```bash
-npm run mirai create component <name> --layer <layer>
+npm run mirai -- create composable <name>
+npm run mirai -- create composable <name> --layer <layer>
 ```
 
-Creates a component in layers/<layer>/app/components.
+Creates a composable in `app/composables` or `layers/<layer>/app/composables`.
 
 ```bash
-npm run mirai create composable <name>
-```
-
-Creates a composable in app/composables.
-
-```bash
-npm run mirai create composable <name> --layer <layer>
-```
-
-Creates a composable in layers/<layer>/app/composables.
-
-```bash
-npm run mirai create layer <name>
+npm run mirai -- create layer <name>
+npm run mirai -- create layer <name> --description "<description>"
 ```
 
 Creates a layer with a `nuxt.config.ts` file.
 
-```bash
-npm run mirai create layer <name> --description "<description>"
-```
+## Error Handling
 
-Creates a layer with a custom description in `nuxt.config.ts`.
+The CLI handles:
+
+* validation errors
+* file system errors
+* Node.js errors
+* unexpected errors
 
 ## Architecture
 
-The CLI uses a command-based structure.
+Commands are split into:
 
-Each command may contain:
-
-* `*.command.ts` — command definition
-* `*.handler.ts` — command execution logic
+* `*.command.ts` — CLI definition
+* `*.handler.ts` — command logic
 * `*.schema.ts` — args validation
-* `*.types.ts` — command-specific types
+* `*.types.ts` — command types
 * `subcommands/` — nested commands
 
-Command files should stay small. Business logic should live in handlers.
-
-## File Structure
+## Structure
 
 ```txt
 scripts/mirai/
   cli.ts
   commands/
     main/
-      command.ts
       main.command.ts
       subcommands/
         create/
-          command.ts
           create.command.ts
           subcommands/
             component/
-              command.ts
               component.command.ts
               component.handler.ts
               component.schema.ts
               component.types.ts
+            composable/
+            layer/
 ```
 
 ## Rules
@@ -88,17 +83,18 @@ scripts/mirai/
 
 ## Roadmap
 
-- [+] Add `create component`
-- [+] Add `create composable`
-- [+] Add `create layer`
-- [+] Add description arg support
-- [+] Ensure CLI runs only from the project root directory
-- [+] Add layer argument support for components
-- [+] Add layer argument support for composables
-- [ ] Add better validation errors
-- [ ] Add better filesystem error handling
-- [ ] Add tests for generators
-- [ ] Add `create feature`
-- [ ] Add protection against overwriting files
-- [ ] Add support for existing layer selection
-- [ ] Add shared template utilities
+### v0.2.0
+
+* Add `create feature`
+* Generate feature structure with `app`, `server`, and shared files
+* Add layer selection prompt
+* Improve edge case handling
+* Prevent accidental overwrites
+* Add shared template utilities
+* Add basic tests
+
+### Later
+
+* Add more generators
+* Improve command documentation
+* Consider extracting the CLI into a separate package
