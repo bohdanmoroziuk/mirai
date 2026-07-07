@@ -1,5 +1,9 @@
+export const isError = (error: unknown): error is Error => {
+  return error instanceof Error
+}
+
 export const getErrorMessage = (error: unknown): string => {
-  if (error instanceof Error) {
+  if (isError(error)) {
     return error.message
   }
 
@@ -15,7 +19,7 @@ export const NodeErrorCode = {
 export type NodeErrorCode = (typeof NodeErrorCode)[keyof typeof NodeErrorCode]
 
 export const isNodeError = (error: unknown): error is NodeError => {
-  return error instanceof Error && 'code' in error
+  return isError(error) && 'code' in error
 }
 
 export const isNodeErrorCode = (error: unknown, code: NodeErrorCode) => {

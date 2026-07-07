@@ -1,6 +1,7 @@
 import { resolve } from 'pathe'
 import { getCurrentDir } from '#mirai/common/utils/process'
 import { getPathStatus, fileExists, dirExists, resolveLayerPath, PathStatus } from '#mirai/common/utils/fs'
+import { FileSystemError } from '#mirai/common/errors/fs'
 
 type ProjectRootPathRequirement = {
   path: string
@@ -26,7 +27,12 @@ export const ensureProjectRoot = async (): Promise<void> => {
   const hasMissingPath = pathStatuses.some(exists => !exists)
 
   if (hasMissingPath) {
-    throw new Error('The Mirai CLI must be called from the project root directory.')
+    throw new FileSystemError(
+      'The Mirai CLI must be called from the project root directory.',
+      {
+        action: 'check',
+      },
+    )
   }
 }
 
@@ -39,10 +45,22 @@ export const ensureLayerDirExists = async (name: string) => {
       return
     case PathStatus.FILE:
     case PathStatus.OTHER:
-      throw new Error(`Layer "${name}" exists, but it is not a directory.`)
+      throw new FileSystemError(
+        `Layer "${name}" exists, but it is not a directory.`,
+        {
+          action: 'check',
+          path,
+        },
+      )
     case PathStatus.MISSING:
     default:
-      throw new Error(`Layer "${name}" does not exist.`)
+      throw new FileSystemError(
+        `Layer "${name}" does not exist.`,
+        {
+          action: 'check',
+          path,
+        },
+      )
   }
 }
 
@@ -54,10 +72,22 @@ export const ensureLayerDirDoesNotExist = async (name: string) => {
     case PathStatus.MISSING:
       return
     case PathStatus.DIRECTORY:
-      throw new Error(`Layer "${name}" already exists.`)
+      throw new FileSystemError(
+        `Layer "${name}" already exists.`,
+        {
+          action: 'check',
+          path,
+        },
+      )
     case PathStatus.FILE:
     case PathStatus.OTHER:
     default:
-      throw new Error(`Layer "${name}" exists, but it is not a directory.`)
+      throw new FileSystemError(
+        `Layer "${name}" exists, but it is not a directory.`,
+        {
+          action: 'check',
+          path,
+        },
+      )
   }
 }
