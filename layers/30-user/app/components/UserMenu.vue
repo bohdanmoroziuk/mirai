@@ -1,23 +1,8 @@
 <script setup lang="ts">
 import type { DropdownMenuItem } from '@nuxt/ui'
-import { getErrorMessage } from '@common/shared/utils/error'
-import { useLogoutMutation } from '@auth/app/queries/auth.queries'
+import { useLogoutWorkflow } from '@auth/app/workflows/logout.workflow'
 
-const notification = useNotification()
-const { loading, logout } = useLogoutMutation()
-
-const handleLogout = async () => {
-  try {
-    await logout()
-    await navigateTo('/auth/signup')
-  }
-  catch (error) {
-    notification.error({
-      title: 'Logout failed!',
-      description: getErrorMessage(error),
-    })
-  }
-}
+const { isPending, logout } = useLogoutWorkflow()
 
 const userItems = computed<DropdownMenuItem[][]>(() => [
   [
@@ -31,8 +16,8 @@ const userItems = computed<DropdownMenuItem[][]>(() => [
     {
       label: 'Log out',
       icon: 'i-lucide-log-out',
-      disabled: loading.value,
-      onSelect: handleLogout,
+      disabled: toValue(isPending),
+      onSelect: logout,
     },
   ],
 ])
@@ -48,7 +33,7 @@ const userItems = computed<DropdownMenuItem[][]>(() => [
         :ui="{ content: 'w-(--reka-dropdown-menu-trigger-width) min-w-48' }"
       >
         <UButton
-          :loading
+          :loading="isPending"
           :label="user.name"
           trailing-icon="i-lucide-chevrons-up-down"
           color="neutral"
