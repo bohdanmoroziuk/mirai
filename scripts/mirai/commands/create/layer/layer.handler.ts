@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises'
-import { join, relative, resolve } from 'pathe'
-import { getCurrentDir } from '#mirai/common/utils/process'
+import { dirname } from 'pathe'
 import { ensureLayerDirDoesNotExist } from '#mirai/common/utils/guards'
+import { resolveLayerNuxtConfigPath, resolveRelativePath } from '#mirai/common/utils/fs'
 import { createNuxtConfigTemplate } from './layer.template'
 import type { CreateLayerArgs, CreateLayerResult } from './layer.types'
 
@@ -10,11 +10,9 @@ export const createLayer = async (args: CreateLayerArgs): Promise<CreateLayerRes
 
   await ensureLayerDirDoesNotExist(layerName)
 
-  const currentDir = getCurrentDir()
   const layerDescription = args.description
-  const layerDir = resolve(currentDir, 'layers', layerName)
-
-  const layerNuxtConfigPath = join(layerDir, 'nuxt.config.ts')
+  const layerNuxtConfigPath = resolveLayerNuxtConfigPath(layerName)
+  const layerDir = dirname(layerNuxtConfigPath)
   const layerNuxtConfigTemplate = createNuxtConfigTemplate(layerName, layerDescription)
 
   await mkdir(
@@ -34,6 +32,6 @@ export const createLayer = async (args: CreateLayerArgs): Promise<CreateLayerRes
   )
 
   return {
-    relativePath: relative(currentDir, layerNuxtConfigPath),
+    relativePath: resolveRelativePath(layerNuxtConfigPath),
   }
 }

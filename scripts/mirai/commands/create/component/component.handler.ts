@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises'
-import { join, relative, resolve } from 'pathe'
-import { getCurrentDir } from '#mirai/common/utils/process'
+import { dirname } from 'pathe'
 import { ensureLayerDirExists } from '#mirai/common/utils/guards'
+import { resolveComponentPath, resolveRelativePath } from '#mirai/common/utils/fs'
 import { createComponentTemplate } from './component.template'
 import type { CreateComponentArgs, CreateComponentResult } from './component.types'
 
@@ -12,13 +12,9 @@ export const createComponent = async (args: CreateComponentArgs): Promise<Create
     await ensureLayerDirExists(layerName)
   }
 
-  const currentDir = getCurrentDir()
   const componentName = args.name
-  const componentFileName = args.name.concat('.vue')
-  const componentDir = layerName
-    ? resolve(currentDir, 'layers', layerName, 'app', 'components')
-    : resolve(currentDir, 'app', 'components')
-  const componentPath = join(componentDir, componentFileName)
+  const componentPath = resolveComponentPath(componentName, layerName)
+  const componentDir = dirname(componentPath)
   const componentTemplate = createComponentTemplate(componentName)
 
   await mkdir(
@@ -38,6 +34,6 @@ export const createComponent = async (args: CreateComponentArgs): Promise<Create
   )
 
   return {
-    relativePath: relative(currentDir, componentPath),
+    relativePath: resolveRelativePath(componentPath),
   }
 }
