@@ -1,7 +1,7 @@
 import { defineCommand } from 'citty'
-import { createComponentCommand } from './subcommands/component/command'
-import { createComposableCommand } from './subcommands/composable/command'
-import { createLayerCommand } from './subcommands/layer/command'
+import { createComponentCommand } from './create/component/component.command'
+import { createComposableCommand } from './create/composable/composable.command'
+import { createLayerCommand } from './create/layer/layer.command'
 
 export const createCommand = defineCommand({
   meta: {
