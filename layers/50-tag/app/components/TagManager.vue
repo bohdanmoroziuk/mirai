@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import { toGetTagsInput } from '../mappers/tag-input.mapper'
-import { useTagsQuery } from '../queries/tag.queries'
+import { useTagListWorkflow } from '../workflows/tag-list.workflow'
 
-const search = ref('')
-const debouncedSearch = refDebounced(search, 500)
-
-const tagsQueryInput = computed(() => {
-  return toGetTagsInput({
-    search: debouncedSearch.value,
-  })
-})
-
-const { tags, loading, error } = useTagsQuery(tagsQueryInput)
+const {
+  search,
+  tags,
+  isFetching,
+  error,
+} = useTagListWorkflow()
 </script>
 
 <template>
@@ -26,7 +21,7 @@ const { tags, loading, error } = useTagsQuery(tagsQueryInput)
 
     <UiQueryState
       :data="tags"
-      :fetching="loading"
+      :fetching="isFetching"
       :error="error"
       :empty-when="isEmpty"
     >
