@@ -25,46 +25,80 @@ export const MONGOOSE_READY_STATE = {
   DISCONNECTING: 3,
 } as const
 
-export const connectMongoose = async (uri: string) => {
+let connectionPromise: Promise<void> | undefined
+let disconnectionPromise: Promise<void> | undefined
+
+export const connectMongoose = async (uri: string): Promise<void> => {
+  if (disconnectionPromise) {
+    await disconnectionPromise
+  }
+
   if (mongoose.connection.readyState === MONGOOSE_READY_STATE.CONNECTED) {
     return
   }
 
-  if (mongoose.connection.readyState === MONGOOSE_READY_STATE.CONNECTING) {
+  if (connectionPromise) {
+    await connectionPromise
     return
   }
 
-  try {
+  connectionPromise = (async () => {
     databaseLogger.info('Connecting to MongoDB...')
 
-    await mongoose.connect(uri)
+    await mongoose.connect(uri, {
+      connectTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 5000,
+    })
 
     databaseLogger.success('Connected to MongoDB')
+  })()
+
+  try {
+    await connectionPromise
+    connectionPromise = undefined
   }
   catch (error) {
+    connectionPromise = undefined
     databaseLogger.error('Failed to connect to MongoDB', error)
 
     throw error
   }
 }
 
-export const disconnectMongoose = async () => {
+export const disconnectMongoose = async (): Promise<void> => {
+  if (connectionPromise) {
+    try {
+      await connectionPromise
+    }
+    catch {
+      return
+    }
+  }
+
   if (mongoose.connection.readyState === MONGOOSE_READY_STATE.DISCONNECTED) {
     return
   }
 
-  if (mongoose.connection.readyState === MONGOOSE_READY_STATE.DISCONNECTING) {
+  if (disconnectionPromise) {
+    await disconnectionPromise
     return
   }
 
-  try {
+  disconnectionPromise = (async () => {
     databaseLogger.info('Disconnecting from MongoDB...')
 
     await mongoose.disconnect()
 
     databaseLogger.success('Disconnected from MongoDB')
+  })()
+
+  try {
+    await disconnectionPromise
+    connectionPromise = undefined
+    disconnectionPromise = undefined
   }
   catch (error) {
+    disconnectionPromise = undefined
     databaseLogger.error('Failed to disconnect from MongoDB', error)
 
     throw error

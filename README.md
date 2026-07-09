@@ -167,14 +167,14 @@ Mirai includes a local CLI for generating project files.
 Current version: `v0.1.0`
 
 ```bash
-npm run mirai -- create component <name>
-npm run mirai -- create component <name> --layer <layer>
+pnpm mirai create component <name>
+pnpm mirai create component <name> --layer <layer>
 
-npm run mirai -- create composable <name>
-npm run mirai -- create composable <name> --layer <layer>
+pnpm mirai create composable <name>
+pnpm mirai create composable <name> --layer <layer>
 
-npm run mirai -- create layer <name>
-npm run mirai -- create layer <name> --description "<description>"
+pnpm mirai create layer <name>
+pnpm mirai create layer <name> --description "<description>"
 ```
 
 The CLI handles validation, file system, Node.js, and unexpected errors gracefully.

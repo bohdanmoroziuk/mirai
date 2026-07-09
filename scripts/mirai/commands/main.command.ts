@@ -1,5 +1,5 @@
 import { defineCommand } from 'citty'
-import { createCommand } from './subcommands/create/command'
+import { createCommand } from './create.command'
 
 export const mainCommand = defineCommand({
   meta: {

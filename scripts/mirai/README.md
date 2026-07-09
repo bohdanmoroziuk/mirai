@@ -11,22 +11,22 @@ The CLI supports component, composable, and layer generation.
 ## Commands
 
 ```bash
-npm run mirai -- create component <name>
-npm run mirai -- create component <name> --layer <layer>
+pnpm mirai create component <name>
+pnpm mirai create component <name> --layer <layer>
 ```
 
 Creates a component in `app/components` or `layers/<layer>/app/components`.
 
 ```bash
-npm run mirai -- create composable <name>
-npm run mirai -- create composable <name> --layer <layer>
+pnpm mirai create composable <name>
+pnpm mirai create composable <name> --layer <layer>
 ```
 
 Creates a composable in `app/composables` or `layers/<layer>/app/composables`.
 
 ```bash
-npm run mirai -- create layer <name>
-npm run mirai -- create layer <name> --description "<description>"
+pnpm mirai create layer <name>
+pnpm mirai create layer <name> --description "<description>"
 ```
 
 Creates a layer with a `nuxt.config.ts` file.
@@ -48,7 +48,7 @@ Commands are split into:
 * `*.handler.ts` — command logic
 * `*.schema.ts` — args validation
 * `*.types.ts` — command types
-* `subcommands/` — nested commands
+* `commands/create/<generator>/` — generator-specific command files
 
 ## Structure
 
@@ -56,19 +56,17 @@ Commands are split into:
 scripts/mirai/
   cli.ts
   commands/
-    main/
-      main.command.ts
-      subcommands/
-        create/
-          create.command.ts
-          subcommands/
-            component/
-              component.command.ts
-              component.handler.ts
-              component.schema.ts
-              component.types.ts
-            composable/
-            layer/
+    main.command.ts
+    create.command.ts
+    create/
+      component/
+        component.command.ts
+        component.handler.ts
+        component.schema.ts
+        component.template.ts
+        component.types.ts
+      composable/
+      layer/
 ```
 
 ## Rules
