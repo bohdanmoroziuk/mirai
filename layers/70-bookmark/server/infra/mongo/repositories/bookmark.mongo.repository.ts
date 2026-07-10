@@ -1,6 +1,7 @@
 import { mapValueOr } from '@core/shared/utils/value'
 import type { BookmarkRepository } from '../../../ports/bookmark.repository.port'
 import { toBookmark } from '../mappers/bookmark.mongo.mapper'
+import { toFindBookmarkQuery } from '../mappers/get-bookmark.mongo.mapper'
 import { toFindBookmarksQuery } from '../mappers/get-bookmarks.mongo.mapper'
 import { toCreateBookmarkData } from '../mappers/create-bookmark.mongo.mapper'
 import { toUpdateBookmarkQuery } from '../mappers/update-bookmark.mongo.mapper'
@@ -13,6 +14,15 @@ export const makeMongoBookmarkRepository = (): BookmarkRepository => {
       const data = toCreateBookmarkData(input)
       const document = await BookmarkModel.create(data)
       return toBookmark(document)
+    },
+
+    async findOne(input) {
+      const query = toFindBookmarkQuery(input)
+      const document = await BookmarkModel
+        .findOne(query.filter)
+        .exec()
+
+      return mapValueOr(document, toBookmark, null)
     },
 
     async findMany(input) {

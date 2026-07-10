@@ -1,11 +1,11 @@
-import { getBookmarkParamsSchema } from '../../../schemas/bookmark.schema'
-import { toGetBookmarkInput } from '../../../mappers/bookmark.mapper'
-import { getBookmark } from '../../../services/bookmark.service'
+import { bookmarkParamsSchema } from '../../../schemas/bookmark-params.schema'
+import { toGetBookmarkInput } from '../../../mappers/get-bookmark.mapper'
+import { getBookmark } from '../../../bookmark.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
-  const params = await validateParams(event, getBookmarkParamsSchema)
-  const bookmark = await getBookmark(toGetBookmarkInput(session, params))
+  const userId = await requireUserId(event)
+  const params = await validateParams(event, bookmarkParamsSchema)
+  const bookmark = await getBookmark(toGetBookmarkInput(userId, params))
 
   return createResponse(bookmark)
 })

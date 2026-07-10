@@ -1,5 +1,4 @@
-import type { CreateBookmarkBody } from '../schemas/create-bookmark.schema'
-import type { CreateBookmarkInput } from '../types/create-bookmark.types'
+import type { CreateBookmarkInput, CreateBookmarkBody } from '../types/create-bookmark.types'
 
 export const toCreateBookmarkInput = (
   userId: string,
