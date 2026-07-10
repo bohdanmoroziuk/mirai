@@ -1,6 +1,5 @@
 import type { Bookmark } from '../../shared/types/bookmark'
 import type {
-  CreateBookmarkInput,
   DeleteBookmarkInput,
   DeleteBookmarkOutput,
   GetBookmarkInput,
@@ -9,19 +8,12 @@ import type {
 } from '../types/bookmark'
 import {
   toBookmark,
-  toCreateBookmarkDocumentInput,
   toDeleteBookmarkDocumentQuery,
   toFindBookmarkDocumentQuery,
   toFindBookmarkDocumentsQuery,
   toUpdateBookmarkDocumentQuery,
 } from '../mappers/bookmark.mapper'
 import { bookmarkRepository } from '../repositories/bookmark.repository'
-
-export const createBookmark = async (input: CreateBookmarkInput): Promise<Bookmark> => {
-  const bookmarkDocument = await bookmarkRepository.createOne(toCreateBookmarkDocumentInput(input))
-
-  return toBookmark(bookmarkDocument)
-}
 
 export const getBookmarks = async (input: GetBookmarksInput): Promise<Bookmark[]> => {
   const bookmarkDocuments = await bookmarkRepository.findMany(toFindBookmarkDocumentsQuery(input))

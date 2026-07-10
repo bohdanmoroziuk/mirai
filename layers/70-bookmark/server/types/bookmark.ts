@@ -4,7 +4,6 @@ import type { Nullish } from '@core/shared/types/common'
 import type { SuccessOutput } from '@core/shared/types/api'
 import type { QuerySort } from '@common/server/types/mongoose'
 import type {
-  createBookmarkBodySchema,
   getBookmarkParamsSchema,
   deleteBookmarkParamsSchema,
   updateBookmarkParamsSchema,
@@ -25,28 +24,6 @@ export type BookmarkSchema = {
 }
 
 export type BookmarkDocument = HydratedDocument<BookmarkSchema>
-
-export type CreateBookmarkBody = z.infer<typeof createBookmarkBodySchema>
-
-export type CreateBookmarkInput = {
-  title: string
-  description: string
-  url: string
-  isFavorite: boolean
-  userId: string
-  collectionId: Nullish<string>
-  tagIds: string[]
-}
-
-export type CreateBookmarkDocumentInput = {
-  title: string
-  description: string
-  url: string
-  isFavorite: boolean
-  userId: Types.ObjectId
-  collectionId: Nullish<Types.ObjectId>
-  tagIds: Types.ObjectId[]
-}
 
 export type GetBookmarksQuery = z.infer<typeof getBookmarksQuerySchema>
 
