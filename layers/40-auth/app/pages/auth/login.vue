@@ -1,28 +1,12 @@
 <script setup lang="ts">
-import { useLoginMutation } from '../../queries/auth.queries'
-import { toLoginInput } from '../../mappers/auth-input.mapper'
-import type { LoginFormState } from '../../types/auth'
+import { useLoginWorkflow } from '../../workflows/login.workflow'
 
 definePageMeta({
   access: 'guest-only',
   layout: 'auth',
 })
 
-const notification = useNotification()
-const { errorMessage, loading, login } = useLoginMutation()
-
-const handleLogin = async (state: LoginFormState) => {
-  try {
-    await login(toLoginInput(state))
-    await navigateTo('/')
-  }
-  catch {
-    notification.error({
-      title: 'Login failed!',
-      description: errorMessage.value,
-    })
-  }
-}
+const { errorMessage, isLoggingIn, login } = useLoginWorkflow()
 </script>
 
 <template>
@@ -33,9 +17,9 @@ const handleLogin = async (state: LoginFormState) => {
 
     <div class="p-8 rounded-3xl shadow-sm">
       <LoginForm
-        :loading
-        :error-message
-        @submit="handleLogin"
+        :submitting="isLoggingIn"
+        :error-message="errorMessage"
+        @submit="login"
       />
     </div>
 

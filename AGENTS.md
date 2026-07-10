@@ -67,8 +67,9 @@ Automatic layer numbering may be handled later.
 - Use `Types.ObjectId.isValid` for ObjectId validation.
 - Keep composables for reusable Vue/Nuxt utilities.
 - Composable filenames must use PascalCase after `use`, for example `useNotification.ts`.
-- For TanStack Vue Query, split code into `keys`, `queries`, and `mutations`.
+- For TanStack Vue Query, split code into `keys`, `queries`, and `mutations`. Add `keys` when key factories are introduced.
 - Prefer workflows for client-side application logic.
+- Workflows coordinate feature scenarios on the client, including queries, mutations, form state, validation, router, route query params, toast, modal state, item-level loading state, and related UI/application state.
 - Query composable input params should support `MaybeRefOrGetter`.
 - Do not add new production dependencies without asking first.
 - Do not touch `.env`, `.env.*`, secrets, tokens, or credentials.

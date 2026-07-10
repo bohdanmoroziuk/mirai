@@ -1,39 +1,17 @@
 <script setup lang="ts">
 import { formatTimeAgo } from '@vueuse/core'
-import { useDeleteTagMutation } from '../queries/tag.queries'
-import { toDeleteTagInput } from '../mappers/tag-input.mapper'
+import { useDeleteTagWorkflow } from '../workflows/delete-tag.workflow'
 
 const props = defineProps<{
   tag: Tag
   number: number
 }>()
 
-const notification = useNotification()
-const { confirm } = useConfirmModal()
-const { loading, deleteTag } = useDeleteTagMutation()
+const tagId = computed(() => {
+  return props.tag.id
+})
 
-const handleTagDelete = async () => {
-  await confirm({
-    title: 'Delete tag?',
-    description: 'This tag will be permanently deleted.',
-    confirmLabel: 'Delete',
-
-    async onConfirm() {
-      await deleteTag(toDeleteTagInput(props.tag.id))
-
-      notification.success({
-        title: 'Tag has been deleted successfully',
-      })
-    },
-
-    onError(error) {
-      notification.error({
-        title: 'Operation failed!',
-        description: getErrorMessage(error),
-      })
-    },
-  })
-}
+const { isDeleting, deleteTag } = useDeleteTagWorkflow(tagId)
 </script>
 
 <template>
@@ -54,12 +32,12 @@ const handleTagDelete = async () => {
 
     <div class="flex gap-2">
       <UButton
-        :loading
+        :loading="isDeleting"
         icon="i-lucide-trash-2"
         size="sm"
         color="error"
         variant="ghost"
-        @click="handleTagDelete"
+        @click="deleteTag"
       />
     </div>
   </li>

@@ -1,37 +1,14 @@
 <script setup lang="ts">
-import { toDeleteBookmarkInput } from '../mappers/bookmark-input.mapper'
-import { useDeleteBookmarkMutation } from '../queries/bookmark.queries'
+import { useDeleteBookmarkWorkflow } from '../workflows/delete-bookmark.workflow'
 
 const props = defineProps<{
   bookmark: Bookmark
 }>()
 
-const notification = useNotification()
-const { confirm } = useConfirmModal()
-const { deleteBookmark, loading } = useDeleteBookmarkMutation()
-
-const handleBookmarkDelete = async () => {
-  await confirm({
-    title: 'Delete bookmark?',
-    description: 'This bookmark will be permanently deleted.',
-    confirmLabel: 'Delete',
-
-    onConfirm: async () => {
-      await deleteBookmark(toDeleteBookmarkInput(props.bookmark.id))
-
-      notification.success({
-        title: 'Bookmark has been deleted successfully',
-      })
-    },
-
-    onError: (error) => {
-      notification.error({
-        title: 'Operation failed!',
-        description: getErrorMessage(error),
-      })
-    },
-  })
-}
+const {
+  isDeleting,
+  deleteBookmark,
+} = useDeleteBookmarkWorkflow(() => props.bookmark.id)
 </script>
 
 <template>
@@ -81,8 +58,8 @@ const handleBookmarkDelete = async () => {
           size="sm"
           color="error"
           variant="solid"
-          :loading="loading"
-          @click.stop="handleBookmarkDelete"
+          :loading="isDeleting"
+          @click.stop="deleteBookmark"
         />
       </div>
     </footer>

@@ -4,7 +4,7 @@ import type { LoginFormState } from '../types/auth'
 import { loginPayloadSchema } from '../schemas/auth.schema'
 
 defineProps<{
-  loading?: boolean
+  submitting?: boolean
   errorMessage: Nullable<string>
 }>()
 
@@ -73,7 +73,7 @@ defineExpose({
     </p>
 
     <UButton
-      :loading="loading"
+      :loading="submitting"
       type="submit"
       block
     >

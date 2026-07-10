@@ -1,28 +1,12 @@
 <script setup lang="ts">
-import { useSignupMutation } from '../../queries/auth.queries'
-import { toSignupInput } from '../../mappers/auth-input.mapper'
-import type { SignupFormState } from '../../types/auth'
+import { useSignupWorkflow } from '../../workflows/signup.workflow'
 
 definePageMeta({
   access: 'guest-only',
   layout: 'auth',
 })
 
-const notification = useNotification()
-const { errorMessage, loading, signup } = useSignupMutation()
-
-const handleSignup = async (state: SignupFormState) => {
-  try {
-    await signup(toSignupInput(state))
-    await navigateTo('/')
-  }
-  catch {
-    notification.error({
-      title: 'Signup failed!',
-      description: errorMessage.value,
-    })
-  }
-}
+const { errorMessage, isSigningUp, signup } = useSignupWorkflow()
 </script>
 
 <template>
@@ -33,9 +17,9 @@ const handleSignup = async (state: SignupFormState) => {
 
     <div class="p-8 rounded-3xl shadow-sm">
       <SignupForm
-        :loading
-        :error-message
-        @submit="handleSignup"
+        :submitting="isSigningUp"
+        :error-message="errorMessage"
+        @submit="signup"
       />
     </div>
 

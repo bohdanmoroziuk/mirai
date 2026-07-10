@@ -1,17 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { getErrorMessage } from '@common/shared/utils/error'
 import { authRepository } from '../repositories/auth.repository'
 
 export const useSignupMutation = () => {
   const queryClient = useQueryClient()
   const userSession = useUserSession()
 
-  const {
-    error,
-    isError,
-    isPending: loading,
-    mutateAsync: signup,
-  } = useMutation({
+  return useMutation({
     mutationKey: ['auth', 'signup'],
     mutationFn: authRepository.signup,
     onSuccess: async () => {
@@ -21,28 +15,13 @@ export const useSignupMutation = () => {
       })
     },
   })
-
-  const errorMessage = computed(() => {
-    return isError.value ? getErrorMessage(error.value) : null
-  })
-
-  return {
-    errorMessage,
-    loading,
-    signup,
-  }
 }
 
 export const useLoginMutation = () => {
   const queryClient = useQueryClient()
   const userSession = useUserSession()
 
-  const {
-    error,
-    isError,
-    isPending: loading,
-    mutateAsync: login,
-  } = useMutation({
+  return useMutation({
     mutationKey: ['auth', 'login'],
     mutationFn: authRepository.login,
     onSuccess: async () => {
@@ -52,26 +31,13 @@ export const useLoginMutation = () => {
       })
     },
   })
-
-  const errorMessage = computed(() => {
-    return isError.value ? getErrorMessage(error.value) : null
-  })
-
-  return {
-    errorMessage,
-    loading,
-    login,
-  }
 }
 
 export const useLogoutMutation = () => {
   const queryClient = useQueryClient()
   const userSession = useUserSession()
 
-  const {
-    isPending: loading,
-    mutateAsync: logout,
-  } = useMutation({
+  return useMutation({
     mutationKey: ['auth', 'logout'],
     mutationFn: authRepository.logout,
     onSuccess: async () => {
@@ -81,9 +47,4 @@ export const useLogoutMutation = () => {
       })
     },
   })
-
-  return {
-    loading,
-    logout,
-  }
 }

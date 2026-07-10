@@ -2,7 +2,7 @@
 import type { TagFormState } from '../types/tag'
 
 const props = defineProps<{
-  loading?: boolean
+  submitting?: boolean
   initialState: TagFormState
 }>()
 
@@ -44,14 +44,14 @@ const cancel = () => {
       <UButton
         variant="outline"
         color="error"
-        :disabled="loading"
+        :disabled="submitting"
         @click="cancel"
       >
         Cancel
       </UButton>
 
       <UButton
-        :loading
+        :loading="submitting"
         type="submit"
       >
         Submit

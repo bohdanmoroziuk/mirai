@@ -1,73 +1,21 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { useQuery } from '@tanstack/vue-query'
 import type { GetTagsInput } from '../types/tag'
 import { tagRepository } from '../repositories/tag.repository'
 
 export const useTagsQuery = (
   input: MaybeRefOrGetter<GetTagsInput> = {},
 ) => {
-  const {
-    isFetching: loading,
-    error,
-    data: tags,
-  } = useQuery<
+  return useQuery<
     ApiResponse<Tag[]>,
     Error,
     Tag[]
   >({
-    queryKey: computed(() => ['tags', toValue(input)]),
-    queryFn: () => tagRepository.getMany(toValue(input)),
-    initialData: toApiResponse([]),
-    initialDataUpdatedAt: 0,
+    queryKey: computed(() => {
+      return ['tags', toValue(input)]
+    }),
+    queryFn: () => {
+      return tagRepository.getMany(toValue(input))
+    },
     select: selectApiData,
   })
-
-  return {
-    tags,
-    error,
-    loading,
-  }
-}
-
-export const useCreateTagMutation = () => {
-  const queryClient = useQueryClient()
-
-  const {
-    isPending: loading,
-    mutateAsync: createTag,
-  } = useMutation({
-    mutationKey: ['tags', 'create'],
-    mutationFn: tagRepository.createOne,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ['tags'],
-      })
-    },
-  })
-
-  return {
-    loading,
-    createTag,
-  }
-}
-
-export const useDeleteTagMutation = () => {
-  const queryClient = useQueryClient()
-
-  const {
-    isPending: loading,
-    mutateAsync: deleteTag,
-  } = useMutation({
-    mutationKey: ['tags', 'delete'],
-    mutationFn: tagRepository.deleteOne,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ['tags'],
-      })
-    },
-  })
-
-  return {
-    loading,
-    deleteTag,
-  }
 }

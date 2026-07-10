@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { toCreateTagInput } from '../mappers/tag-input.mapper'
-import { getTagFormInitialState } from '../mappers/tag.mapper'
-import { useCreateTagMutation } from '../queries/tag.queries'
 import type { TagFormState } from '../types/tag'
+import { useCreateTagWorkflow } from '../workflows/create-tag.workflow'
 
-const notification = useNotification()
+const { tagFormInitialState, isCreating, createTag } = useCreateTagWorkflow()
+
 const [isOpen, toggle] = useToggle()
-const { loading, createTag } = useCreateTagMutation()
 
 const open = () => {
   toggle(true)
@@ -16,23 +14,11 @@ const close = () => {
   toggle(false)
 }
 
-const initialState = getTagFormInitialState()
-
 const handleTagCreate = async (state: TagFormState) => {
-  try {
-    await createTag(toCreateTagInput(state))
+  const success = await createTag(state)
 
-    notification.success({
-      title: 'Tag has been created',
-    })
-
+  if (success) {
     close()
-  }
-  catch (error) {
-    notification.error({
-      title: 'Operation failed!',
-      description: getErrorMessage(error),
-    })
   }
 }
 </script>
@@ -52,8 +38,8 @@ const handleTagCreate = async (state: TagFormState) => {
 
     <template #body>
       <TagForm
-        :initial-state
-        :loading
+        :initial-state="tagFormInitialState"
+        :submitting="isCreating"
         @submit="handleTagCreate"
         @cancel="close"
       />

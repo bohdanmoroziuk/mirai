@@ -4,7 +4,7 @@ import type { SignupFormState } from '../types/auth'
 import { signupPayloadSchema } from '../schemas/auth.schema'
 
 defineProps<{
-  loading?: boolean
+  submitting?: boolean
   errorMessage: Nullable<string>
 }>()
 
@@ -86,7 +86,7 @@ defineExpose({
     </p>
 
     <UButton
-      :loading="loading"
+      :loading="submitting"
       type="submit"
       block
     >

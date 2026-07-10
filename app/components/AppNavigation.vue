@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
-import { useCollectionMenuItems } from '@collection/app/composables/useCollectionMenuItems'
 
-const { collectionMenuItems } = useCollectionMenuItems()
+const { items: collectionItems } = useCollectionNavigationItems()
 
 const items = computed<NavigationMenuItem[]>(() => {
   return [
@@ -15,8 +14,8 @@ const items = computed<NavigationMenuItem[]>(() => {
       label: 'Bookmarks',
       to: '/bookmarks',
       icon: 'i-lucide-inbox',
-      badge: collectionMenuItems.value.length.toString(),
-      children: collectionMenuItems.value,
+      badge: collectionItems.value.length.toString(),
+      children: collectionItems.value,
     },
   ]
 })

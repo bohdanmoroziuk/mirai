@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouteQuery } from '@vueuse/router'
-import { useBookmarkQuery } from '../../queries/bookmark.queries'
+import { useBookmarkListWorkflow } from '../../workflows/bookmark-list.workflow'
 
 definePageMeta({
   access: 'private',
@@ -9,13 +9,11 @@ definePageMeta({
 
 const collectionId = useRouteQuery<Nullish<string>>('collectionId', undefined)
 
-const bookmarksQuery = computed(() => {
-  return {
-    collectionId: collectionId.value ?? undefined,
-  }
-})
-
-const { bookmarks, error, loading } = useBookmarkQuery(bookmarksQuery)
+const {
+  bookmarks,
+  error,
+  isPending,
+} = useBookmarkListWorkflow(collectionId)
 </script>
 
 <template>
@@ -30,7 +28,7 @@ const { bookmarks, error, loading } = useBookmarkQuery(bookmarksQuery)
       <UiQueryState
         :data="bookmarks"
         :error="error"
-        :fetching="loading"
+        :fetching="isPending"
         :empty-when="isEmpty"
       >
         <template #fetching>
@@ -39,8 +37,8 @@ const { bookmarks, error, loading } = useBookmarkQuery(bookmarksQuery)
           </div>
         </template>
 
-        <template #error="{ error }">
-          <BookmarksErrorState :error />
+        <template #error="{ error: queryError }">
+          <BookmarksErrorState :error="queryError" />
         </template>
 
         <template #empty>

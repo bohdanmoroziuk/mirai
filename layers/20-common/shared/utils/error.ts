@@ -20,7 +20,7 @@ export const getNativeErrorMessage = (
 export const getFetchErrorMessage = (
   error: FetchError,
   fallback = 'Something went wrong',
-) => {
+): string => {
   return (
     error.data?.data?.message
     || error.data?.message
@@ -33,7 +33,7 @@ export const getFetchErrorMessage = (
 export const getH3ErrorMessage = <T = unknown>(
   error: H3Error<T>,
   fallback = 'Something went wrong',
-) => {
+): string => {
   return (
     error.message
     || error.statusMessage
@@ -44,7 +44,7 @@ export const getH3ErrorMessage = <T = unknown>(
 export const getErrorMessage = (
   value: unknown,
   fallback = 'Something went wrong',
-) => {
+): string => {
   if (isFetchError(value)) {
     return getFetchErrorMessage(value, fallback)
   }

@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { toCreateBookmarkInput } from '../mappers/bookmark-input.mapper'
-import { getBookmarkFormInitialState } from '../mappers/bookmark.mapper'
-import { useCreateBookmarkMutation } from '../queries/bookmark.queries'
+import { useCreateBookmarkWorkflow } from '../workflows/create-bookmark.workflow'
 import type { BookmarkFormState } from '../types/bookmark'
 
-const notification = useNotification()
+const {
+  bookmarkFormInitialState,
+  isCreating,
+  createBookmark,
+} = useCreateBookmarkWorkflow()
+
 const [isOpen, toggle] = useToggle()
-const { createBookmark, loading } = useCreateBookmarkMutation()
 
 const open = () => {
   toggle(true)
@@ -16,23 +18,11 @@ const close = () => {
   toggle(false)
 }
 
-const initialState = getBookmarkFormInitialState()
-
 const handleBookmarkCreate = async (state: BookmarkFormState) => {
-  try {
-    await createBookmark(toCreateBookmarkInput(state))
+  const success = await createBookmark(state)
 
-    notification.success({
-      title: 'Bookmark has been created',
-    })
-
+  if (success) {
     close()
-  }
-  catch (error) {
-    notification.error({
-      title: 'Operation failed!',
-      description: getErrorMessage(error),
-    })
   }
 }
 </script>
@@ -52,8 +42,8 @@ const handleBookmarkCreate = async (state: BookmarkFormState) => {
 
     <template #body>
       <BookmarkForm
-        :loading
-        :initial-state
+        :submitting="isCreating"
+        :initial-state="bookmarkFormInitialState"
         @submit="handleBookmarkCreate"
         @cancel="close"
       />

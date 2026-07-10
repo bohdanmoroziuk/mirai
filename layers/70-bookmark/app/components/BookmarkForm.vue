@@ -4,7 +4,7 @@ import type { BookmarkFormState } from '../types/bookmark'
 
 const props = withDefaults(
   defineProps<{
-    loading?: boolean
+    submitting?: boolean
     submitLabel?: string
     initialState: BookmarkFormState
   }>(),
@@ -85,6 +85,7 @@ const cancel = () => {
 
     <div class="flex items-center justify-end gap-4">
       <UButton
+        :disabled="submitting"
         variant="outline"
         color="error"
         @click="cancel"
@@ -93,7 +94,7 @@ const cancel = () => {
       </UButton>
 
       <UButton
-        :loading
+        :loading="submitting"
         type="submit"
       >
         {{ submitLabel }}

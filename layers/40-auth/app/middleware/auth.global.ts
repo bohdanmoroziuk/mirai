@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   await fetch()
 
   if (access === PageAccess.Private && loggedIn.value === false) {
-    return navigateTo('/auth/signup')
+    return navigateTo('/auth/login')
   }
 
   if (access === PageAccess.GuestOnly && loggedIn.value) {

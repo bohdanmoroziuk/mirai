@@ -1,5 +1,5 @@
 import { stat } from 'node:fs/promises'
-import { resolve } from 'pathe'
+import { join, relative, resolve } from 'pathe'
 import { getCurrentDir } from '#mirai/common/utils/process'
 import { isPathNotFoundError } from '#mirai/common/errors/node'
 
@@ -49,4 +49,30 @@ export const pathExists = async (path: string) => {
 
 export const resolveLayerPath = (name: string) => {
   return resolve(getCurrentDir(), 'layers', name)
+}
+
+export const resolveLayerNuxtConfigPath = (name: string) => {
+  return join(resolveLayerPath(name), 'nuxt.config.ts')
+}
+
+export const resolveComponentPath = (name: string, layerName?: string) => {
+  const currentDir = getCurrentDir()
+  const componentDir = layerName
+    ? resolve(currentDir, 'layers', layerName, 'app', 'components')
+    : resolve(currentDir, 'app', 'components')
+
+  return join(componentDir, `${name}.vue`)
+}
+
+export const resolveComposablePath = (name: string, layerName?: string) => {
+  const currentDir = getCurrentDir()
+  const composableDir = layerName
+    ? resolve(currentDir, 'layers', layerName, 'app', 'composables')
+    : resolve(currentDir, 'app', 'composables')
+
+  return join(composableDir, `${name}.ts`)
+}
+
+export const resolveRelativePath = (path: string) => {
+  return relative(getCurrentDir(), path)
 }
