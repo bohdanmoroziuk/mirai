@@ -1,7 +1,6 @@
 import type { Nullable } from '@core/shared/types/common'
 import type {
   BookmarkDocument,
-  DeleteBookmarkDocumentQuery,
   FindBookmarkDocumentQuery,
   FindBookmarksDocumentsQuery,
   UpdateBookmarkDocumentQuery,
@@ -19,12 +18,6 @@ export const bookmarkRepository = {
   findOne(query: FindBookmarkDocumentQuery): Promise<Nullable<BookmarkDocument>> {
     return BookmarkModel
       .findOne(query.filter)
-      .exec()
-  },
-
-  deleteOne(query: DeleteBookmarkDocumentQuery): Promise<Nullable<BookmarkDocument>> {
-    return BookmarkModel
-      .findOneAndDelete(query.filter)
       .exec()
   },
 

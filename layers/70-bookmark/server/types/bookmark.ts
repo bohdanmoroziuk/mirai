@@ -1,11 +1,9 @@
 import type z from 'zod'
 import type { HydratedDocument, QueryFilter, QueryOptions, Types, UpdateQuery } from 'mongoose'
 import type { Nullish } from '@core/shared/types/common'
-import type { SuccessOutput } from '@core/shared/types/api'
 import type { QuerySort } from '@common/server/types/mongoose'
 import type {
   getBookmarkParamsSchema,
-  deleteBookmarkParamsSchema,
   updateBookmarkParamsSchema,
   updateBookmarkBodySchema,
   getBookmarksQuerySchema,
@@ -47,15 +45,6 @@ export type GetBookmarkInput = {
 export type FindBookmarkDocumentQuery = {
   filter: QueryFilter<BookmarkSchema>
 }
-
-export type DeleteBookmarkParams = z.infer<typeof deleteBookmarkParamsSchema>
-
-export type DeleteBookmarkInput = {
-  bookmarkId: string
-  userId: string
-}
-
-export type DeleteBookmarkOutput = SuccessOutput
 
 export type DeleteBookmarkDocumentQuery = {
   filter: QueryFilter<BookmarkSchema>
