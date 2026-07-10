@@ -5,10 +5,6 @@ import type {
   GetBookmarkParams,
   GetBookmarkInput,
   FindBookmarkDocumentQuery,
-  UpdateBookmarkInput,
-  UpdateBookmarkParams,
-  UpdateBookmarkBody,
-  UpdateBookmarkDocumentQuery,
 } from '../types/bookmark'
 
 export const toBookmark = (document: BookmarkDocument): Bookmark => {
@@ -43,48 +39,6 @@ export const toFindBookmarkDocumentQuery = (
     filter: {
       _id: toObjectId(input.bookmarkId),
       userId: toObjectId(input.userId),
-    },
-  }
-}
-
-export const toUpdateBookmarkInput = (
-  session: UserSessionRequired,
-  params: UpdateBookmarkParams,
-  body: UpdateBookmarkBody,
-): UpdateBookmarkInput => {
-  return {
-    bookmarkId: params.bookmarkId,
-    userId: session.user.id,
-    title: body.title,
-    description: body.description,
-    url: body.url,
-    isFavorite: body.isFavorite,
-    collectionId: body.collectionId,
-    tagIds: body.tagIds,
-  }
-}
-
-export const toUpdateBookmarkDocumentQuery = (
-  input: UpdateBookmarkInput,
-): UpdateBookmarkDocumentQuery => {
-  return {
-    filter: {
-      _id: toObjectId(input.bookmarkId),
-      userId: toObjectId(input.userId),
-    },
-    update: {
-      $set: {
-        title: input.title,
-        description: input.description,
-        url: input.url,
-        isFavorite: input.isFavorite,
-        collectionId: toNullableObjectId(input.collectionId),
-        tagIds: input.tagIds?.map(toObjectId),
-      },
-    },
-    options: {
-      runValidators: true,
-      returnDocument: 'after',
     },
   }
 }
