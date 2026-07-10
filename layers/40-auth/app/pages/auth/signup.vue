@@ -6,7 +6,7 @@ definePageMeta({
   layout: 'auth',
 })
 
-const { errorMessage, isPending, signup } = useSignupWorkflow()
+const { errorMessage, isSigningUp, signup } = useSignupWorkflow()
 </script>
 
 <template>
@@ -17,7 +17,7 @@ const { errorMessage, isPending, signup } = useSignupWorkflow()
 
     <div class="p-8 rounded-3xl shadow-sm">
       <SignupForm
-        :loading="isPending"
+        :submitting="isSigningUp"
         :error-message="errorMessage"
         @submit="signup"
       />

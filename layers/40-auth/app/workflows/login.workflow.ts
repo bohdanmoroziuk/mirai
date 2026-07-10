@@ -3,13 +3,9 @@ import { toLoginInput } from '../mappers/auth-input.mapper'
 import type { LoginFormState } from '../types/auth'
 
 export const useLoginWorkflow = () => {
-  const { error, isPending, mutateAsync } = useLoginMutation()
+  const { error, isPending: isLoggingIn, mutateAsync } = useLoginMutation()
 
-  const errorMessage = computed(() => {
-    return toValue(error)
-      ? getErrorMessage(toValue(error))
-      : null
-  })
+  const errorMessage = useMappedValueOr(error, getErrorMessage, null)
 
   const login = async (state: LoginFormState) => {
     try {
@@ -24,7 +20,7 @@ export const useLoginWorkflow = () => {
 
   return {
     errorMessage,
-    isPending,
+    isLoggingIn,
     login,
   }
 }

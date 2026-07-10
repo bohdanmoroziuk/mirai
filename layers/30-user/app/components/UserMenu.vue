@@ -2,7 +2,7 @@
 import type { DropdownMenuItem } from '@nuxt/ui'
 import { useLogoutWorkflow } from '@auth/app/workflows/logout.workflow'
 
-const { isPending, logout } = useLogoutWorkflow()
+const { isLoggingOut, logout } = useLogoutWorkflow()
 
 const userItems = computed<DropdownMenuItem[][]>(() => [
   [
@@ -16,7 +16,7 @@ const userItems = computed<DropdownMenuItem[][]>(() => [
     {
       label: 'Log out',
       icon: 'i-lucide-log-out',
-      disabled: toValue(isPending),
+      disabled: toValue(isLoggingOut),
       onSelect: logout,
     },
   ],
@@ -33,7 +33,7 @@ const userItems = computed<DropdownMenuItem[][]>(() => [
         :ui="{ content: 'w-(--reka-dropdown-menu-trigger-width) min-w-48' }"
       >
         <UButton
-          :loading="isPending"
+          :loading="isLoggingOut"
           :label="user.name"
           trailing-icon="i-lucide-chevrons-up-down"
           color="neutral"

@@ -3,9 +3,9 @@ import { getTagFormInitialState } from '../mappers/tag.mapper'
 import { toCreateTagInput } from '../mappers/tag-input.mapper'
 import type { TagFormState } from '../types/tag'
 
-export const useCreateTag = () => {
+export const useCreateTagWorkflow = () => {
   const notification = useNotification()
-  const { isPending, mutateAsync } = useCreateTagMutation()
+  const { isPending: isCreating, mutateAsync } = useCreateTagMutation()
   const tagFormInitialState = getTagFormInitialState()
 
   const createTag = async (state: TagFormState) => {
@@ -30,7 +30,7 @@ export const useCreateTag = () => {
 
   return {
     tagFormInitialState,
-    isPending,
+    isCreating,
     createTag,
   }
 }

@@ -1,27 +1,13 @@
 <script setup lang="ts">
-import type { SelectMenuItem } from '@nuxt/ui'
-import { useTagsQuery } from '../queries/tag.queries'
+const value = defineModel<string[]>({ default: () => [] })
 
-const { tags, loading } = useTagsQuery()
-
-const value = defineModel<string[]>({ default: [] })
-
-const toMenuItem = (tag: Tag): SelectMenuItem => {
-  return {
-    label: tag.name,
-    value: tag.id,
-  }
-}
-
-const items = computed(() => {
-  return tags.value.map(toMenuItem)
-})
+const { items, isPending } = useTagSelectItems()
 </script>
 
 <template>
   <USelectMenu
     v-model="value"
-    :loading
+    :loading="isPending"
     :items
     placeholder="Select tags"
     value-key="value"

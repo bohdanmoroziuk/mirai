@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { toCreateCollectionInput } from '../mappers/collection-input.mapper'
-import { useCreateCollectionMutation } from '../queries/collection.queries'
+import { useCreateCollectionWorkflow } from '../workflows/create-collection.workflow'
 import type { CollectionFormState } from '../types/collection'
 
-const notification = useNotification()
+const {
+  collectionFormInitialState,
+  isCreating,
+  createCollection,
+} = useCreateCollectionWorkflow()
+
 const [isOpen, toggle] = useToggle()
-const { loading, createCollection } = useCreateCollectionMutation()
 
 const open = () => {
   toggle(true)
@@ -16,20 +19,10 @@ const close = () => {
 }
 
 const handleCollectionCreate = async (state: CollectionFormState) => {
-  try {
-    await createCollection(toCreateCollectionInput(state))
+  const success = await createCollection(state)
 
-    notification.success({
-      title: 'Collection has been created',
-    })
-
+  if (success) {
     close()
-  }
-  catch (error) {
-    notification.error({
-      title: 'Operation failed!',
-      description: getErrorMessage(error),
-    })
   }
 }
 </script>
@@ -49,9 +42,9 @@ const handleCollectionCreate = async (state: CollectionFormState) => {
     </template>
 
     <template #body>
-      <CreateCollectionForm
-        :loading
-        :initial-state="{ title: '' }"
+      <CollectionForm
+        :submitting="isCreating"
+        :initial-state="collectionFormInitialState"
         @submit="handleCollectionCreate"
         @cancel="close"
       />

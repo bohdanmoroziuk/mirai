@@ -3,10 +3,10 @@ import { useLogoutMutation } from '../queries/auth.mutations'
 
 export const useLogoutWorkflow = () => {
   const notification = useNotification()
-  const { isPending, mutateAsync } = useLogoutMutation()
+  const { isPending: isLoggingOut, mutateAsync } = useLogoutMutation()
 
   const logout = async () => {
-    if (toValue(isPending)) {
+    if (toValue(isLoggingOut)) {
       return false
     }
 
@@ -25,7 +25,7 @@ export const useLogoutWorkflow = () => {
   }
 
   return {
-    isPending,
+    isLoggingOut,
     logout,
   }
 }

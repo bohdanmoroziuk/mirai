@@ -11,12 +11,12 @@ export const useTagListWorkflow = () => {
     })
   })
 
-  const { data: tags, isFetching, error } = useTagsQuery(tagsQueryInput)
+  const { data: tags, isPending, error } = useTagsQuery(tagsQueryInput)
 
   return {
     search,
     tags,
-    isFetching,
+    isPending,
     error,
   }
 }

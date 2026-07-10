@@ -2,7 +2,7 @@
 import type { CollectionFormState } from '../types/collection'
 
 const props = defineProps<{
-  loading?: boolean
+  submitting?: boolean
   initialState: CollectionFormState
 }>()
 
@@ -48,7 +48,7 @@ const cancel = () => {
       </UButton>
 
       <UButton
-        :loading
+        :loading="submitting"
         type="submit"
       >
         Submit

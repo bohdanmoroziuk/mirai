@@ -7,10 +7,11 @@ const props = defineProps<{
   number: number
 }>()
 
-const {
-  isPending,
-  deleteTag,
-} = useDeleteTagWorkflow(() => props.tag.id)
+const tagId = computed(() => {
+  return props.tag.id
+})
+
+const { isDeleting, deleteTag } = useDeleteTagWorkflow(tagId)
 </script>
 
 <template>
@@ -31,7 +32,7 @@ const {
 
     <div class="flex gap-2">
       <UButton
-        :loading="isPending"
+        :loading="isDeleting"
         icon="i-lucide-trash-2"
         size="sm"
         color="error"

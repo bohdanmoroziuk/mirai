@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { TagFormState } from '../types/tag'
-import { useCreateTag } from '../workflows/create-tag.workflow'
+import { useCreateTagWorkflow } from '../workflows/create-tag.workflow'
 
-const { tagFormInitialState, loading, createTag } = useCreateTag()
+const { tagFormInitialState, isCreating, createTag } = useCreateTagWorkflow()
 
 const [isOpen, toggle] = useToggle()
 
@@ -39,7 +39,7 @@ const handleTagCreate = async (state: TagFormState) => {
     <template #body>
       <TagForm
         :initial-state="tagFormInitialState"
-        :loading
+        :submitting="isCreating"
         @submit="handleTagCreate"
         @cancel="close"
       />

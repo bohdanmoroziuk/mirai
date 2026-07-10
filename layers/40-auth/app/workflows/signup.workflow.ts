@@ -3,13 +3,9 @@ import { toSignupInput } from '../mappers/auth-input.mapper'
 import type { SignupFormState } from '../types/auth'
 
 export const useSignupWorkflow = () => {
-  const { error, isPending, mutateAsync } = useSignupMutation()
+  const { error, isPending: isSigningUp, mutateAsync } = useSignupMutation()
 
-  const errorMessage = computed(() => {
-    return toValue(error)
-      ? getErrorMessage(toValue(error))
-      : null
-  })
+  const errorMessage = useMappedValueOr(error, getErrorMessage, null)
 
   const signup = async (state: SignupFormState) => {
     try {
@@ -24,7 +20,7 @@ export const useSignupWorkflow = () => {
 
   return {
     errorMessage,
-    isPending,
+    isSigningUp,
     signup,
   }
 }

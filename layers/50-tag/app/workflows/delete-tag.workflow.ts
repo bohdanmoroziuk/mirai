@@ -4,7 +4,7 @@ import { toDeleteTagInput } from '../mappers/tag-input.mapper'
 export const useDeleteTagWorkflow = (tagId: MaybeRefOrGetter<string>) => {
   const notification = useNotification()
   const { confirm } = useConfirmModal()
-  const { isPending, mutateAsync } = useDeleteTagMutation()
+  const { isPending: isDeleting, mutateAsync } = useDeleteTagMutation()
 
   const deleteTag = async () => {
     await confirm({
@@ -30,7 +30,7 @@ export const useDeleteTagWorkflow = (tagId: MaybeRefOrGetter<string>) => {
   }
 
   return {
-    isPending,
+    isDeleting,
     deleteTag,
   }
 }

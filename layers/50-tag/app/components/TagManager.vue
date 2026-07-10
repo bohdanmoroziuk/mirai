@@ -4,7 +4,7 @@ import { useTagListWorkflow } from '../workflows/tag-list.workflow'
 const {
   search,
   tags,
-  isFetching,
+  isPending,
   error,
 } = useTagListWorkflow()
 </script>
@@ -21,7 +21,7 @@ const {
 
     <UiQueryState
       :data="tags"
-      :fetching="isFetching"
+      :fetching="isPending"
       :error="error"
       :empty-when="isEmpty"
     >
