@@ -12,7 +12,7 @@ export const useLogoutWorkflow = () => {
 
     try {
       await mutateAsync()
-      await navigateTo('/auth/signup')
+      await navigateTo('/auth/login')
       return true
     }
     catch (error) {

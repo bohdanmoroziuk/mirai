@@ -9,6 +9,10 @@ export const useCreateBookmarkWorkflow = () => {
   const bookmarkFormInitialState = getBookmarkFormInitialState()
 
   const createBookmark = async (state: BookmarkFormState) => {
+    if (toValue(isCreating)) {
+      return false
+    }
+
     try {
       await mutateAsync(toCreateBookmarkInput(state))
 

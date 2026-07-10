@@ -10,10 +10,12 @@ export const useTagsQuery = (
     Error,
     Tag[]
   >({
-    queryKey: computed(() => ['tags', toValue(input)]),
-    queryFn: () => tagRepository.getMany(toValue(input)),
-    initialData: toApiResponse([]),
-    initialDataUpdatedAt: 0,
+    queryKey: computed(() => {
+      return ['tags', toValue(input)]
+    }),
+    queryFn: () => {
+      return tagRepository.getMany(toValue(input))
+    },
     select: selectApiData,
   })
 }

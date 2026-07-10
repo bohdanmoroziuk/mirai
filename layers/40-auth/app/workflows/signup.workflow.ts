@@ -8,6 +8,10 @@ export const useSignupWorkflow = () => {
   const errorMessage = useMappedValueOr(error, getErrorMessage, null)
 
   const signup = async (state: SignupFormState) => {
+    if (toValue(isSigningUp)) {
+      return false
+    }
+
     try {
       await mutateAsync(toSignupInput(state))
       await navigateTo('/')

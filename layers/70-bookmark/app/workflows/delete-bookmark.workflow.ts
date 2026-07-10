@@ -7,6 +7,10 @@ export const useDeleteBookmarkWorkflow = (bookmarkId: MaybeRefOrGetter<string>) 
   const { isPending: isDeleting, mutateAsync } = useDeleteBookmarkMutation()
 
   const deleteBookmark = async () => {
+    if (toValue(isDeleting)) {
+      return
+    }
+
     await confirm({
       title: 'Delete bookmark?',
       description: 'This bookmark will be permanently deleted.',

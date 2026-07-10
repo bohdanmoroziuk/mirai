@@ -7,6 +7,10 @@ export const useDeleteTagWorkflow = (tagId: MaybeRefOrGetter<string>) => {
   const { isPending: isDeleting, mutateAsync } = useDeleteTagMutation()
 
   const deleteTag = async () => {
+    if (toValue(isDeleting)) {
+      return
+    }
+
     await confirm({
       title: 'Delete tag?',
       description: 'This tag will be permanently deleted.',

@@ -9,6 +9,10 @@ export const useCreateTagWorkflow = () => {
   const tagFormInitialState = getTagFormInitialState()
 
   const createTag = async (state: TagFormState) => {
+    if (toValue(isCreating)) {
+      return false
+    }
+
     try {
       await mutateAsync(toCreateTagInput(state))
 

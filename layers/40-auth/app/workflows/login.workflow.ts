@@ -8,6 +8,10 @@ export const useLoginWorkflow = () => {
   const errorMessage = useMappedValueOr(error, getErrorMessage, null)
 
   const login = async (state: LoginFormState) => {
+    if (toValue(isLoggingIn)) {
+      return false
+    }
+
     try {
       await mutateAsync(toLoginInput(state))
       await navigateTo('/')
