@@ -1,83 +1,21 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
+import { useQuery } from '@tanstack/vue-query'
 import { bookmarkRepository } from '../repositories/bookmark.repository'
-import type { GetBookmarksQuery } from '../types/bookmark'
-import { toGetBookmarksInput } from '../mappers/bookmark-input.mapper'
+import type { GetBookmarksInput } from '../types/bookmark'
 
-export const useBookmarkQuery = (
-  query: MaybeRefOrGetter<GetBookmarksQuery> = {},
+export const useBookmarksQuery = (
+  input: MaybeRefOrGetter<GetBookmarksInput>,
 ) => {
-  const input = computed(() => {
-    return toGetBookmarksInput(toValue(query))
-  })
-
-  const {
-    data: bookmarks,
-    isFetching: loading,
-    error,
-  } = useQuery<
+  return useQuery<
     ApiResponse<Bookmark[]>,
     Error,
     Bookmark[]
   >({
     queryKey: computed(() => {
-      return [
-        'bookmarks',
-        toValue(input),
-      ]
+      return ['bookmarks', toValue(input)]
     }),
-    queryFn: () => bookmarkRepository.getMany(toValue(input)),
-    initialData: toApiResponse([]),
-    initialDataUpdatedAt: 0,
+    queryFn: () => {
+      return bookmarkRepository.getMany(toValue(input))
+    },
     select: selectApiData,
   })
-
-  return {
-    bookmarks,
-    loading,
-    error,
-  }
-}
-
-export const useCreateBookmarkMutation = () => {
-  const queryClient = useQueryClient()
-
-  const {
-    isPending: loading,
-    mutateAsync: createBookmark,
-  } = useMutation({
-    mutationKey: ['bookmarks', 'create'],
-    mutationFn: bookmarkRepository.createOne,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ['bookmarks'],
-      })
-    },
-  })
-
-  return {
-    loading,
-    createBookmark,
-  }
-}
-
-export const useDeleteBookmarkMutation = () => {
-  const queryClient = useQueryClient()
-
-  const {
-    isPending: loading,
-    mutateAsync: deleteBookmark,
-  } = useMutation({
-    mutationKey: ['bookmarks', 'delete'],
-    mutationFn: bookmarkRepository.deleteOne,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ['bookmarks'],
-      })
-    },
-  })
-
-  return {
-    loading,
-    deleteBookmark,
-  }
 }
