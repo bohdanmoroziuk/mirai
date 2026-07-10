@@ -6,7 +6,6 @@ import type {
   getBookmarkParamsSchema,
   updateBookmarkParamsSchema,
   updateBookmarkBodySchema,
-  getBookmarksQuerySchema,
 } from '../schemas/bookmark.schema'
 
 export type BookmarkSchema = {
@@ -22,13 +21,6 @@ export type BookmarkSchema = {
 }
 
 export type BookmarkDocument = HydratedDocument<BookmarkSchema>
-
-export type GetBookmarksQuery = z.infer<typeof getBookmarksQuerySchema>
-
-export type GetBookmarksInput = {
-  userId: string
-  collectionId?: string
-}
 
 export type FindBookmarksDocumentsQuery = {
   filter: QueryFilter<BookmarkSchema>

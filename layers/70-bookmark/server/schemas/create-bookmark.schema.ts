@@ -25,5 +25,3 @@ export const createBookmarkBodySchema = z.object({
     .array(objectIdSchema)
     .default([]),
 })
-
-export type CreateBookmarkBody = z.infer<typeof createBookmarkBodySchema>

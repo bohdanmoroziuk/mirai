@@ -2,8 +2,6 @@ import type { UserSessionRequired } from '#auth-utils'
 import type { Bookmark } from '../../shared/types/bookmark'
 import type {
   BookmarkDocument,
-  GetBookmarksInput,
-  FindBookmarksDocumentsQuery,
   GetBookmarkParams,
   GetBookmarkInput,
   FindBookmarkDocumentQuery,
@@ -11,7 +9,6 @@ import type {
   UpdateBookmarkParams,
   UpdateBookmarkBody,
   UpdateBookmarkDocumentQuery,
-  GetBookmarksQuery,
 } from '../types/bookmark'
 
 export const toBookmark = (document: BookmarkDocument): Bookmark => {
@@ -26,34 +23,6 @@ export const toBookmark = (document: BookmarkDocument): Bookmark => {
     tagIds: document.tagIds.map(tagId => tagId.toString()),
     createdAt: document.createdAt.toISOString(),
     updatedAt: document.updatedAt.toISOString(),
-  }
-}
-
-export const toGetBookmarksInput = (
-  session: UserSessionRequired,
-  query: GetBookmarksQuery,
-): GetBookmarksInput => {
-  return {
-    userId: session.user.id,
-    collectionId: query.collectionId,
-  }
-}
-
-export const toFindBookmarkDocumentsQuery = (
-  input: GetBookmarksInput,
-): FindBookmarksDocumentsQuery => {
-  return {
-    filter: {
-      userId: toObjectId(input.userId),
-      ...(
-        input.collectionId
-          ? { collectionId: toNullableObjectId(input.collectionId) }
-          : {}
-      ),
-    },
-    sort: {
-      createdAt: -1,
-    },
   }
 }
 

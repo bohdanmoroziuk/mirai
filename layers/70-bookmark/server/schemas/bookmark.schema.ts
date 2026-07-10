@@ -1,10 +1,6 @@
 import z from 'zod'
 import { objectIdSchema } from '@common/server/schemas/mongoose.schema'
 
-export const getBookmarksQuerySchema = z.object({
-  collectionId: objectIdSchema.optional(),
-})
-
 export const getBookmarkParamsSchema = z.object({
   bookmarkId: objectIdSchema,
 })
