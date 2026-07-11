@@ -6,7 +6,7 @@ export const getBookmarkFormInitialState = (): BookmarkFormState => {
     description: '',
     url: '',
     isFavorite: false,
-    collectionId: undefined,
+    collectionId: null,
     tagIds: [],
   }
 }
@@ -17,7 +17,7 @@ export const toBookmarkFormState = (bookmark: Bookmark): BookmarkFormState => {
     description: bookmark.description ?? '',
     url: bookmark.url,
     isFavorite: bookmark.isFavorite,
-    collectionId: bookmark.collectionId ?? undefined,
+    collectionId: bookmark.collectionId ?? null,
     tagIds: bookmark.tagIds,
   }
 }

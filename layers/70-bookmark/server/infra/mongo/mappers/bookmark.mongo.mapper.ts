@@ -13,7 +13,7 @@ export const toBookmark = (document: BookmarkDocument): Bookmark => {
     collectionId: mapValueOr(
       document.collectionId,
       collectionId => collectionId.toString(),
-      undefined,
+      null,
     ),
     tagIds: document.tagIds.map(tagId => tagId.toString()),
     createdAt: document.createdAt.toISOString(),

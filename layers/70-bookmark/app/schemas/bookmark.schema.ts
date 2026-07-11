@@ -5,6 +5,6 @@ export const bookmarkPayloadSchema = z.object({
   description: z.string().trim().min(3).or(z.literal('')),
   url: z.url(),
   isFavorite: z.boolean(),
-  collectionId: z.string().optional(),
+  collectionId: z.string().nullable(),
   tagIds: z.array(z.string()),
 })

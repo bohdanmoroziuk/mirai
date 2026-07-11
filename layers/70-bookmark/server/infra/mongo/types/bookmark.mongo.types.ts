@@ -1,5 +1,5 @@
 import type { HydratedDocument, Types } from 'mongoose'
-import type { Nullish } from '@core/shared/types/common'
+import type { Nullable } from '@core/shared/types/common'
 
 export type BookmarkFields = {
   title: string
@@ -7,7 +7,7 @@ export type BookmarkFields = {
   url: string
   isFavorite: boolean
   userId: Types.ObjectId
-  collectionId: Nullish<Types.ObjectId>
+  collectionId: Nullable<Types.ObjectId>
   tagIds: Types.ObjectId[]
   updatedAt: Date
   createdAt: Date

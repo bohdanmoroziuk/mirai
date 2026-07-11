@@ -26,7 +26,7 @@ export const updateBookmarkBodySchema = z
       .boolean()
       .optional(),
 
-    collectionId: objectIdSchema.optional(),
+    collectionId: objectIdSchema.nullish(),
 
     tagIds: z
       .array(objectIdSchema)

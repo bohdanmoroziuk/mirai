@@ -19,7 +19,7 @@ export const createBookmarkBodySchema = z.object({
     .boolean()
     .default(false),
 
-  collectionId: objectIdSchema.optional(),
+  collectionId: objectIdSchema.nullable(),
 
   tagIds: z
     .array(objectIdSchema)

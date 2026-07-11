@@ -1,4 +1,4 @@
-import type { Nullish } from '@core/shared/types/common'
+import type { Nullable } from '@core/shared/types/common'
 import type { Entity, Timestamps } from '@core/shared/types/entity'
 
 export type BookmarkEntity = {
@@ -7,7 +7,7 @@ export type BookmarkEntity = {
   url: string
   isFavorite: boolean
   userId: string
-  collectionId: Nullish<string>
+  collectionId: Nullable<string>
   tagIds: string[]
 }
 
