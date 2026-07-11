@@ -6,7 +6,7 @@ export const toTag = (document: TagDocument): Tag => {
     id: document._id.toString(),
     userId: document.userId.toString(),
     name: document.name,
-    color: document.color ?? undefined,
+    color: document.color,
     updatedAt: document.updatedAt.toISOString(),
     createdAt: document.createdAt.toISOString(),
   }

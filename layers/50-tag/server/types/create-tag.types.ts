@@ -6,5 +6,5 @@ export type CreateTagBody = z.infer<typeof createTagBodySchema>
 export type CreateTagInput = {
   userId: string
   name: string
-  color?: string
+  color: string
 }

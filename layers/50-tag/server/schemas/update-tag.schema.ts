@@ -11,5 +11,6 @@ export const updateTagBodySchema = z.object({
 
   color: z
     .string()
+    .trim()
     .optional(),
 })

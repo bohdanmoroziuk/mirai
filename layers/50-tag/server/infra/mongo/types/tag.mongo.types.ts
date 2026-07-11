@@ -1,10 +1,9 @@
 import type { HydratedDocument, Types } from 'mongoose'
-import type { Nullish } from '@core/shared/types/common'
 
 export type TagFields = {
   userId: Types.ObjectId
   name: string
-  color: Nullish<string>
+  color: string
   updatedAt: Date
   createdAt: Date
 }

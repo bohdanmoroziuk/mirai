@@ -30,7 +30,7 @@ defineRouteMeta({
         'application/json': {
           schema: {
             type: 'object',
-            required: ['name'],
+            required: ['name', 'color'],
             properties: {
               name: {
                 type: 'string',
@@ -38,7 +38,6 @@ defineRouteMeta({
               },
               color: {
                 type: 'string',
-                nullable: true,
                 example: '#F59E0B',
               },
             },
@@ -76,7 +75,6 @@ defineRouteMeta({
                     },
                     color: {
                       type: 'string',
-                      nullable: true,
                       example: '#F59E0B',
                     },
                     userId: {

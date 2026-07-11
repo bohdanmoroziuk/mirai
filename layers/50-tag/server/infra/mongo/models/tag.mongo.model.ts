@@ -15,7 +15,8 @@ const tagSchema = new Schema<TagFields>({
   },
   color: {
     type: String,
-    default: null,
+    required: true,
+    trim: true,
   },
 }, {
   timestamps: true,

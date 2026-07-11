@@ -65,7 +65,6 @@ defineRouteMeta({
                       },
                       color: {
                         type: 'string',
-                        nullable: true,
                         example: '#F59E0B',
                       },
                       userId: {
