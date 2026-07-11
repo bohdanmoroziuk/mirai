@@ -1,5 +1,18 @@
-import { loginBodySchema } from '../../schemas/auth.schema'
-import { loginUser } from '../../services/auth.service'
+import { loginUserBodySchema } from '../../schemas/login-user.schema'
+import { toLoginUserInput } from '../../mappers/login-user.mapper'
+import { loginUser } from '../../auth.container'
+
+export default defineSafeEventHandler(async (event) => {
+  const body = await validateBody(event, loginUserBodySchema)
+  const user = await loginUser(toLoginUserInput(body))
+
+  await setUserSession(event, {
+    user,
+    loggedInAt: new Date(),
+  })
+
+  return createResponse(user)
+})
 
 defineRouteMeta({
   openAPI: {
@@ -78,16 +91,4 @@ defineRouteMeta({
       },
     },
   },
-})
-
-export default defineSafeEventHandler(async (event) => {
-  const body = await validateBody(event, loginBodySchema)
-  const user = await loginUser(body)
-
-  await setUserSession(event, {
-    user,
-    loggedInAt: new Date(),
-  })
-
-  return createResponse(user)
 })

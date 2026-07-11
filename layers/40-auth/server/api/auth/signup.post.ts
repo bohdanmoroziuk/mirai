@@ -1,11 +1,12 @@
 import { HttpStatus } from '@core/shared/constants/http'
 import { createResponse } from '@core/server/utils/response'
-import { signupBodySchema } from '../../schemas/auth.schema'
-import { signupUser } from '../../services/auth.service'
+import { signupUserBodySchema } from '../../schemas/signup-user.schema'
+import { toSignupUserInput } from '../../mappers/signup-user.mapper'
+import { signupUser } from '../../auth.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const body = await validateBody(event, signupBodySchema)
-  const user = await signupUser(body)
+  const body = await validateBody(event, signupUserBodySchema)
+  const user = await signupUser(toSignupUserInput(body))
 
   await setUserSession(event, {
     user,
