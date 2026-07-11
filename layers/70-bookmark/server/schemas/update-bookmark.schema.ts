@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { hasDefinedProperty } from '@core/shared/utils/object'
 import { objectIdSchema } from '@common/server/schemas/mongoose.schema'
 
 export const updateBookmarkBodySchema = z
@@ -32,8 +33,8 @@ export const updateBookmarkBodySchema = z
       .optional(),
   })
   .refine(
-    body => Object.values(body).some(value => value !== undefined),
+    hasDefinedProperty,
     {
-      message: 'At least one field must be provided',
+      error: 'At least one field must be provided',
     },
   )

@@ -16,3 +16,11 @@ export const compactObject = <
     Object.entries(value).filter(([, item]) => item !== undefined),
   ) as CompactedObject<T>
 }
+
+export const hasDefinedProperty = (
+  value: Record<string, unknown>,
+): boolean => {
+  return Object.values(value).some(
+    property => property !== undefined,
+  )
+}
