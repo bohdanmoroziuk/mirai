@@ -1,19 +1,19 @@
-import { isNullish } from '@core/shared/utils/common'
+import { isNull, isNotNull } from '@core/shared/utils/common'
 import { HttpStatus } from '@core/shared/constants/http'
-import type { Nullish } from '@core/shared/types/common'
-import type { UserWithPassword } from '~~/layers/30-user/server/types/user.types'
+import type { Nullable } from '@core/shared/types/common'
+import type { UserWithPassword } from '@user/server/types/user.types'
 
-export function ensureUserDoesNotExist(user: Nullish<UserWithPassword>): asserts user is null | undefined {
+export function ensureUserDoesNotExist(user: Nullable<UserWithPassword>): asserts user is null {
   invariant(
-    isNullish(user),
+    isNull(user),
     HttpStatus.CONFLICT,
     'User with this email already exists',
   )
 }
 
-export function ensureUserExists(user: Nullish<UserWithPassword>): asserts user is UserWithPassword {
+export function ensureUserExists(user: Nullable<UserWithPassword>): asserts user is UserWithPassword {
   invariant(
-    isPresent(user),
+    isNotNull(user),
     HttpStatus.UNAUTHORIZED,
     'Invalid email or password',
   )

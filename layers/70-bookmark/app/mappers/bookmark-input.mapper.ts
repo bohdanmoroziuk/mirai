@@ -2,7 +2,7 @@ import type { BookmarkFormState, CreateBookmarkInput, DeleteBookmarkInput, GetBo
 
 export const toGetBookmarksInput = (query: GetBookmarksQuery): GetBookmarksInput => {
   return {
-    query: compactQuery({
+    query: compactObject({
       collectionId: query.collectionId,
     }),
   }

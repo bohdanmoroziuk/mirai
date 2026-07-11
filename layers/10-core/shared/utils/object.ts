@@ -1,3 +1,5 @@
+import { isDefined } from './common'
+
 type CompactedObject<T extends Record<PropertyKey, unknown>> = {
   [K in keyof T as undefined extends T[K] ? never : K]: T[K]
 } & {
@@ -13,14 +15,12 @@ export const compactObject = <
   value: T,
 ): CompactedObject<T> => {
   return Object.fromEntries(
-    Object.entries(value).filter(([, item]) => item !== undefined),
+    Object.entries(value).filter(([, item]) => isDefined(item)),
   ) as CompactedObject<T>
 }
 
 export const hasDefinedProperty = (
   value: Record<string, unknown>,
 ): boolean => {
-  return Object.values(value).some(
-    property => property !== undefined,
-  )
+  return Object.values(value).some(isDefined)
 }

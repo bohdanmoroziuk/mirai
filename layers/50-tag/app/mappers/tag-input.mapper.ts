@@ -2,7 +2,7 @@ import type { CreateTagInput, DeleteTagInput, GetTagsInput, GetTagsQuery, TagFor
 
 export const toGetTagsInput = (query: GetTagsQuery): GetTagsInput => {
   return {
-    query: compactQuery({
+    query: compactObject({
       search: query.search?.trim() || undefined,
     }),
   }
