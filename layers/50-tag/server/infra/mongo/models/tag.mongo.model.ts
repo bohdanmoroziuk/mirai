@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose'
-import type { TagSchema } from '../types/tag'
+import type { TagFields } from '../types/tag.mongo.types'
 
-const tagSchema = new Schema<TagSchema>({
+const tagSchema = new Schema<TagFields>({
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -28,4 +28,4 @@ tagSchema.index({
   unique: true,
 })
 
-export const TagModel = createMongooseModel<TagSchema>('Tag', tagSchema)
+export const TagModel = createMongooseModel<TagFields>('Tag', tagSchema)

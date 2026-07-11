@@ -1,12 +1,13 @@
 import { HttpStatus } from '@core/shared/constants/http'
-import { createTagBodySchema } from '../../schemas/tag.schema'
-import { toCreateTagInput } from '../../mappers/tag.mapper'
-import { createTag } from '../../services/tag.service'
+import { requireUserId } from '@common/server/utils/auth'
+import { createTagBodySchema } from '../../schemas/create-tag.schema'
+import { toCreateTagInput } from '../../mappers/create-tag.mapper'
+import { createTag } from '../../tag.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
+  const userId = await requireUserId(event)
   const body = await validateBody(event, createTagBodySchema)
-  const tag = await createTag(toCreateTagInput(session, body))
+  const tag = await createTag(toCreateTagInput(userId, body))
 
   setResponseStatus(event, HttpStatus.CREATED)
 
