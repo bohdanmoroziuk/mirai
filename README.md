@@ -6,16 +6,28 @@
 
 The goal of v0.1.0 is to provide a small but usable bookmark manager.
 
-### Included
+### Included in the UI
 
 - Auth: sign up, log in, log out
 - Tags: create, view, search, delete
 - Collections: create, view
 - Bookmarks: create, view, open links, filter by collection, delete
 
-### Not Included Yet
+### API Support
 
-- Editing tags, collections, or bookmarks
+The server routes also expose authenticated read/update/delete endpoints for tags, collections, and bookmarks where implemented:
+
+| Area | Endpoints |
+| --- | --- |
+| Health | `GET /api/health` |
+| Auth | `POST /api/auth/signup`, `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me` |
+| Tags | `GET /api/tags`, `POST /api/tags`, `PATCH /api/tags/:tagId`, `DELETE /api/tags/:tagId` |
+| Collections | `GET /api/collections`, `POST /api/collections`, `GET /api/collections/:collectionId`, `PATCH /api/collections/:collectionId`, `DELETE /api/collections/:collectionId` |
+| Bookmarks | `GET /api/bookmarks`, `POST /api/bookmarks`, `GET /api/bookmarks/:bookmarkId`, `PATCH /api/bookmarks/:bookmarkId`, `DELETE /api/bookmarks/:bookmarkId` |
+
+### Not Included Yet in the UI
+
+- Editing tags, collections, or bookmarks from the app UI
 - Advanced filtering
 - Bookmark import/export
 - Sharing
@@ -39,19 +51,21 @@ app/
 
 layers/10-core/
   Pure framework-agnostic TypeScript code.
-  Must not depend on Nuxt, Vue, H3, Zod, Mongoose, Sentry, or other libraries.
+  Must not depend on Nuxt, Vue, H3, Zod, Mongoose, or other libraries.
 
 layers/20-common/
   Reusable application code that may depend on Nuxt, Vue, H3, Zod, Nuxt UI, and other libraries.
 
 layers/30-user/
-layers/40-bookmark/
+layers/40-auth/
 layers/50-tag/
+layers/60-collection/
+layers/70-bookmark/
   Feature layers.
-  Each feature owns its components, composables, queries, routes, schemas, models, repositories, services, mappers, and types.
+  Each feature owns its components, composables, workflows, queries, routes, schemas, models, repositories, mappers, and types.
 
 modules/
-  Local Nuxt modules used to install and configure third-party tools such as Vue Query, Mongoose, and Sentry.
+  Local Nuxt modules used to install and configure third-party tools such as Vue Query and Mongoose.
 ```
 
 ### Rules
@@ -83,6 +97,8 @@ modules → configure third-party tools for the Nuxt runtime
 ```
 
 Feature layers should own their domain implementation. Models, repositories, mappers, services, schemas, and routes stay inside the corresponding feature layer.
+
+Server-side persistence details live inside the relevant feature layer under `server/infra/mongo`.
 
 ## API Documentation
 
@@ -140,6 +156,8 @@ docs/components/index.md
 docs/components/ui-query-state.md
 docs/components/ui-input-password.md
 docs/components/ui-loader.md
+docs/composables/index.md
+docs/composables/use-notification.md
 ```
 
 Use these files to document shared components, architecture decisions, API conventions and project-specific rules.
@@ -188,35 +206,17 @@ See `scripts/mirai/README.md` for architecture, command details, and roadmap.
 Make sure to install dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
+
+The project uses `pnpm@11.10.0` from `package.json`.
 
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
 pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -224,33 +224,13 @@ bun run dev
 Build the application for production:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
 pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
 pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

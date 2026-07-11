@@ -6,9 +6,11 @@ Use this folder to document project-specific composables, not every small Vue or
 
 ## Composables
 
-| Composable        | Description                                                     | Docs                           |
-| ----------------- | --------------------------------------------------------------- | ------------------------------ |
+| Composable | Description | Docs |
+| --- | --- | --- |
 | `useConfirmModal` | Opens `UiConfirmModal` programmatically for confirmation flows. | [Docs](./use-confirm-modal.md) |
+| `useMappedItems` | Maps nullable or reactive arrays into computed arrays. | [Docs](./use-mapped-items.md) |
+| `useMappedValueOr` | Maps nullable or reactive values into computed values with a fallback. | [Docs](./use-mapped-value-or.md) |
 | `useNotification` | Shows consistent app notifications through Nuxt UI toasts. | [Docs](./use-notification.md) |
 
 ## Rules
@@ -60,6 +62,6 @@ Composables usually live inside layer-specific `composables` directories.
 Example:
 
 ```txt
-layers/common/app/composables/useConfirmModal.ts
+layers/20-common/app/composables/useConfirmModal.ts
 docs/composables/use-confirm-modal.md
 ```

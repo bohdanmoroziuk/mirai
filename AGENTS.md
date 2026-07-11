@@ -7,24 +7,24 @@ Mirai is a Nuxt 4, Nuxt UI, TypeScript, MongoDB/Mongoose, Zod and TanStack Vue Q
 Current version: v0.1.0.
 
 Implemented scope:
-- auth: signup, login, logout
-- tag: create, view, search, delete
-- collection: create, view
-- bookmark: create, view, open link in a new tab, filter by collection id, delete
+- auth: signup, login, logout, current user
+- tag: create, view, search, update API, delete
+- collection: create, view, get by id API, update API, delete API
+- bookmark: create, view, get by id API, update API, open link in a new tab, filter by collection id, delete
 
 ## Architecture
 
 Follow Feature-based Vertical Slice Clean Architecture.
 
 Feature layers live in:
-- `layers/<feature>/app`
-- `layers/<feature>/server`
-- `layers/<feature>/shared`
+- `layers/<number>-<feature>/app`
+- `layers/<number>-<feature>/server`
+- `layers/<number>-<feature>/shared`
 
 Common shared code lives in:
-- `layers/common/app`
-- `layers/common/server`
-- `layers/common/shared`
+- `layers/20-common/app`
+- `layers/20-common/server`
+- `layers/20-common/shared`
 
 Infrastructure setup does not live in a separate `infra` layer.
 Use modules instead:
@@ -57,13 +57,13 @@ Automatic layer numbering may be handled later.
 - Use pnpm.
 - Core must not depend on third-party libraries.
 - Do not introduce a separate `infra` layer.
-- Use explicit route param names, for example `[bookmarkId].delete.ts`.
+- Use explicit route param names, for example `[bookmarkId]/index.delete.ts`.
 - Do not create service classes unless there is a clear need.
 - Prefer simple function-based use cases.
 - Keep repository ports and implementations inside the relevant feature server layer.
 - Prefer `infra/mongo/{models,repositories}` for server-side persistence details.
 - Use Zod schemas for API validation.
-- Put `objectIdSchema` in `common/server/schemas`.
+- Put `objectIdSchema` in `layers/20-common/server/schemas`.
 - Use `Types.ObjectId.isValid` for ObjectId validation.
 - Keep composables for reusable Vue/Nuxt utilities.
 - Composable filenames must use PascalCase after `use`, for example `useNotification.ts`.
