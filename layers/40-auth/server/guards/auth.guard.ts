@@ -1,9 +1,9 @@
 import { isNullish } from '@core/shared/utils/common'
 import { HttpStatus } from '@core/shared/constants/http'
 import type { Nullish } from '@core/shared/types/common'
-import type { User } from '@user/shared/types/user'
+import type { UserWithPassword } from '~~/layers/30-user/server/types/user.types'
 
-export function ensureUserDoesNotExist(user: Nullish<User>): asserts user is null | undefined {
+export function ensureUserDoesNotExist(user: Nullish<UserWithPassword>): asserts user is null | undefined {
   invariant(
     isNullish(user),
     HttpStatus.CONFLICT,
@@ -11,7 +11,7 @@ export function ensureUserDoesNotExist(user: Nullish<User>): asserts user is nul
   )
 }
 
-export function ensureUserExists(user: Nullish<User>): asserts user is User {
+export function ensureUserExists(user: Nullish<UserWithPassword>): asserts user is UserWithPassword {
   invariant(
     isPresent(user),
     HttpStatus.UNAUTHORIZED,

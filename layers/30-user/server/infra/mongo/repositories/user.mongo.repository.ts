@@ -1,6 +1,6 @@
 import { mapValueOr } from '@core/shared/utils/value'
 import type { UserRepository } from '../../../ports/user.repository.port'
-import { toUser } from '../mappers/user.mongo.mapper'
+import { toUserWithPassword } from '../mappers/user.mongo.mapper'
 import { toCreateUserData } from '../mappers/create-user.mongo.mapper'
 import { toFindUserByEmailQuery } from '../mappers/find-user-by-email.mongo.mapper'
 import { UserModel } from '../models/user.mongo.model'
@@ -10,7 +10,7 @@ export const makeMongoUserRepository = (): UserRepository => {
     async createOne(input) {
       const data = toCreateUserData(input)
       const document = await UserModel.create(data)
-      return toUser(document)
+      return toUserWithPassword(document)
     },
 
     async findOneByEmail(input) {
@@ -19,7 +19,7 @@ export const makeMongoUserRepository = (): UserRepository => {
         .findOne(query.filter)
         .exec()
 
-      return mapValueOr(document, toUser, null)
+      return mapValueOr(document, toUserWithPassword, null)
     },
   }
 }

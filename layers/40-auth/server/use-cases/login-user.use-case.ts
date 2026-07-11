@@ -12,7 +12,7 @@ export const makeLoginUserUseCase = (userRepository: UserRepository) => {
 
     ensureUserExists(user)
 
-    const isPasswordValid = await verifyPassword(user.password, input.password)
+    const isPasswordValid = await verifyPassword(user.passwordHash, input.password)
 
     ensurePasswordValid(isPasswordValid)
 

@@ -1,12 +1,12 @@
-import type { User } from '../../../../shared/types/user'
+import type { UserWithPassword } from '../../../types/user.types'
 import type { UserDocument } from '../types/user.mongo.types'
 
-export const toUser = (document: UserDocument): User => {
+export const toUserWithPassword = (document: UserDocument): UserWithPassword => {
   return {
     id: document._id.toString(),
     name: document.name,
     email: document.email,
-    password: document.passwordHash,
+    passwordHash: document.passwordHash,
     avatarUrl: document.avatarUrl,
     createdAt: document.createdAt.toISOString(),
     updatedAt: document.updatedAt.toISOString(),
