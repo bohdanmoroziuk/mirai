@@ -1,13 +1,12 @@
-import { getCollectionParamsSchema } from '../../../schemas/collection.schema'
-import { getCollection } from '../../../services/collection.service'
+import { requireUserId } from '@common/server/utils/auth'
+import { collectionParamsSchema } from '../../../schemas/collection-params.schema'
+import { toGetCollectionInput } from '../../../mappers/get-collection.mapper'
+import { getCollection } from '../../../collection.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
-  const params = await validateParams(event, getCollectionParamsSchema)
-  const collection = await getCollection({
-    collectionId: params.collectionId,
-    userId: session.user.id,
-  })
+  const userId = await requireUserId(event)
+  const params = await validateParams(event, collectionParamsSchema)
+  const collection = await getCollection(toGetCollectionInput(userId, params))
 
   return createResponse(collection)
 })

@@ -1,7 +1,7 @@
-import type { Collection } from '../../shared/types/collection'
-import type { CollectionDocument } from '../types/collection'
+import type { Collection } from '../../../../shared/types/collection'
+import type { CollectionDocument } from '../types/collection.mongo.types'
 
-export const mapCollection = (document: CollectionDocument): Collection => {
+export const toCollection = (document: CollectionDocument): Collection => {
   return {
     id: document._id.toString(),
     title: document.title,

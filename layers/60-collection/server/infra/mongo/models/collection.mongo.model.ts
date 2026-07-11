@@ -1,8 +1,7 @@
 import { Schema } from 'mongoose'
-import { createMongooseModel } from '@common/server/utils/mongoose'
-import type { CollectionSchema } from '../types/collection'
+import type { CollectionFields } from '../types/collection.mongo.types'
 
-const collectionSchema = new Schema<CollectionSchema>({
+const collectionSchema = new Schema<CollectionFields>({
   title: {
     type: String,
     required: true,
@@ -37,4 +36,4 @@ collectionSchema.index(
   },
 )
 
-export const CollectionModel = createMongooseModel<CollectionSchema>('Collection', collectionSchema)
+export const CollectionModel = createMongooseModel<CollectionFields>('Collection', collectionSchema)

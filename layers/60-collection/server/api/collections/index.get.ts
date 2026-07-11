@@ -1,10 +1,10 @@
-import { getCollections } from '../../services/collection.service'
+import { requireUserId } from '@common/server/utils/auth'
+import { toGetCollectionsInput } from '../../mappers/get-collections.mapper'
+import { getCollections } from '../../collection.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
-  const collections = await getCollections({
-    userId: session.user.id,
-  })
+  const userId = await requireUserId(event)
+  const collections = await getCollections(toGetCollectionsInput(userId))
 
   return createResponse(collections)
 })
