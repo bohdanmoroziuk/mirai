@@ -23,7 +23,7 @@ const hasError = computed(() => {
   return isPresent(props.error)
 })
 
-const isEmpty = computed(() => {
+const empty = computed(() => {
   if (props.fetching) {
     return false
   }
@@ -48,7 +48,7 @@ const isEmpty = computed(() => {
     />
   </template>
 
-  <template v-else-if="isEmpty">
+  <template v-else-if="empty">
     <slot name="empty" />
   </template>
 

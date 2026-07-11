@@ -1,11 +1,12 @@
-import { getTags } from '../../services/tag.service'
-import { toGetTagsInput } from '../../mappers/tag.mapper'
-import { getTagsQuerySchema } from '../../schemas/tag.schema'
+import { requireUserId } from '@common/server/utils/auth'
+import { getTagsQuerySchema } from '../../schemas/get-tags.schema'
+import { toGetTagsInput } from '../../mappers/get-tags.mapper'
+import { getTags } from '../../tag.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
+  const userId = await requireUserId(event)
   const query = await validateQuery(event, getTagsQuerySchema)
-  const tags = await getTags(toGetTagsInput(session, query))
+  const tags = await getTags(toGetTagsInput(userId, query))
 
   return createResponse(tags)
 })
@@ -64,7 +65,6 @@ defineRouteMeta({
                       },
                       color: {
                         type: 'string',
-                        nullable: true,
                         example: '#F59E0B',
                       },
                       userId: {

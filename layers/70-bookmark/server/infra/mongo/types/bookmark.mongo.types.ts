@@ -1,0 +1,16 @@
+import type { HydratedDocument, Types } from 'mongoose'
+import type { Nullable } from '@core/shared/types/common'
+
+export type BookmarkFields = {
+  title: string
+  description: string
+  url: string
+  isFavorite: boolean
+  userId: Types.ObjectId
+  collectionId: Nullable<Types.ObjectId>
+  tagIds: Types.ObjectId[]
+  updatedAt: Date
+  createdAt: Date
+}
+
+export type BookmarkDocument = HydratedDocument<BookmarkFields>

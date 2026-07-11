@@ -1,14 +1,13 @@
 import { validateParams } from '@common/server/utils/validation'
-import { deleteCollectionParamsSchema } from '../../../schemas/collection.schema'
-import { deleteCollection } from '../../../services/collection.service'
+import { requireUserId } from '@common/server/utils/auth'
+import { collectionParamsSchema } from '../../../schemas/collection-params.schema'
+import { toDeleteCollectionInput } from '../../../mappers/delete-collection.mapper'
+import { deleteCollection } from '../../../collection.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
-  const params = await validateParams(event, deleteCollectionParamsSchema)
-  const result = await deleteCollection({
-    collectionId: params.collectionId,
-    userId: session.user.id,
-  })
+  const userId = await requireUserId(event)
+  const params = await validateParams(event, collectionParamsSchema)
+  const result = await deleteCollection(toDeleteCollectionInput(userId, params))
 
   return createResponse(result)
 })

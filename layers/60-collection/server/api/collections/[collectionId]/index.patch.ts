@@ -1,15 +1,14 @@
-import { updateCollectionBodySchema, updateCollectionParamsSchema } from '../../../schemas/collection.schema'
-import { updateCollection } from '../../../services/collection.service'
+import { requireUserId } from '@common/server/utils/auth'
+import { collectionParamsSchema } from '../../../schemas/collection-params.schema'
+import { updateCollectionBodySchema } from '../../../schemas/update-collection.schema'
+import { toUpdateCollectionInput } from '../../../mappers/update-collection.mapper'
+import { updateCollection } from '../../../collection.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
-  const params = await validateParams(event, updateCollectionParamsSchema)
+  const userId = await requireUserId(event)
+  const params = await validateParams(event, collectionParamsSchema)
   const body = await validateBody(event, updateCollectionBodySchema)
-  const collection = await updateCollection({
-    title: body.title,
-    userId: session.user.id,
-    collectionId: params.collectionId,
-  })
+  const collection = await updateCollection(toUpdateCollectionInput(userId, params, body))
 
   return createResponse(collection)
 })

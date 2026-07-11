@@ -1,12 +1,12 @@
 import { validateQuery } from '@common/server/utils/validation'
-import { getBookmarksQuerySchema } from '../../schemas/bookmark.schema'
-import { toGetBookmarksInput } from '../../mappers/bookmark.mapper'
-import { getBookmarks } from '../../services/bookmark.service'
+import { getBookmarksQuerySchema } from '../../schemas/get-bookmarks.schema'
+import { toGetBookmarksInput } from '../../mappers/get-bookmarks.mapper'
+import { getBookmarks } from '../../bookmark.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
+  const userId = await requireUserId(event)
   const query = await validateQuery(event, getBookmarksQuerySchema)
-  const bookmarks = await getBookmarks(toGetBookmarksInput(session, query))
+  const bookmarks = await getBookmarks(toGetBookmarksInput(userId, query))
 
   return createResponse(bookmarks)
 })

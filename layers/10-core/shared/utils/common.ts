@@ -1,4 +1,20 @@
-import type { Nullish, Falsy, Truthy } from '../../shared/types/common'
+import type { Nullish, Optional, Nullable, Falsy, Truthy } from '../../shared/types/common'
+
+export const isUndefined = <T>(value: Optional<T>): value is undefined => {
+  return value === undefined
+}
+
+export const isDefined = <T>(value: Optional<T>): value is T => {
+  return value !== undefined
+}
+
+export const isNull = <T>(value: Nullable<T>): value is null => {
+  return value === null
+}
+
+export const isNotNull = <T>(value: Nullable<T>): value is T => {
+  return value !== null
+}
 
 export const isPresent = <T>(value: Nullish<T>): value is T => {
   return value !== null && value !== undefined

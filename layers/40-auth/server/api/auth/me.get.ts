@@ -1,3 +1,9 @@
+export default defineSafeEventHandler(async (event) => {
+  const session = await getUserSession(event)
+
+  return createResponse(session.user ?? null)
+})
+
 defineRouteMeta({
   openAPI: {
     tags: ['Auth'],
@@ -63,10 +69,4 @@ defineRouteMeta({
       },
     },
   },
-})
-
-export default defineSafeEventHandler(async (event) => {
-  const session = await getUserSession(event)
-
-  return createResponse(session.user ?? null)
 })

@@ -1,15 +1,13 @@
 import { HttpStatus } from '@core/shared/constants/http'
-import { createCollectionBodySchema } from '../../schemas/collection.schema'
-import { createCollection } from '../../services/collection.service'
+import { requireUserId } from '@common/server/utils/auth'
+import { createCollectionBodySchema } from '../../schemas/create-collection.schema'
+import { toCreateCollectionInput } from '../../mappers/create-collection.mapper'
+import { createCollection } from '../../collection.container'
 
 export default defineSafeEventHandler(async (event) => {
-  const session = await requireUserSession(event)
+  const userId = await requireUserId(event)
   const body = await validateBody(event, createCollectionBodySchema)
-  const collection = await createCollection({
-    title: body.title,
-    userId: session.user.id,
-    parentId: body.parentId,
-  })
+  const collection = await createCollection(toCreateCollectionInput(userId, body))
 
   setResponseStatus(event, HttpStatus.CREATED)
 
