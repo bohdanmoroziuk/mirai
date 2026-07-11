@@ -1,8 +1,7 @@
 import { Schema } from 'mongoose'
-import { createMongooseModel } from '@common/server/utils/mongoose'
-import type { UserSchema } from '../types/user'
+import type { UserFields } from '../types/user.mongo.types'
 
-export const userSchema = new Schema<UserSchema>({
+export const userSchema = new Schema<UserFields>({
   name: {
     type: String,
     required: true,
@@ -27,4 +26,4 @@ export const userSchema = new Schema<UserSchema>({
   timestamps: true,
 })
 
-export const UserModel = createMongooseModel<UserSchema>('User', userSchema)
+export const UserModel = createMongooseModel<UserFields>('User', userSchema)

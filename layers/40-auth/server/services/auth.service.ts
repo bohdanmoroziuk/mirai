@@ -1,13 +1,14 @@
 import { isNullish } from '@core/shared/utils/common'
 import { HttpStatus } from '@core/shared/constants/http'
-import { mapUser } from '@user/server/mappers/user.mapper'
-import { createUser, getUserByEmail, getUserDocumentByEmail } from '@user/server/services/user.service'
+import { userRepository } from '@user/server/user.repository.container'
 import type { AuthUser } from '../../shared/types/auth'
 import type { SignupUserInput, LoginUserInput } from '../types/auth'
 import { mapAuthUser } from '../mappers/auth.mapper'
 
 export const signupUser = async (input: SignupUserInput): Promise<AuthUser> => {
-  const existingUser = await getUserByEmail(input.email)
+  const existingUser = await userRepository.findOneByEmail({
+    email: input.email,
+  })
 
   invariant(
     isNullish(existingUser),
@@ -17,7 +18,7 @@ export const signupUser = async (input: SignupUserInput): Promise<AuthUser> => {
 
   const passwordHash = await hashPassword(input.password)
 
-  const user = await createUser({
+  const user = await userRepository.createOne({
     name: input.name,
     email: input.email,
     passwordHash,
@@ -29,15 +30,17 @@ export const signupUser = async (input: SignupUserInput): Promise<AuthUser> => {
 }
 
 export const loginUser = async (input: LoginUserInput): Promise<AuthUser> => {
-  const userDocument = await getUserDocumentByEmail(input.email)
+  const userCredentials = await userRepository.findOneByEmail({
+    email: input.email,
+  })
 
   invariant(
-    isPresent(userDocument),
+    isPresent(userCredentials),
     HttpStatus.UNAUTHORIZED,
     'Invalid email or password',
   )
 
-  const isPasswordValid = await verifyPassword(userDocument.passwordHash, input.password)
+  const isPasswordValid = await verifyPassword(userCredentials.password, input.password)
 
   invariant(
     isPasswordValid,
@@ -45,7 +48,7 @@ export const loginUser = async (input: LoginUserInput): Promise<AuthUser> => {
     'Invalid email or password',
   )
 
-  const authUser = mapAuthUser(mapUser(userDocument))
+  const authUser = mapAuthUser(userCredentials)
 
   return authUser
 }
