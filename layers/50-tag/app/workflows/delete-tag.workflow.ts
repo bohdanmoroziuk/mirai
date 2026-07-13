@@ -1,36 +1,28 @@
 import { useDeleteTagMutation } from '../queries/tag.mutations'
 import { toDeleteTagInput } from '../mappers/tag-input.mapper'
 
-export const useDeleteTagWorkflow = (tagId: MaybeRefOrGetter<string>) => {
+export const useDeleteTagWorkflow = () => {
   const notification = useNotification()
-  const { confirm } = useConfirmModal()
   const { isPending: isDeleting, mutateAsync } = useDeleteTagMutation()
 
-  const deleteTag = async () => {
+  const deleteTag = async (tagId: string) => {
     if (toValue(isDeleting)) {
       return
     }
 
-    await confirm({
-      title: 'Delete tag?',
-      description: 'This tag will be permanently deleted.',
-      confirmLabel: 'Delete',
+    try {
+      await mutateAsync(toDeleteTagInput(tagId))
 
-      async onConfirm() {
-        await mutateAsync(toDeleteTagInput(toValue(tagId)))
-
-        notification.success({
-          title: 'Tag has been deleted successfully',
-        })
-      },
-
-      onError(error) {
-        notification.error({
-          title: 'Operation failed!',
-          description: getErrorMessage(error),
-        })
-      },
-    })
+      notification.success({
+        title: 'Tag deleted',
+      })
+    }
+    catch (error) {
+      notification.error({
+        title: 'Operation failed',
+        description: getErrorMessage(error),
+      })
+    }
   }
 
   return {

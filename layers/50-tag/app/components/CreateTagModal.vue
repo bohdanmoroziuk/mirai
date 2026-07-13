@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { toCreateTagInput } from '../mappers/tag-input.mapper'
+import { getTagFormInitialState } from '../mappers/tag.mapper'
 import type { TagFormState } from '../types/tag'
 import { useCreateTagWorkflow } from '../workflows/create-tag.workflow'
 
-const { tagFormInitialState, isCreating, createTag } = useCreateTagWorkflow()
-
+const tagFormInitialState = getTagFormInitialState()
+const { isCreating, createTag } = useCreateTagWorkflow()
 const [isOpen, toggle] = useToggle()
 
 const open = () => {
@@ -15,7 +17,7 @@ const close = () => {
 }
 
 const handleTagCreate = async (state: TagFormState) => {
-  const success = await createTag(state)
+  const success = await createTag(toCreateTagInput(state))
 
   if (success) {
     close()

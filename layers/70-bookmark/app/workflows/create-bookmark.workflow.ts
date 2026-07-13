@@ -1,20 +1,17 @@
-import { toCreateBookmarkInput } from '../mappers/bookmark-input.mapper'
-import { getBookmarkFormInitialState } from '../mappers/bookmark.mapper'
 import { useCreateBookmarkMutation } from '../queries/bookmark.mutations'
-import type { BookmarkFormState } from '../types/bookmark'
+import type { CreateBookmarkInput } from '../types/bookmark'
 
 export const useCreateBookmarkWorkflow = () => {
   const notification = useNotification()
   const { isPending: isCreating, mutateAsync } = useCreateBookmarkMutation()
-  const bookmarkFormInitialState = getBookmarkFormInitialState()
 
-  const createBookmark = async (state: BookmarkFormState) => {
+  const createBookmark = async (input: CreateBookmarkInput) => {
     if (toValue(isCreating)) {
       return false
     }
 
     try {
-      await mutateAsync(toCreateBookmarkInput(state))
+      await mutateAsync(input)
 
       notification.success({
         title: 'Bookmark created',
@@ -33,7 +30,6 @@ export const useCreateBookmarkWorkflow = () => {
   }
 
   return {
-    bookmarkFormInitialState,
     isCreating,
     createBookmark,
   }

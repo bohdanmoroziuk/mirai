@@ -5,10 +5,20 @@ const props = defineProps<{
   bookmark: Bookmark
 }>()
 
-const {
-  isDeleting,
-  deleteBookmark,
-} = useDeleteBookmarkWorkflow(() => props.bookmark.id)
+const { confirm } = useConfirmModal()
+const { isDeleting, deleteBookmark } = useDeleteBookmarkWorkflow()
+
+const handleBookmarkDelete = async () => {
+  const confirmed = await confirm({
+    title: 'Delete bookmark?',
+    description: 'This bookmark will be permanently deleted.',
+    confirmLabel: 'Delete',
+  })
+
+  if (confirmed) {
+    await deleteBookmark(props.bookmark.id)
+  }
+}
 </script>
 
 <template>
@@ -59,7 +69,7 @@ const {
           color="error"
           variant="solid"
           :loading="isDeleting"
-          @click.stop="deleteBookmark"
+          @click.stop="handleBookmarkDelete"
         />
       </div>
     </footer>

@@ -1,30 +1,27 @@
 import { useCreateTagMutation } from '../queries/tag.mutations'
-import { getTagFormInitialState } from '../mappers/tag.mapper'
-import { toCreateTagInput } from '../mappers/tag-input.mapper'
-import type { TagFormState } from '../types/tag'
+import type { CreateTagInput } from '../types/tag'
 
 export const useCreateTagWorkflow = () => {
   const notification = useNotification()
   const { isPending: isCreating, mutateAsync } = useCreateTagMutation()
-  const tagFormInitialState = getTagFormInitialState()
 
-  const createTag = async (state: TagFormState) => {
+  const createTag = async (input: CreateTagInput) => {
     if (toValue(isCreating)) {
       return false
     }
 
     try {
-      await mutateAsync(toCreateTagInput(state))
+      await mutateAsync(input)
 
       notification.success({
-        title: 'Tag has been created',
+        title: 'Tag created',
       })
 
       return true
     }
     catch (error) {
       notification.error({
-        title: 'Operation failed!',
+        title: 'Operation failed',
         description: getErrorMessage(error),
       })
 
@@ -33,7 +30,6 @@ export const useCreateTagWorkflow = () => {
   }
 
   return {
-    tagFormInitialState,
     isCreating,
     createTag,
   }

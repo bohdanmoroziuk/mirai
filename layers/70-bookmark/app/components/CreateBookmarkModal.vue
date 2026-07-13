@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { useCreateBookmarkWorkflow } from '../workflows/create-bookmark.workflow'
+import { getBookmarkFormInitialState } from '../mappers/bookmark.mapper'
+import { toCreateBookmarkInput } from '../mappers/bookmark-input.mapper'
 import type { BookmarkFormState } from '../types/bookmark'
 
-const {
-  bookmarkFormInitialState,
-  isCreating,
-  createBookmark,
-} = useCreateBookmarkWorkflow()
+const bookmarkFormInitialState = getBookmarkFormInitialState()
+const { isCreating, createBookmark } = useCreateBookmarkWorkflow()
 
 const [isOpen, toggle] = useToggle()
 
@@ -19,7 +18,7 @@ const close = () => {
 }
 
 const handleBookmarkCreate = async (state: BookmarkFormState) => {
-  const success = await createBookmark(state)
+  const success = await createBookmark(toCreateBookmarkInput(state))
 
   if (success) {
     close()

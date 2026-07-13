@@ -1,12 +1,20 @@
 <script setup lang="ts">
+import { toLoginInput } from '../../mappers/auth-input.mapper'
 import { useLoginWorkflow } from '../../workflows/login.workflow'
+import type { LoginFormState } from '../../types/auth'
 
 definePageMeta({
   access: 'guest-only',
   layout: 'auth',
 })
 
-const { errorMessage, isLoggingIn, login } = useLoginWorkflow()
+const { error, isLoggingIn, login } = useLoginWorkflow()
+
+const errorMessage = useMappedValueOr(error, getErrorMessage, null)
+
+const handleLogin = async (state: LoginFormState) => {
+  await login(toLoginInput(state))
+}
 </script>
 
 <template>
@@ -19,7 +27,7 @@ const { errorMessage, isLoggingIn, login } = useLoginWorkflow()
       <LoginForm
         :submitting="isLoggingIn"
         :error-message="errorMessage"
-        @submit="login"
+        @submit="handleLogin"
       />
     </div>
 
