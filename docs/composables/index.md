@@ -9,6 +9,7 @@ Use this folder to document project-specific composables, not every small Vue or
 | Composable | Description | Docs |
 | --- | --- | --- |
 | `useConfirmModal` | Opens `UiConfirmModal` programmatically for confirmation flows. | [Docs](./use-confirm-modal.md) |
+| `useFormState` | Manages typed reactive form state and reset behavior. | [Docs](./use-form-state.md) |
 | `useMappedItems` | Maps nullable or reactive arrays into computed arrays. | [Docs](./use-mapped-items.md) |
 | `useMappedValueOr` | Maps nullable or reactive values into computed values with a fallback. | [Docs](./use-mapped-value-or.md) |
 | `useNotification` | Shows consistent app notifications through Nuxt UI toasts. | [Docs](./use-notification.md) |

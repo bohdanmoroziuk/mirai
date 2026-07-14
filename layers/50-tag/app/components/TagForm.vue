@@ -13,7 +13,7 @@ const emit = defineEmits<{
   cancel: []
 }>()
 
-const state = reactive<TagFormState>({ ...props.initialState })
+const { state, resetState } = useFormState<TagFormState>(() => props.initialState)
 
 const submit = (event: FormSubmitEvent<TagFormState>) => {
   emit('submit', event.data)
@@ -22,6 +22,10 @@ const submit = (event: FormSubmitEvent<TagFormState>) => {
 const cancel = () => {
   emit('cancel')
 }
+
+defineExpose({
+  resetState,
+})
 </script>
 
 <template>

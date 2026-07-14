@@ -13,18 +13,14 @@ const emit = defineEmits<{
   submit: [state: SignupFormState]
 }>()
 
-const state = reactive<SignupFormState>({ ...props.initialState })
-
-const reset = () => {
-  Object.assign(state, { ...props.initialState })
-}
+const { state, resetState } = useFormState<SignupFormState>(() => props.initialState)
 
 const submit = (event: FormSubmitEvent<SignupFormState>) => {
   emit('submit', event.data)
 }
 
 defineExpose({
-  reset,
+  resetState,
 })
 </script>
 

@@ -13,7 +13,7 @@ const emit = defineEmits<{
   cancel: []
 }>()
 
-const state = reactive({ ...props.initialState })
+const { state, resetState } = useFormState<CollectionFormState>(() => props.initialState)
 
 const submit = (event: FormSubmitEvent<CollectionFormState>) => {
   emit('submit', event.data)
@@ -22,6 +22,10 @@ const submit = (event: FormSubmitEvent<CollectionFormState>) => {
 const cancel = () => {
   emit('cancel')
 }
+
+defineExpose({
+  resetState,
+})
 </script>
 
 <template>
