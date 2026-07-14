@@ -1,9 +1,9 @@
 import type { z } from 'zod'
-import type { bookmarkPayloadSchema } from '../schemas/bookmark.schema'
+import type { bookmarkFormStateSchema } from '../schemas/bookmark.schema'
 
-export type BookmarkPayload = z.infer<typeof bookmarkPayloadSchema>
+export type BookmarkFormState = z.infer<typeof bookmarkFormStateSchema>
 
-export type BookmarkFormState = BookmarkPayload
+export type BookmarkPayload = BookmarkFormState
 
 export type GetBookmarksQuery = {
   collectionId?: string

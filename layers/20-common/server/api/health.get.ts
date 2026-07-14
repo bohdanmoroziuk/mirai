@@ -1,3 +1,9 @@
+export default defineSafeEventHandler(() => {
+  return createResponse({
+    success: true,
+  })
+})
+
 defineRouteMeta({
   openAPI: {
     tags: ['Health'],
@@ -10,11 +16,17 @@ defineRouteMeta({
           'application/json': {
             schema: {
               type: 'object',
-              required: ['status'],
+              required: ['data'],
               properties: {
-                status: {
-                  type: 'string',
-                  example: 'ok',
+                data: {
+                  type: 'object',
+                  required: ['success'],
+                  properties: {
+                    success: {
+                      type: 'boolean',
+                      example: true,
+                    },
+                  },
                 },
               },
             },
@@ -23,10 +35,4 @@ defineRouteMeta({
       },
     },
   },
-})
-
-export default defineSafeEventHandler(() => {
-  return {
-    status: 'ok',
-  }
 })

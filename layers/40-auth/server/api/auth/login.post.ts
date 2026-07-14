@@ -53,7 +53,7 @@ defineRouteMeta({
               properties: {
                 data: {
                   type: 'object',
-                  required: ['id', 'name', 'email'],
+                  required: ['id', 'name', 'email', 'avatarUrl'],
                   properties: {
                     id: {
                       type: 'string',

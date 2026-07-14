@@ -13,7 +13,9 @@ export const createBookmarkBodySchema = z.object({
     .trim()
     .max(512),
 
-  url: z.url(),
+  url: z
+    .url()
+    .trim(),
 
   isFavorite: z
     .boolean()

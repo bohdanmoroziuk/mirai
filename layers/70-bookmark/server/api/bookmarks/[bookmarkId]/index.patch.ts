@@ -40,6 +40,7 @@ defineRouteMeta({
         'application/json': {
           schema: {
             type: 'object',
+            description: 'At least one field must be provided.',
             properties: {
               title: {
                 type: 'string',

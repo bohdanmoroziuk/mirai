@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { bookmarkPayloadSchema } from '../schemas/bookmark.schema'
+import { bookmarkFormStateSchema } from '../schemas/bookmark.schema'
 import type { BookmarkFormState } from '../types/bookmark'
 
 const props = withDefaults(
@@ -32,7 +32,7 @@ const cancel = () => {
 
 <template>
   <UForm
-    :schema="bookmarkPayloadSchema"
+    :schema="bookmarkFormStateSchema"
     :state="state"
     class="space-y-4"
     @submit="submit"

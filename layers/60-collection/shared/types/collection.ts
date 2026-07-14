@@ -7,4 +7,7 @@ export type CollectionEntity = {
   parentId: Nullish<string>
 }
 
-export type Collection = Entity & CollectionEntity & Timestamps
+export type Collection
+  = & Entity
+    & CollectionEntity
+    & Timestamps

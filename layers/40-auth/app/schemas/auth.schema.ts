@@ -8,7 +8,7 @@ const passwordSchema = z
   .string()
   .min(8)
 
-export const signupPayloadSchema = z.object({
+export const signupFormStateSchema = z.object({
   name: z
     .string()
     .trim()
@@ -17,7 +17,7 @@ export const signupPayloadSchema = z.object({
   password: passwordSchema,
 })
 
-export const loginPayloadSchema = z.object({
+export const loginFormStateSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
 })

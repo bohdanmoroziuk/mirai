@@ -2,11 +2,14 @@
 import { toSignupInput } from '../../mappers/auth-input.mapper'
 import { useSignupWorkflow } from '../../workflows/signup.workflow'
 import type { SignupFormState } from '../../types/auth'
+import { getSignupFormInitialState } from '../../mappers/auth.mapper'
 
 definePageMeta({
   access: 'guest-only',
   layout: 'auth',
 })
+
+const signupFormInitialState = getSignupFormInitialState()
 
 const { error, isSigningUp, signup } = useSignupWorkflow()
 
@@ -25,6 +28,7 @@ const handleSignup = async (state: SignupFormState) => {
 
     <div class="p-8 rounded-3xl shadow-sm">
       <SignupForm
+        :initial-state="signupFormInitialState"
         :submitting="isSigningUp"
         :error-message="errorMessage"
         @submit="handleSignup"

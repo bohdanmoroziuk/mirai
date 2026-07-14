@@ -1,10 +1,9 @@
-export type TagPayload = Pick<
-  TagEntity,
-  | 'name'
-  | 'color'
->
+import type { z } from 'zod'
+import type { tagFormStateSchema } from '../schemas/tag.schema'
 
-export type TagFormState = TagPayload
+export type TagFormState = z.infer<typeof tagFormStateSchema>
+
+export type TagPayload = TagFormState
 
 export type GetTagsQuery = {
   search?: string

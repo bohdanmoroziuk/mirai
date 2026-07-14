@@ -11,4 +11,7 @@ export type BookmarkEntity = {
   tagIds: string[]
 }
 
-export type Bookmark = Entity & BookmarkEntity & Timestamps
+export type Bookmark
+  = & Entity
+    & BookmarkEntity
+    & Timestamps

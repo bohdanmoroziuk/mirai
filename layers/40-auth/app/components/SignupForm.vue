@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { SignupFormState } from '../types/auth'
-import { signupPayloadSchema } from '../schemas/auth.schema'
+import { signupFormStateSchema } from '../schemas/auth.schema'
 
-defineProps<{
+const props = defineProps<{
+  initialState: SignupFormState
   submitting?: boolean
   errorMessage: Nullable<string>
 }>()
@@ -12,18 +13,10 @@ const emit = defineEmits<{
   submit: [state: SignupFormState]
 }>()
 
-const getInitialState = () => {
-  return {
-    name: undefined,
-    email: undefined,
-    password: undefined,
-  }
-}
-
-const state = reactive<Partial<SignupFormState>>(getInitialState())
+const state = reactive<SignupFormState>({ ...props.initialState })
 
 const reset = () => {
-  Object.assign(state, getInitialState())
+  Object.assign(state, { ...props.initialState })
 }
 
 const submit = (event: FormSubmitEvent<SignupFormState>) => {
@@ -37,7 +30,7 @@ defineExpose({
 
 <template>
   <UForm
-    :schema="signupPayloadSchema"
+    :schema="signupFormStateSchema"
     :state="state"
     class="space-y-4"
     @submit="submit"

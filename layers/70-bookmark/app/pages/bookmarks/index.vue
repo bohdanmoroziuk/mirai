@@ -7,7 +7,7 @@ definePageMeta({
   pageTitle: 'Bookmarks',
 })
 
-const collectionId = useRouteQuery<Nullish<string>>('collectionId', undefined)
+const collectionId = useRouteQuery<Optional<string>>('collectionId', undefined)
 
 const {
   bookmarks,
@@ -19,9 +19,9 @@ const {
 <template>
   <div class="flex flex-col gap-4">
     <div class="flex items-center gap-4">
-      <CreateCollectionModal />
+      <CollectionCreateModal />
 
-      <CreateBookmarkModal />
+      <BookmarkCreateModal />
     </div>
 
     <div>

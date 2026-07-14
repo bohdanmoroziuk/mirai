@@ -6,4 +6,7 @@ export type TagEntity = {
   color: string
 }
 
-export type Tag = Entity & TagEntity & Timestamps
+export type Tag
+  = & Entity
+    & TagEntity
+    & Timestamps

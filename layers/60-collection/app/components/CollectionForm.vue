@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import type { FormSubmitEvent } from '@nuxt/ui'
 import type { CollectionFormState } from '../types/collection'
+import { collectionFormStateSchema } from '../schemas/collection.schema'
 
 const props = defineProps<{
   submitting?: boolean
@@ -13,8 +15,8 @@ const emit = defineEmits<{
 
 const state = reactive({ ...props.initialState })
 
-const submit = () => {
-  emit('submit', toValue(state))
+const submit = (event: FormSubmitEvent<CollectionFormState>) => {
+  emit('submit', event.data)
 }
 
 const cancel = () => {
@@ -24,6 +26,7 @@ const cancel = () => {
 
 <template>
   <UForm
+    :schema="collectionFormStateSchema"
     :state="state"
     class="space-y-4"
     @submit="submit"
