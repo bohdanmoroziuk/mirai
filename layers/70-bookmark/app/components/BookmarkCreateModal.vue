@@ -8,9 +8,9 @@ const { isCreating, createBookmark } = useCreateBookmarkWorkflow()
 
 const [isOpen, toggle] = useToggle()
 
-const open = async () => {
-  await refresh()
+const open = () => {
   toggle(true)
+  refresh()
 }
 
 const close = () => {
@@ -50,6 +50,7 @@ const handleBookmarkCreate = async (state: BookmarkFormState) => {
         <BookmarkForm
           :submitting="isCreating"
           :initial-state="initialState"
+          submit-label="Create"
           @submit="handleBookmarkCreate"
           @cancel="close"
         />

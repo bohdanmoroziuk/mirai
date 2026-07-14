@@ -1,4 +1,12 @@
-import type { BookmarkFormState, CreateBookmarkInput, DeleteBookmarkInput, GetBookmarksInput, GetBookmarksQuery } from '../types/bookmark'
+import type { BookmarkFormState, CreateBookmarkInput, DeleteBookmarkInput, GetBookmarkInput, GetBookmarksInput, GetBookmarksQuery, UpdateBookmarkInput } from '../types/bookmark'
+
+export const toGetBookmarkInput = (bookmarkId: string): GetBookmarkInput => {
+  return {
+    params: {
+      bookmarkId,
+    },
+  }
+}
 
 export const toGetBookmarksInput = (query: GetBookmarksQuery): GetBookmarksInput => {
   return {
@@ -10,6 +18,22 @@ export const toGetBookmarksInput = (query: GetBookmarksQuery): GetBookmarksInput
 
 export const toCreateBookmarkInput = (state: BookmarkFormState): CreateBookmarkInput => {
   return {
+    body: {
+      title: state.title,
+      description: state.description,
+      url: state.url,
+      isFavorite: state.isFavorite,
+      collectionId: state.collectionId,
+      tagIds: state.tagIds,
+    },
+  }
+}
+
+export const toUpdateBookmarkInput = (bookmarkId: string, state: BookmarkFormState): UpdateBookmarkInput => {
+  return {
+    params: {
+      bookmarkId,
+    },
     body: {
       title: state.title,
       description: state.description,

@@ -5,6 +5,14 @@ export type BookmarkFormState = z.infer<typeof bookmarkFormStateSchema>
 
 export type BookmarkPayload = BookmarkFormState
 
+export type BookmarkParams = {
+  bookmarkId: string
+}
+
+export type GetBookmarkInput = {
+  params: BookmarkParams
+}
+
 export type GetBookmarksQuery = {
   collectionId?: string
 }
@@ -17,10 +25,13 @@ export type CreateBookmarkInput = {
   body: BookmarkPayload
 }
 
+export type UpdateBookmarkInput = {
+  params: BookmarkParams
+  body: BookmarkPayload
+}
+
 export type DeleteBookmarkInput = {
-  params: {
-    bookmarkId: string
-  }
+  params: BookmarkParams
 }
 
 export type DeleteBookmarkOutput = SuccessOutput

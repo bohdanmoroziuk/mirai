@@ -4,7 +4,7 @@ const props = withDefaults(
     data?: T
     error?: Nullable<E>
     fetching?: boolean
-    emptyWhen: (data?: T) => boolean
+    emptyWhen?: (data?: T) => boolean
   }>(),
   {
     error: null,
@@ -32,7 +32,7 @@ const empty = computed(() => {
     return false
   }
 
-  return props.emptyWhen(props.data)
+  return props.emptyWhen?.(props.data)
 })
 </script>
 

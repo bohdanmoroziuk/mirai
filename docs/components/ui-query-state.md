@@ -20,7 +20,7 @@ It does not fetch data by itself. It only receives already prepared state:
 * `data`;
 * `error`;
 * `fetching`;
-* `emptyWhen`.
+* `emptyWhen` when an empty state is needed.
 
 ## Props
 
@@ -29,7 +29,7 @@ type UiQueryStateProps<T, E = Error> = {
   data?: T
   error?: E | null
   fetching?: boolean
-  emptyWhen: (data?: T) => boolean
+  emptyWhen?: (data?: T) => boolean
 }
 ```
 
@@ -39,7 +39,7 @@ type UiQueryStateProps<T, E = Error> = {
 | ---------- | -------------- | --------------------------------------------------------------------- |
 | `fetching` | —              | Rendered while data is being fetched.                                 |
 | `error`    | `{ error: E }` | Rendered when an error exists.                                        |
-| `empty`    | —              | Rendered when `emptyWhen(data)` returns `true`.                       |
+| `empty`    | —              | Rendered when `emptyWhen(data)` returns `true`, when provided.         |
 | `default`  | `{ data: T }`  | Rendered when data exists and there is no fetching/error/empty state. |
 
 ## Behavior
@@ -48,7 +48,7 @@ type UiQueryStateProps<T, E = Error> = {
 
 1. `fetching`
 2. `error`
-3. `empty`
+3. `empty` when `emptyWhen` returns `true`
 4. `default`
 
 This means fetching has the highest priority.
@@ -76,6 +76,27 @@ This means fetching has the highest priority.
 
   <template #default="{ data: bookmarks }">
     <BookmarkList :bookmarks="bookmarks" />
+  </template>
+</UiQueryState>
+```
+
+When no `emptyWhen` function is provided, the component skips the empty state and renders the default slot after fetching and error handling:
+
+```vue
+<UiQueryState
+  :error="error"
+  :fetching="isFetching"
+>
+  <template #fetching>
+    Loading bookmark...
+  </template>
+
+  <template #error="{ error }">
+    {{ error.message }}
+  </template>
+
+  <template #default>
+    <BookmarkForm :initial-state="initialState" />
   </template>
 </UiQueryState>
 ```

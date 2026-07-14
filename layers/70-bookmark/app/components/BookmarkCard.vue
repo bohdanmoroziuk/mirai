@@ -1,24 +1,12 @@
 <script setup lang="ts">
-import { useDeleteBookmarkWorkflow } from '../workflows/delete-bookmark.workflow'
-
-const props = defineProps<{
+defineProps<{
   bookmark: Bookmark
 }>()
 
-const { confirm } = useConfirmModal()
-const { isDeleting, deleteBookmark } = useDeleteBookmarkWorkflow()
-
-const handleBookmarkDelete = async () => {
-  const confirmed = await confirm({
-    title: 'Delete bookmark?',
-    description: 'This bookmark will be permanently deleted.',
-    confirmLabel: 'Delete',
-  })
-
-  if (confirmed) {
-    await deleteBookmark(props.bookmark.id)
-  }
-}
+const emit = defineEmits<{
+  update: [bookmarkId: string]
+  delete: [bookmarkId: string]
+}>()
 </script>
 
 <template>
@@ -64,12 +52,18 @@ const handleBookmarkDelete = async () => {
           variant="outline"
         />
         <UButton
+          icon="i-lucide-edit"
+          size="sm"
+          color="info"
+          variant="solid"
+          @click.stop="emit('update', bookmark.id)"
+        />
+        <UButton
           icon="i-lucide-trash-2"
           size="sm"
           color="error"
           variant="solid"
-          :loading="isDeleting"
-          @click.stop="handleBookmarkDelete"
+          @click.stop="emit('delete', bookmark.id)"
         />
       </div>
     </footer>

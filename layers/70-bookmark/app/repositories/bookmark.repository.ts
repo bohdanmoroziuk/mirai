@@ -1,6 +1,12 @@
-import type { GetBookmarksInput, CreateBookmarkInput, DeleteBookmarkInput, DeleteBookmarkOutput } from '../types/bookmark'
+import type { GetBookmarkInput, GetBookmarksInput, CreateBookmarkInput, DeleteBookmarkInput, DeleteBookmarkOutput, UpdateBookmarkInput } from '../types/bookmark'
 
 export const bookmarkRepository = {
+  getOne(input: GetBookmarkInput) {
+    return $fetch<ApiResponse<Bookmark>>(`/api/bookmarks/${input.params.bookmarkId}`, {
+      method: 'get',
+    })
+  },
+
   getMany(input: GetBookmarksInput = {}) {
     return $fetch<ApiResponse<Bookmark[]>>('/api/bookmarks', {
       method: 'get',
@@ -11,6 +17,13 @@ export const bookmarkRepository = {
   createOne(input: CreateBookmarkInput) {
     return $fetch<ApiResponse<Bookmark>>('/api/bookmarks', {
       method: 'post',
+      body: input.body,
+    })
+  },
+
+  updateOne(input: UpdateBookmarkInput) {
+    return $fetch <ApiResponse<Bookmark>>(`/api/bookmarks/${input.params.bookmarkId}`, {
+      method: 'patch',
       body: input.body,
     })
   },

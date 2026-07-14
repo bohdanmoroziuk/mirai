@@ -15,6 +15,20 @@ export const useCreateBookmarkMutation = () => {
   })
 }
 
+export const useUpdateBookmarkMutation = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationKey: ['bookmarks', 'update'],
+    mutationFn: bookmarkRepository.updateOne,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['bookmarks'],
+      })
+    },
+  })
+}
+
 export const useDeleteBookmarkMutation = () => {
   const queryClient = useQueryClient()
 
