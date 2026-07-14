@@ -9,7 +9,7 @@ const props = withDefaults(
     initialState: BookmarkFormState
   }>(),
   {
-    loading: false,
+    submitting: false,
     submitLabel: 'Submit',
   },
 )

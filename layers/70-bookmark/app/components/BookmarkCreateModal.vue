@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { useCreateBookmarkWorkflow } from '../workflows/create-bookmark.workflow'
-import { getBookmarkFormInitialState } from '../mappers/bookmark.mapper'
 import { toCreateBookmarkInput } from '../mappers/bookmark-input.mapper'
 import type { BookmarkFormState } from '../types/bookmark'
 
-const bookmarkFormInitialState = getBookmarkFormInitialState()
+const { initialState, isRefreshing, refresh } = useBookmarkFormInitialState()
 const { isCreating, createBookmark } = useCreateBookmarkWorkflow()
 
 const [isOpen, toggle] = useToggle()
 
-const open = () => {
+const open = async () => {
+  await refresh()
   toggle(true)
 }
 
@@ -40,12 +40,20 @@ const handleBookmarkCreate = async (state: BookmarkFormState) => {
     </template>
 
     <template #body>
-      <BookmarkForm
-        :submitting="isCreating"
-        :initial-state="bookmarkFormInitialState"
-        @submit="handleBookmarkCreate"
-        @cancel="close"
-      />
+      <template v-if="isRefreshing">
+        <div class="flex justify-center">
+          <UiLoader />
+        </div>
+      </template>
+
+      <template v-else>
+        <BookmarkForm
+          :submitting="isCreating"
+          :initial-state="initialState"
+          @submit="handleBookmarkCreate"
+          @cancel="close"
+        />
+      </template>
     </template>
   </UModal>
 </template>
