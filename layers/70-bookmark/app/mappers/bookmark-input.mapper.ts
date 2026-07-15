@@ -1,4 +1,4 @@
-import type { BookmarkFormState, CreateBookmarkInput, DeleteBookmarkInput, GetBookmarkInput, GetBookmarksInput, GetBookmarksQuery, UpdateBookmarkInput } from '../types/bookmark'
+import type { BookmarkFormState, CreateBookmarkInput, DeleteBookmarkInput, GetBookmarkInput, GetBookmarksInput, BookmarksQuery, UpdateBookmarkInput } from '../types/bookmark'
 
 export const toGetBookmarkInput = (bookmarkId: string): GetBookmarkInput => {
   return {
@@ -8,7 +8,7 @@ export const toGetBookmarkInput = (bookmarkId: string): GetBookmarkInput => {
   }
 }
 
-export const toGetBookmarksInput = (query: GetBookmarksQuery): GetBookmarksInput => {
+export const toGetBookmarksInput = (query: BookmarksQuery): GetBookmarksInput => {
   return {
     query: compactObject({
       collectionId: query.collectionId,

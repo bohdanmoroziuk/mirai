@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/vue-query'
+import { bookmarkKeys } from './bookmark.keys'
 import { bookmarkRepository } from '../repositories/bookmark.repository'
 import type { GetBookmarkInput, GetBookmarksInput } from '../types/bookmark'
 
@@ -11,7 +12,7 @@ export const useBookmarkQuery = (
     Bookmark
   >({
     queryKey: computed(() => {
-      return ['bookmarks', toValue(input)]
+      return bookmarkKeys.detail(toValue(input).params)
     }),
     queryFn: () => {
       return bookmarkRepository.getOne(toValue(input))
@@ -29,7 +30,7 @@ export const useBookmarksQuery = (
     Bookmark[]
   >({
     queryKey: computed(() => {
-      return ['bookmarks', toValue(input)]
+      return bookmarkKeys.list(toValue(input).query)
     }),
     queryFn: () => {
       return bookmarkRepository.getMany(toValue(input))

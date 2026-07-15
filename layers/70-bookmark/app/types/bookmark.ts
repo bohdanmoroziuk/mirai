@@ -3,8 +3,6 @@ import type { bookmarkFormStateSchema } from '../schemas/bookmark.schema'
 
 export type BookmarkFormState = z.infer<typeof bookmarkFormStateSchema>
 
-export type BookmarkPayload = BookmarkFormState
-
 export type BookmarkParams = {
   bookmarkId: string
 }
@@ -13,13 +11,15 @@ export type GetBookmarkInput = {
   params: BookmarkParams
 }
 
-export type GetBookmarksQuery = {
+export type BookmarksQuery = {
   collectionId?: string
 }
 
 export type GetBookmarksInput = {
-  query?: GetBookmarksQuery
+  query: BookmarksQuery
 }
+
+export type BookmarkPayload = BookmarkFormState
 
 export type CreateBookmarkInput = {
   body: BookmarkPayload

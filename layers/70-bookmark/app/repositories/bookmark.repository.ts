@@ -7,7 +7,7 @@ export const bookmarkRepository = {
     })
   },
 
-  getMany(input: GetBookmarksInput = {}) {
+  getMany(input: GetBookmarksInput) {
     return $fetch<ApiResponse<Bookmark[]>>('/api/bookmarks', {
       method: 'get',
       query: input.query,
