@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { set } from '@vueuse/core'
 import { toUpdateBookmarkInput } from '../mappers/bookmark-input.mapper'
 import { useUpdateBookmarkWorkflow } from '../workflows/update-bookmark.workflow'
 import type { BookmarkFormState } from '../types/bookmark'
@@ -8,14 +9,13 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  'close': []
-  'after:leave': []
+  closed: []
 }>()
 
 const isOpen = defineModel<boolean>('open', { required: true })
 
-const closeModal = () => {
-  emit('close')
+const close = () => {
+  set(isOpen, false)
 }
 
 const { initialState, isRefreshing, error } = useUpdateBookmarkFormInitialState(() => props.bookmarkId)
@@ -26,7 +26,7 @@ const handleBookmarkUpdate = async (state: BookmarkFormState) => {
   const success = await updateBookmark(updateBookmarkInput)
 
   if (success) {
-    closeModal()
+    close()
   }
 }
 </script>
@@ -34,9 +34,9 @@ const handleBookmarkUpdate = async (state: BookmarkFormState) => {
 <template>
   <UModal
     v-model:open="isOpen"
-    :close="{ onClick: closeModal }"
+    :close="{ onClick: close }"
     title="Update bookmark"
-    @after:leave="emit('after:leave')"
+    @after:leave="emit('closed')"
   >
     <template #body>
       <UiQueryState
@@ -61,7 +61,7 @@ const handleBookmarkUpdate = async (state: BookmarkFormState) => {
             :initial-state="initialState"
             submit-label="Update"
             @submit="handleBookmarkUpdate"
-            @cancel="closeModal"
+            @cancel="close"
           />
         </template>
       </UiQueryState>

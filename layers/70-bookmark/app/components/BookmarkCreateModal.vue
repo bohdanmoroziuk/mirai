@@ -5,16 +5,11 @@ import type { BookmarkFormState } from '../types/bookmark'
 
 const { initialState, isRefreshing, refresh } = useBookmarkFormInitialState()
 const { isCreating, createBookmark } = useCreateBookmarkWorkflow()
+const { isOpen, open, close } = useModalState()
 
-const [isOpen, toggle] = useToggle()
-
-const open = () => {
-  toggle(true)
+const openModal = () => {
+  open()
   refresh()
-}
-
-const close = () => {
-  toggle(false)
 }
 
 const handleBookmarkCreate = async (state: BookmarkFormState) => {
@@ -35,7 +30,7 @@ const handleBookmarkCreate = async (state: BookmarkFormState) => {
       <UButton
         label="Create bookmark"
         color="primary"
-        @click="open"
+        @click="openModal"
       />
     </template>
 

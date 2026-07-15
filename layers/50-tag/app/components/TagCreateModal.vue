@@ -6,15 +6,7 @@ import { useCreateTagWorkflow } from '../workflows/create-tag.workflow'
 
 const tagFormInitialState = getTagFormInitialState()
 const { isCreating, createTag } = useCreateTagWorkflow()
-const [isOpen, toggle] = useToggle()
-
-const open = () => {
-  toggle(true)
-}
-
-const close = () => {
-  toggle(false)
-}
+const { isOpen, open, close } = useModalState()
 
 const handleTagCreate = async (state: TagFormState) => {
   const success = await createTag(toCreateTagInput(state))

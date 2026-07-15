@@ -9,23 +9,19 @@ const props = defineProps<{
 
 const { bookmarks, error, isPending } = useBookmarkListWorkflow(() => props.collectionId)
 const { deleteBookmark } = useDeleteBookmarkWorkflow()
-const { isOpen, open, close } = useModalState()
+const { isOpen, open } = useModalState()
 const { confirm } = useConfirmModal()
 
 const selectedBookmarkId = ref<Nullable<string>>(null)
-
-const resetSelectedBookmarkId = () => {
-  if (toValue(isOpen)) return
-  set(selectedBookmarkId, null)
-}
 
 const openUpdateModal = (bookmarkId: string) => {
   set(selectedBookmarkId, bookmarkId)
   open()
 }
 
-const closeUpdateModal = () => {
-  close()
+const cleanupUpdateModal = () => {
+  if (toValue(isOpen)) return
+  set(selectedBookmarkId, null)
 }
 
 const handleBookmarkDelete = async (bookmarkId: string) => {
@@ -77,8 +73,7 @@ const handleBookmarkDelete = async (bookmarkId: string) => {
     <LazyBookmarkUpdateModal
       v-model:open="isOpen"
       :bookmark-id="selectedBookmarkId"
-      @close="closeUpdateModal"
-      @after:leave="resetSelectedBookmarkId"
+      @closed="cleanupUpdateModal"
     />
   </template>
 </template>

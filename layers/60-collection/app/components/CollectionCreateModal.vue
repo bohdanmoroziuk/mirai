@@ -6,15 +6,7 @@ import type { CollectionFormState } from '../types/collection'
 
 const collectionFormInitialState = getCollectionFormInitialState()
 const { isCreating, createCollection } = useCreateCollectionWorkflow()
-const [isOpen, toggle] = useToggle()
-
-const open = () => {
-  toggle(true)
-}
-
-const close = () => {
-  toggle(false)
-}
+const { isOpen, open, close } = useModalState()
 
 const handleCollectionCreate = async (state: CollectionFormState) => {
   const success = await createCollection(toCreateCollectionInput(state))
