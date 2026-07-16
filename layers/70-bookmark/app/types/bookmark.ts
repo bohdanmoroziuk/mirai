@@ -11,12 +11,12 @@ export type GetBookmarkInput = {
   params: BookmarkParams
 }
 
-export type BookmarksQuery = {
+export type BookmarkQuery = {
   collectionId?: string
 }
 
 export type GetBookmarksInput = {
-  query?: BookmarksQuery
+  query?: BookmarkQuery
 }
 
 export type BookmarkPayload = BookmarkFormState

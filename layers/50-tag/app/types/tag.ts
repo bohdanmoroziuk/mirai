@@ -3,15 +3,15 @@ import type { tagFormStateSchema } from '../schemas/tag.schema'
 
 export type TagFormState = z.infer<typeof tagFormStateSchema>
 
-export type TagPayload = TagFormState
-
-export type TagsQuery = {
+export type TagQuery = {
   search?: string
 }
 
 export type GetTagsInput = {
-  query?: TagsQuery
+  query?: TagQuery
 }
+
+export type TagPayload = TagFormState
 
 export type CreateTagInput = {
   body: TagPayload
