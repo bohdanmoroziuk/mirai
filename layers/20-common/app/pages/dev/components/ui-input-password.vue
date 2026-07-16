@@ -4,6 +4,8 @@ definePageMeta({
   devOnly: true,
 })
 
+const icons = useAppIcons()
+
 const emptyPassword = ref('')
 const filledPassword = ref('secret-password')
 const disabledPassword = ref('disabled-password')
@@ -19,7 +21,7 @@ const signupPasswordConfirmation = ref('')
       <UButton
         to="/dev/components"
         variant="ghost"
-        icon="i-lucide-arrow-left"
+        :icon="icons.back"
       >
         Components
       </UButton>

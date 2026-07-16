@@ -4,6 +4,8 @@ definePageMeta({
   layout: false,
 })
 
+const icons = useAppIcons()
+
 type Bookmark = {
   id: string
   title: string
@@ -35,7 +37,7 @@ const emptyWhenNoBookmarks = (bookmarks?: Bookmark[]) => {
       <UButton
         to="/dev/components"
         variant="ghost"
-        icon="i-lucide-arrow-left"
+        :icon="icons.back"
       >
         Components
       </UButton>

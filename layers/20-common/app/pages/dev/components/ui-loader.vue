@@ -3,6 +3,8 @@ definePageMeta({
   devOnly: true,
   layout: false,
 })
+
+const icons = useAppIcons()
 </script>
 
 <template>
@@ -11,7 +13,7 @@ definePageMeta({
       <UButton
         to="/dev/components"
         variant="ghost"
-        icon="i-lucide-arrow-left"
+        :icon="icons.back"
       >
         Components
       </UButton>

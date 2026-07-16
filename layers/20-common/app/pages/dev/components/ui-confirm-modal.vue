@@ -6,6 +6,8 @@ definePageMeta({
   layout: false,
 })
 
+const icons = useAppIcons()
+
 const overlay = useOverlay()
 
 function openDefaultModal() {
@@ -50,7 +52,7 @@ function openNonDestructiveModal() {
       <UButton
         to="/dev/components"
         variant="ghost"
-        icon="i-lucide-arrow-left"
+        :icon="icons.back"
       >
         Components
       </UButton>

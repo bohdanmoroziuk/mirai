@@ -7,6 +7,8 @@ const emit = defineEmits<{
   update: [bookmarkId: string]
   delete: [bookmarkId: string]
 }>()
+
+const icons = useAppIcons()
 </script>
 
 <template>
@@ -46,20 +48,20 @@ const emit = defineEmits<{
           external
           target="_blank"
           rel="noopener noreferrer"
-          icon="i-lucide-view"
+          :icon="icons.view"
           size="sm"
           color="primary"
           variant="outline"
         />
         <UButton
-          icon="i-lucide-edit"
+          :icon="icons.edit"
           size="sm"
           color="info"
           variant="solid"
           @click.stop="emit('update', bookmark.id)"
         />
         <UButton
-          icon="i-lucide-trash-2"
+          :icon="icons.delete"
           size="sm"
           color="error"
           variant="solid"
