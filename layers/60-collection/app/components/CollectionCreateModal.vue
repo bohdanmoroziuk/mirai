@@ -1,25 +1,15 @@
 <script setup lang="ts">
 import { useCreateCollectionWorkflow } from '../workflows/create-collection.workflow'
+import { getCollectionFormInitialState } from '../mappers/collection.mapper'
+import { toCreateCollectionInput } from '../mappers/collection-input.mapper'
 import type { CollectionFormState } from '../types/collection'
 
-const {
-  collectionFormInitialState,
-  isCreating,
-  createCollection,
-} = useCreateCollectionWorkflow()
-
-const [isOpen, toggle] = useToggle()
-
-const open = () => {
-  toggle(true)
-}
-
-const close = () => {
-  toggle(false)
-}
+const collectionFormInitialState = getCollectionFormInitialState()
+const { isCreating, createCollection } = useCreateCollectionWorkflow()
+const { isOpen, open, close } = useModalState()
 
 const handleCollectionCreate = async (state: CollectionFormState) => {
-  const success = await createCollection(state)
+  const success = await createCollection(toCreateCollectionInput(state))
 
   if (success) {
     close()

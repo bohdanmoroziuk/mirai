@@ -7,11 +7,20 @@ const props = defineProps<{
   number: number
 }>()
 
-const tagId = computed(() => {
-  return props.tag.id
-})
+const { confirm } = useConfirmModal()
+const { isDeleting, deleteTag } = useDeleteTagWorkflow()
 
-const { isDeleting, deleteTag } = useDeleteTagWorkflow(tagId)
+const handleTagDelete = async () => {
+  const confirmed = await confirm({
+    title: 'Delete tag?',
+    description: 'This tag will be permanently deleted.',
+    confirmLabel: 'Delete',
+  })
+
+  if (confirmed) {
+    await deleteTag(props.tag.id)
+  }
+}
 </script>
 
 <template>
@@ -37,7 +46,7 @@ const { isDeleting, deleteTag } = useDeleteTagWorkflow(tagId)
         size="sm"
         color="error"
         variant="ghost"
-        @click="deleteTag"
+        @click="handleTagDelete"
       />
     </div>
   </li>

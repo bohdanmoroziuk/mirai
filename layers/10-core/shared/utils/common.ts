@@ -36,6 +36,20 @@ export const getHostname = (url: string) => {
   return new URL(url).hostname
 }
 
+export const isValidUrl = (value: unknown): value is string => {
+  if (typeof value !== 'string') {
+    return false
+  }
+
+  try {
+    new URL(value)
+    return true
+  }
+  catch {
+    return false
+  }
+}
+
 export const isEmpty = (value: unknown) => {
   if (typeof value === 'string' || Array.isArray(value)) {
     return value.length === 0

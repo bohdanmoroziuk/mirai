@@ -2,11 +2,11 @@ import { toGetBookmarksInput } from '../mappers/bookmark-input.mapper'
 import { useBookmarksQuery } from '../queries/bookmark.queries'
 
 export const useBookmarkListWorkflow = (
-  collectionId: MaybeRefOrGetter<Nullish<Collection['id']>>,
+  collectionId: MaybeRefOrGetter<Optional<string>>,
 ) => {
   const bookmarksQueryInput = computed(() => {
     return toGetBookmarksInput({
-      collectionId: toValueOr(collectionId, undefined),
+      collectionId: toValue(collectionId),
     })
   })
 

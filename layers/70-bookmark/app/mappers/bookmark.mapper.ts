@@ -14,10 +14,10 @@ export const getBookmarkFormInitialState = (): BookmarkFormState => {
 export const toBookmarkFormState = (bookmark: Bookmark): BookmarkFormState => {
   return {
     title: bookmark.title,
-    description: bookmark.description ?? '',
+    description: bookmark.description,
     url: bookmark.url,
     isFavorite: bookmark.isFavorite,
-    collectionId: bookmark.collectionId ?? null,
+    collectionId: bookmark.collectionId,
     tagIds: bookmark.tagIds,
   }
 }

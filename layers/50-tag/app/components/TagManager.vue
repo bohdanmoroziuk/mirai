@@ -12,7 +12,7 @@ const {
 <template>
   <div class="flex flex-col gap-4">
     <div class="flex justify-end">
-      <CreateTagModal />
+      <TagCreateModal />
     </div>
 
     <div>

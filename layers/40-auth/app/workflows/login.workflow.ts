@@ -1,19 +1,16 @@
 import { useLoginMutation } from '../queries/auth.mutations'
-import { toLoginInput } from '../mappers/auth-input.mapper'
-import type { LoginFormState } from '../types/auth'
+import type { LoginInput } from '../types/auth'
 
 export const useLoginWorkflow = () => {
   const { error, isPending: isLoggingIn, mutateAsync } = useLoginMutation()
 
-  const errorMessage = useMappedValueOr(error, getErrorMessage, null)
-
-  const login = async (state: LoginFormState) => {
+  const login = async (input: LoginInput) => {
     if (toValue(isLoggingIn)) {
       return false
     }
 
     try {
-      await mutateAsync(toLoginInput(state))
+      await mutateAsync(input)
       await navigateTo('/')
       return true
     }
@@ -23,7 +20,7 @@ export const useLoginWorkflow = () => {
   }
 
   return {
-    errorMessage,
+    error,
     isLoggingIn,
     login,
   }

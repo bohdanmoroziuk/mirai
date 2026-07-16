@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { bookmarkPayloadSchema } from '../schemas/bookmark.schema'
+import { bookmarkFormStateSchema } from '../schemas/bookmark.schema'
 import type { BookmarkFormState } from '../types/bookmark'
 
 const props = withDefaults(
@@ -9,7 +9,7 @@ const props = withDefaults(
     initialState: BookmarkFormState
   }>(),
   {
-    loading: false,
+    submitting: false,
     submitLabel: 'Submit',
   },
 )
@@ -19,7 +19,7 @@ const emit = defineEmits<{
   cancel: []
 }>()
 
-const state = reactive<BookmarkFormState>({ ...props.initialState })
+const { state, resetState } = useFormState<BookmarkFormState>(() => props.initialState)
 
 const submit = () => {
   emit('submit', toValue(state))
@@ -28,11 +28,15 @@ const submit = () => {
 const cancel = () => {
   emit('cancel')
 }
+
+defineExpose({
+  resetState,
+})
 </script>
 
 <template>
   <UForm
-    :schema="bookmarkPayloadSchema"
+    :schema="bookmarkFormStateSchema"
     :state="state"
     class="space-y-4"
     @submit="submit"

@@ -1,12 +1,23 @@
 <script setup lang="ts">
+import { toSignupInput } from '../../mappers/auth-input.mapper'
 import { useSignupWorkflow } from '../../workflows/signup.workflow'
+import type { SignupFormState } from '../../types/auth'
+import { getSignupFormInitialState } from '../../mappers/auth.mapper'
 
 definePageMeta({
   access: 'guest-only',
   layout: 'auth',
 })
 
-const { errorMessage, isSigningUp, signup } = useSignupWorkflow()
+const signupFormInitialState = getSignupFormInitialState()
+
+const { error, isSigningUp, signup } = useSignupWorkflow()
+
+const errorMessage = useMappedValueOr(error, getErrorMessage, null)
+
+const handleSignup = async (state: SignupFormState) => {
+  await signup(toSignupInput(state))
+}
 </script>
 
 <template>
@@ -17,9 +28,10 @@ const { errorMessage, isSigningUp, signup } = useSignupWorkflow()
 
     <div class="p-8 rounded-3xl shadow-sm">
       <SignupForm
+        :initial-state="signupFormInitialState"
         :submitting="isSigningUp"
         :error-message="errorMessage"
-        @submit="signup"
+        @submit="handleSignup"
       />
     </div>
 

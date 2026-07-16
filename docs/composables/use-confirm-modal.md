@@ -49,12 +49,11 @@ type UseConfirmModalReturn = {
 ```ts
 const { confirm } = useConfirmModal()
 
-function handleDeleteBookmark(bookmarkId: string) {
-  confirm({
+async function handleDeleteBookmark(bookmarkId: string) {
+  await confirm({
     title: 'Delete bookmark?',
     description: 'This action cannot be undone.',
     confirmLabel: 'Delete',
-    cancelLabel: 'Cancel',
     async onConfirm() {
       await deleteBookmark(bookmarkId)
     },
@@ -65,25 +64,23 @@ function handleDeleteBookmark(bookmarkId: string) {
 ## With error handling
 
 ```ts
-const toast = useToast()
+const notification = useNotification()
 const { confirm } = useConfirmModal()
 
-function handleDeleteBookmark(bookmarkId: string) {
-  confirm({
+async function handleDeleteBookmark(bookmarkId: string) {
+  await confirm({
     title: 'Delete bookmark?',
     description: 'This action cannot be undone.',
     confirmLabel: 'Delete',
-    cancelLabel: 'Cancel',
 
     async onConfirm() {
       await deleteBookmark(bookmarkId)
     },
 
     onError(error) {
-      toast.add({
-        color: 'error',
+      notification.error({
         title: 'Failed to delete bookmark',
-        description: error instanceof Error ? error.message : 'Unknown error',
+        description: getErrorMessage(error),
       })
     },
   })
@@ -92,19 +89,19 @@ function handleDeleteBookmark(bookmarkId: string) {
 
 ## Behavior
 
-`useConfirmModal` opens `UiConfirmModal` through Nuxt UI modal functionality.
+`useConfirmModal` opens `UiConfirmModal` through Nuxt UI overlay functionality.
 
 When the user confirms the action:
 
-1. the composable calls `onConfirm`;
+1. `UiConfirmModal` calls `onConfirm`;
 2. the modal enters loading state while `onConfirm` is running;
-3. the modal closes after successful confirmation;
-4. if `onConfirm` throws an error, `onError` is called.
+3. the modal closes and `confirm` resolves to `true` after successful confirmation;
+4. if `onConfirm` throws, `onError` is called and the modal stays open.
 
 When the user cancels the action:
 
-1. the composable calls `onCancel` if it exists;
-2. the modal closes.
+1. `UiConfirmModal` calls `onCancel` if it exists;
+2. the modal closes and `confirm` resolves to `false`.
 
 ## Notes
 
@@ -141,7 +138,7 @@ Business logic should stay in the caller:
 
 * page component;
 * feature component;
-* mutation handler;
-* action composable.
+* workflow;
+* mutation handler.
 
 `useConfirmModal` should only coordinate the confirmation UI flow.

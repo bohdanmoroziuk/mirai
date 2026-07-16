@@ -1,4 +1,4 @@
-## UiInputPassword
+# UiInputPassword
 
 `UiInputPassword` is a shared password input component.
 
@@ -12,7 +12,7 @@ Use it when a form needs a password-like field:
 * current password
 * new password
 
-### Purpose
+## Purpose
 
 `UiInputPassword` keeps password input behavior consistent across the app.
 
@@ -25,18 +25,19 @@ It should handle:
 * autocomplete value
 * invalid state from the parent form
 
-### Props
+## Props
 
 ```ts
 type UiInputPasswordProps = {
-  modelValue?: string
   placeholder?: string
   disabled?: boolean
   autocomplete?: string
 }
 ```
 
-### Emits
+The component also supports `v-model` through its default string model.
+
+## Emits
 
 ```ts
 type UiInputPasswordEmits = {
@@ -44,7 +45,7 @@ type UiInputPasswordEmits = {
 }
 ```
 
-### Usage
+## Usage
 
 ```vue
 <script setup lang="ts">
@@ -60,7 +61,7 @@ const password = ref('')
 </template>
 ```
 
-### With Nuxt UI form field
+## With Nuxt UI form field
 
 ```vue
 <UFormField
@@ -75,7 +76,7 @@ const password = ref('')
 </UFormField>
 ```
 
-### Signup example
+## Signup example
 
 ```vue
 <UFormField
@@ -101,7 +102,7 @@ const password = ref('')
 </UFormField>
 ```
 
-### Behavior
+## Behavior
 
 By default, the input type is `password`.
 
@@ -109,7 +110,9 @@ When the visibility button is clicked, the input type changes to `text`.
 
 Clicking the button again changes it back to `password`.
 
-### Notes
+The trailing toggle button uses `Show password` and `Hide password` aria labels and keeps the pressed state in `aria-pressed`.
+
+## Notes
 
 Use `autocomplete="current-password"` for login forms.
 

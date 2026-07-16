@@ -1,20 +1,17 @@
-import { toCreateCollectionInput } from '../mappers/collection-input.mapper'
-import { getCollectionFormInitialState } from '../mappers/collection.mapper'
 import { useCreateCollectionMutation } from '../queries/collection.mutations'
-import type { CollectionFormState } from '../types/collection'
+import type { CreateCollectionInput } from '../types/collection'
 
 export const useCreateCollectionWorkflow = () => {
   const notification = useNotification()
   const { isPending: isCreating, mutateAsync } = useCreateCollectionMutation()
-  const collectionFormInitialState = getCollectionFormInitialState()
 
-  const createCollection = async (state: CollectionFormState) => {
+  const createCollection = async (input: CreateCollectionInput) => {
     if (toValue(isCreating)) {
       return false
     }
 
     try {
-      await mutateAsync(toCreateCollectionInput(state))
+      await mutateAsync(input)
 
       notification.success({
         title: 'Collection created',
@@ -32,7 +29,6 @@ export const useCreateCollectionWorkflow = () => {
   }
 
   return {
-    collectionFormInitialState,
     isCreating,
     createCollection,
   }

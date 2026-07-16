@@ -1,36 +1,28 @@
 import { toDeleteBookmarkInput } from '../mappers/bookmark-input.mapper'
 import { useDeleteBookmarkMutation } from '../queries/bookmark.mutations'
 
-export const useDeleteBookmarkWorkflow = (bookmarkId: MaybeRefOrGetter<string>) => {
+export const useDeleteBookmarkWorkflow = () => {
   const notification = useNotification()
-  const { confirm } = useConfirmModal()
   const { isPending: isDeleting, mutateAsync } = useDeleteBookmarkMutation()
 
-  const deleteBookmark = async () => {
+  const deleteBookmark = async (bookmarkId: string) => {
     if (toValue(isDeleting)) {
       return
     }
 
-    await confirm({
-      title: 'Delete bookmark?',
-      description: 'This bookmark will be permanently deleted.',
-      confirmLabel: 'Delete',
+    try {
+      await mutateAsync(toDeleteBookmarkInput(bookmarkId))
 
-      async onConfirm() {
-        await mutateAsync(toDeleteBookmarkInput(toValue(bookmarkId)))
-
-        notification.success({
-          title: 'Bookmark has been deleted successfully',
-        })
-      },
-
-      onError(error) {
-        notification.error({
-          title: 'Operation failed!',
-          description: getErrorMessage(error),
-        })
-      },
-    })
+      notification.success({
+        title: 'Bookmark deleted',
+      })
+    }
+    catch (error) {
+      notification.error({
+        title: 'Operation failed',
+        description: getErrorMessage(error),
+      })
+    }
   }
 
   return {

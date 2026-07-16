@@ -19,7 +19,7 @@ export type ConfirmModalOptions = Pick<
 export const useConfirmModal = () => {
   const overlay = useOverlay()
 
-  const confirm = async (options: ConfirmModalOptions) => {
+  const confirm = async (options: ConfirmModalOptions): Promise<boolean> => {
     const modal = overlay.create(LazyUiConfirmModal)
     const instance = modal.open(options)
     const confirmed = await instance.result

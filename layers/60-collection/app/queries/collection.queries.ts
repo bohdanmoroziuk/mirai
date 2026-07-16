@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/vue-query'
+import { collectionKeys } from './collection.keys'
 import { collectionRepository } from '../repositories/collection.repository'
 
 export const useCollectionsQuery = () => {
@@ -7,7 +8,7 @@ export const useCollectionsQuery = () => {
     Error,
     Collection[]
   >({
-    queryKey: ['collections'],
+    queryKey: collectionKeys.lists(),
     queryFn: collectionRepository.getMany,
     select: selectApiData,
   })

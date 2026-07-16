@@ -1,14 +1,14 @@
 import type { z } from 'zod'
 import type { SuccessOutput } from '@core/shared/types/api'
-import type { signupPayloadSchema, loginPayloadSchema } from '../schemas/auth.schema'
+import type { signupFormStateSchema, loginFormStateSchema } from '../schemas/auth.schema'
 
-export type SignupPayload = z.infer<typeof signupPayloadSchema>
+export type SignupFormState = z.infer<typeof signupFormStateSchema>
 
-export type LoginPayload = z.infer<typeof loginPayloadSchema>
+export type LoginFormState = z.infer<typeof loginFormStateSchema>
 
-export type SignupFormState = SignupPayload
+export type SignupPayload = SignupFormState
 
-export type LoginFormState = LoginPayload
+export type LoginPayload = LoginFormState
 
 export type SignupInput = {
   body: SignupPayload

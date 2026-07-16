@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/vue-query'
-import type { GetTagsInput } from '../types/tag'
+import { getListQuery } from '@common/app/utils/query-keys'
 import { tagRepository } from '../repositories/tag.repository'
+import { tagKeys } from './tag.keys'
+import type { GetTagsInput } from '../types/tag'
 
 export const useTagsQuery = (
   input: MaybeRefOrGetter<GetTagsInput> = {},
@@ -11,7 +13,7 @@ export const useTagsQuery = (
     Tag[]
   >({
     queryKey: computed(() => {
-      return ['tags', toValue(input)]
+      return tagKeys.list(getListQuery(toValue(input)))
     }),
     queryFn: () => {
       return tagRepository.getMany(toValue(input))

@@ -89,9 +89,11 @@ When the user clicks the confirm button, the component emits `close(true)`.
 
 When the user clicks the cancel button, the component emits `close(false)`.
 
-When `loading` is `true`, the confirm button should show loading state and prevent repeated confirmation.
+While `onConfirm` is running, the confirm button shows loading state and the cancel button is disabled.
 
-When `dismissible` is `false`, the user should not be able to close the modal by clicking outside or pressing escape.
+If `onConfirm` throws, `onError` is called and the modal stays open.
+
+When `dismissible` is `false`, the user cannot dismiss the modal through the modal backdrop or escape behavior. While confirmation is loading, the modal is also treated as non-dismissible.
 
 ## Notes
 

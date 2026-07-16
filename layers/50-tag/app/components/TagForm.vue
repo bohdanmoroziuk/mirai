@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import type { FormSubmitEvent } from '@nuxt/ui'
 import type { TagFormState } from '../types/tag'
+import { tagFormStateSchema } from '../schemas/tag.schema'
 
 const props = defineProps<{
   submitting?: boolean
@@ -11,19 +13,24 @@ const emit = defineEmits<{
   cancel: []
 }>()
 
-const state = reactive<TagFormState>({ ...props.initialState })
+const { state, resetState } = useFormState<TagFormState>(() => props.initialState)
 
-const submit = () => {
-  emit('submit', toValue(state))
+const submit = (event: FormSubmitEvent<TagFormState>) => {
+  emit('submit', event.data)
 }
 
 const cancel = () => {
   emit('cancel')
 }
+
+defineExpose({
+  resetState,
+})
 </script>
 
 <template>
   <UForm
+    :schema="tagFormStateSchema"
     :state="state"
     class="space-y-4"
     @submit="submit"
