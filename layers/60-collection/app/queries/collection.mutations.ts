@@ -6,11 +6,11 @@ export const useCreateCollectionMutation = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: collectionKeys.create,
+    mutationKey: collectionKeys.create(),
     mutationFn: collectionRepository.createOne,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: collectionKeys.lists,
+        queryKey: collectionKeys.lists(),
       })
     },
   })

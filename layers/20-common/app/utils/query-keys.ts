@@ -33,9 +33,18 @@ export const getListQuery = <TQuery extends object>(
 /**
  * Creates query and mutation keys for a resource.
  *
- * List keys are `[resource, 'list']` or `[resource, 'list', query]`.
- * Detail keys are `[resource, 'detail', params]`; mutation keys are grouped
- * under `[resource, 'mutation']`.
+ * Keys use these shapes:
+ * - `all`: `[resource]`
+ * - `query(name)`: `[resource, 'queries', name]`
+ * - `query(name, input)`: `[resource, 'queries', name, input]`
+ * - `lists`: `[resource, 'queries', 'list']`
+ * - `list(query)`: `[resource, 'queries', 'list', query]`
+ * - `details`: `[resource, 'queries', 'detail']`
+ * - `detail(params)`: `[resource, 'queries', 'detail', params]`
+ * - `mutation(name)`: `[resource, 'mutations', name]`
+ * - `create`, `update`, `delete`: prebuilt mutation keys
+ *
+ * Empty/nullish query inputs are omitted from the key.
  *
  * @param resourceName Resource name used as the root key segment.
  * @returns A typed factory for resource query and mutation keys.
@@ -43,40 +52,58 @@ export const getListQuery = <TQuery extends object>(
 export const createResourceKeys = <const TResourceName extends string>(
   resourceName: TResourceName,
 ) => {
-  const all = [resourceName] as const
+  const all = () => [resourceName] as const
 
-  const lists = [...all, 'list'] as const
+  const queries = () => [...all(), 'queries'] as const
+  const mutations = () => [...all(), 'mutations'] as const
 
-  const list = <TQuery extends object>(query?: TQuery) => {
-    if (isUndefined(query)) return lists
-    if (isEmpty(query)) return lists
+  const query = <
+    const TQueryName extends string,
+    TInput extends object = Record<string, never>,
+  >(
+    queryName: TQueryName,
+    input?: Nullable<TInput>,
+  ) => {
+    if (isNullish(input)) return [...queries(), queryName] as const
+    if (isEmpty(input)) return [...queries(), queryName] as const
 
-    return [...lists, query] as const
+    return [...queries(), queryName, input] as const
   }
 
-  const details = [...all, 'detail'] as const
-
-  const detail = <TParams extends object>(params: TParams) => {
-    return [...details, params] as const
-  }
-
-  const mutations = [...all, 'mutation'] as const
-
-  const mutation = <TMutationName extends string>(
+  const mutation = <const TMutationName extends string>(
     mutationName: TMutationName,
   ) => {
-    return [...mutations, mutationName] as const
+    return [...mutations(), mutationName] as const
+  }
+
+  const lists = () => [...queries(), 'list'] as const
+  const details = () => [...queries(), 'detail'] as const
+
+  const list = <TQuery extends object>(query?: Nullable<TQuery>) => {
+    if (isNullish(query)) return lists()
+    if (isEmpty(query)) return lists()
+
+    return [...lists(), query] as const
+  }
+
+  const detail = <TParams extends object>(params: TParams) => {
+    return [...details(), params] as const
   }
 
   return {
     all,
+
+    query,
+    mutation,
+
     lists,
     list,
+
     details,
     detail,
-    mutation,
-    create: mutation('create'),
-    update: mutation('update'),
-    delete: mutation('delete'),
+
+    create: () => mutation('create'),
+    update: () => mutation('update'),
+    delete: () => mutation('delete'),
   }
 }

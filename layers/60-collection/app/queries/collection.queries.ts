@@ -8,7 +8,7 @@ export const useCollectionsQuery = () => {
     Error,
     Collection[]
   >({
-    queryKey: collectionKeys.lists,
+    queryKey: collectionKeys.lists(),
     queryFn: collectionRepository.getMany,
     select: selectApiData,
   })

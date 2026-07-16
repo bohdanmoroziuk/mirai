@@ -6,11 +6,11 @@ export const useCreateTagMutation = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: tagKeys.create,
+    mutationKey: tagKeys.create(),
     mutationFn: tagRepository.createOne,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: tagKeys.lists,
+        queryKey: tagKeys.lists(),
       })
     },
   })
@@ -20,11 +20,11 @@ export const useDeleteTagMutation = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: tagKeys.delete,
+    mutationKey: tagKeys.delete(),
     mutationFn: tagRepository.deleteOne,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: tagKeys.lists,
+        queryKey: tagKeys.lists(),
       })
     },
   })
