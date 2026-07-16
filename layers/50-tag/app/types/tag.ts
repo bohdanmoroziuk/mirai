@@ -5,22 +5,24 @@ export type TagFormState = z.infer<typeof tagFormStateSchema>
 
 export type TagPayload = TagFormState
 
-export type GetTagsQuery = {
+export type TagsQuery = {
   search?: string
 }
 
 export type GetTagsInput = {
-  query?: GetTagsQuery
+  query?: TagsQuery
 }
 
 export type CreateTagInput = {
   body: TagPayload
 }
 
+export type TagParams = {
+  tagId: string
+}
+
 export type DeleteTagInput = {
-  params: {
-    tagId: string
-  }
+  params: TagParams
 }
 
 export type DeleteTagOutput = SuccessOutput

@@ -16,7 +16,7 @@ export type BookmarksQuery = {
 }
 
 export type GetBookmarksInput = {
-  query: BookmarksQuery
+  query?: BookmarksQuery
 }
 
 export type BookmarkPayload = BookmarkFormState

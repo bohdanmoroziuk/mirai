@@ -1,50 +1,39 @@
-import { useMutation, useQueryClient } from '@tanstack/vue-query'
+import { useMutation } from '@tanstack/vue-query'
+import { authKeys } from './auth.keys'
 import { authRepository } from '../repositories/auth.repository'
 
 export const useSignupMutation = () => {
-  const queryClient = useQueryClient()
   const userSession = useUserSession()
 
   return useMutation({
-    mutationKey: ['auth', 'signup'],
+    mutationKey: authKeys.mutation('signup'),
     mutationFn: authRepository.signup,
     onSuccess: async () => {
       await userSession.fetch()
-      await queryClient.invalidateQueries({
-        queryKey: ['auth', 'me'],
-      })
     },
   })
 }
 
 export const useLoginMutation = () => {
-  const queryClient = useQueryClient()
   const userSession = useUserSession()
 
   return useMutation({
-    mutationKey: ['auth', 'login'],
+    mutationKey: authKeys.mutation('login'),
     mutationFn: authRepository.login,
     onSuccess: async () => {
       await userSession.fetch()
-      await queryClient.invalidateQueries({
-        queryKey: ['auth', 'me'],
-      })
     },
   })
 }
 
 export const useLogoutMutation = () => {
-  const queryClient = useQueryClient()
   const userSession = useUserSession()
 
   return useMutation({
-    mutationKey: ['auth', 'logout'],
+    mutationKey: authKeys.mutation('logout'),
     mutationFn: authRepository.logout,
     onSuccess: async () => {
       await userSession.clear()
-      queryClient.removeQueries({
-        queryKey: ['auth', 'me'],
-      })
     },
   })
 }

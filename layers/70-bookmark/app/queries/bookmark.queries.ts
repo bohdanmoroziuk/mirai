@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/vue-query'
-import { bookmarkKeys } from './bookmark.keys'
+import { getDetailParams, getListQuery } from '@common/app/utils/query-keys'
 import { bookmarkRepository } from '../repositories/bookmark.repository'
+import { bookmarkKeys } from './bookmark.keys'
 import type { GetBookmarkInput, GetBookmarksInput } from '../types/bookmark'
 
 export const useBookmarkQuery = (
@@ -12,7 +13,7 @@ export const useBookmarkQuery = (
     Bookmark
   >({
     queryKey: computed(() => {
-      return bookmarkKeys.detail(toValue(input).params)
+      return bookmarkKeys.detail(getDetailParams(toValue(input)))
     }),
     queryFn: () => {
       return bookmarkRepository.getOne(toValue(input))
@@ -22,7 +23,7 @@ export const useBookmarkQuery = (
 }
 
 export const useBookmarksQuery = (
-  input: MaybeRefOrGetter<GetBookmarksInput>,
+  input: MaybeRefOrGetter<GetBookmarksInput> = {},
 ) => {
   return useQuery<
     ApiResponse<Bookmark[]>,
@@ -30,7 +31,7 @@ export const useBookmarksQuery = (
     Bookmark[]
   >({
     queryKey: computed(() => {
-      return bookmarkKeys.list(toValue(input).query)
+      return bookmarkKeys.list(getListQuery(toValue(input)))
     }),
     queryFn: () => {
       return bookmarkRepository.getMany(toValue(input))
