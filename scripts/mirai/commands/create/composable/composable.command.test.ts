@@ -1,11 +1,14 @@
-import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { runCommand } from 'citty'
 import { join } from 'pathe'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { FileSystemError } from '#mirai/common/errors/fs'
+import { NodeErrorCode } from '#mirai/common/errors/node'
 import { ValidationError } from '#mirai/common/errors/validation'
-import { logger } from '#mirai/common/utils/logger'
+import { CittyErrorCode } from '#mirai/test/constants/citty'
+import { expectPathMissing } from '#mirai/test/utils/assertions'
+import { createCliLoggerSpies } from '#mirai/test/utils/logger'
+import { createTemporaryCliProject } from '#mirai/test/utils/temporary-project'
 import { createComposableCommand } from './composable.command'
 
 const runCreateComposableCommand = (rawArgs: string[]) => {
@@ -13,88 +16,77 @@ const runCreateComposableCommand = (rawArgs: string[]) => {
 }
 
 describe.sequential('create composable command', () => {
-  let temporaryDir: string
-  let previousInitCwd: string | undefined
+  const project = createTemporaryCliProject('composable-command')
+  let loggerSpies: ReturnType<typeof createCliLoggerSpies>
 
   beforeEach(async () => {
-    temporaryDir = await mkdtemp(join(tmpdir(), 'mirai-cli-composable-command-'))
-    previousInitCwd = process.env.INIT_CWD
-    process.env.INIT_CWD = temporaryDir
-
-    vi.spyOn(logger, 'success').mockImplementation(() => {})
+    await project.setup()
+    loggerSpies = createCliLoggerSpies()
   })
 
   afterEach(async () => {
     vi.restoreAllMocks()
-
-    if (previousInitCwd === undefined) {
-      delete process.env.INIT_CWD
-    }
-    else {
-      process.env.INIT_CWD = previousInitCwd
-    }
-
-    await rm(temporaryDir, { recursive: true, force: true })
+    await project.cleanup()
   })
 
   it('creates a composable in the project root', async () => {
     await runCreateComposableCommand(['useNotification'])
 
-    const composablePath = join(temporaryDir, 'app', 'composables', 'useNotification.ts')
+    const composablePath = join(project.root, 'app', 'composables', 'useNotification.ts')
     const composable = await readFile(composablePath, 'utf8')
 
     expect(composable).toContain('export const useNotification')
-    expect(logger.success).toHaveBeenCalledWith('Composable created: app/composables/useNotification.ts')
+    expect(loggerSpies.success).toHaveBeenCalledWith('Composable created: app/composables/useNotification.ts')
   })
 
   it('creates a composable inside an existing layer', async () => {
-    await mkdir(join(temporaryDir, 'layers', 'admin'), { recursive: true })
+    await mkdir(join(project.root, 'layers', 'admin'), { recursive: true })
 
     await runCreateComposableCommand(['useNotification', '--layer', 'admin'])
 
-    const composablePath = join(temporaryDir, 'layers', 'admin', 'app', 'composables', 'useNotification.ts')
+    const composablePath = join(project.root, 'layers', 'admin', 'app', 'composables', 'useNotification.ts')
     const composable = await readFile(composablePath, 'utf8')
 
     expect(composable).toContain('export const useNotification')
-    expect(logger.success).toHaveBeenCalledWith(
+    expect(loggerSpies.success).toHaveBeenCalledWith(
       'Composable created: layers/admin/app/composables/useNotification.ts',
     )
   })
 
   it('does not overwrite an existing composable', async () => {
-    const composablePath = join(temporaryDir, 'app', 'composables', 'useNotification.ts')
+    const composablePath = join(project.root, 'app', 'composables', 'useNotification.ts')
     const existingComposable = 'export const useNotification = () => "existing"'
 
-    await mkdir(join(temporaryDir, 'app', 'composables'), { recursive: true })
+    await mkdir(join(project.root, 'app', 'composables'), { recursive: true })
     await writeFile(composablePath, existingComposable, 'utf8')
 
     await expect(runCreateComposableCommand(['useNotification'])).rejects.toMatchObject({
-      code: 'EEXIST',
+      code: NodeErrorCode.PATH_ALREADY_EXISTS,
     })
 
     await expect(readFile(composablePath, 'utf8')).resolves.toBe(existingComposable)
-    expect(logger.success).not.toHaveBeenCalled()
+    expect(loggerSpies.success).not.toHaveBeenCalled()
   })
 
   it('rejects a composable for a missing layer without creating directories', async () => {
     await expect(runCreateComposableCommand(['useNotification', '--layer', 'admin'])).rejects.toMatchObject({
       name: FileSystemError.name,
       action: 'check',
-      path: join(temporaryDir, 'layers', 'admin'),
+      path: join(project.root, 'layers', 'admin'),
     })
 
-    await expect(stat(join(temporaryDir, 'app'))).rejects.toMatchObject({ code: 'ENOENT' })
-    expect(logger.success).not.toHaveBeenCalled()
+    await expectPathMissing(join(project.root, 'app'))
+    expect(loggerSpies.success).not.toHaveBeenCalled()
   })
 
   it('rejects missing and invalid arguments without creating directories', async () => {
-    await expect(runCreateComposableCommand([])).rejects.toMatchObject({ code: 'EARG' })
+    await expect(runCreateComposableCommand([])).rejects.toMatchObject({ code: CittyErrorCode.ARGUMENT })
     await expect(runCreateComposableCommand(['notification'])).rejects.toBeInstanceOf(ValidationError)
     await expect(
       runCreateComposableCommand(['useNotification', '--layer', 'Admin']),
     ).rejects.toBeInstanceOf(ValidationError)
 
-    await expect(stat(join(temporaryDir, 'app'))).rejects.toMatchObject({ code: 'ENOENT' })
-    expect(logger.success).not.toHaveBeenCalled()
+    await expectPathMissing(join(project.root, 'app'))
+    expect(loggerSpies.success).not.toHaveBeenCalled()
   })
 })
