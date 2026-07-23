@@ -8,6 +8,7 @@ Use this folder to document project-specific composables, not every small Vue or
 
 | Composable | Description | Docs |
 | --- | --- | --- |
+| `useAppIcons` | Provides semantic aliases for application icons. | [Docs](./use-app-icons.md) |
 | `useConfirmModal` | Opens `UiConfirmModal` programmatically for confirmation flows. | [Docs](./use-confirm-modal.md) |
 | `useFormReset` | Resets a child form through its template ref. | [Docs](./use-form-reset.md) |
 | `useFormState` | Manages typed reactive form state and reset behavior. | [Docs](./use-form-state.md) |

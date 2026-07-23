@@ -9,6 +9,7 @@ const props = defineProps<{
 
 const { confirm } = useConfirmModal()
 const { isDeleting, deleteTag } = useDeleteTagWorkflow()
+const icons = useAppIcons()
 
 const handleTagDelete = async () => {
   const confirmed = await confirm({
@@ -42,7 +43,7 @@ const handleTagDelete = async () => {
     <div class="flex gap-2">
       <UButton
         :loading="isDeleting"
-        icon="i-lucide-trash-2"
+        :icon="icons.delete"
         size="sm"
         color="error"
         variant="ghost"

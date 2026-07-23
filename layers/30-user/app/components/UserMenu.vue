@@ -3,19 +3,20 @@ import type { DropdownMenuItem } from '@nuxt/ui'
 import { useLogoutWorkflow } from '@auth/app/workflows/logout.workflow'
 
 const { isLoggingOut, logout } = useLogoutWorkflow()
+const icons = useAppIcons()
 
 const userItems = computed<DropdownMenuItem[][]>(() => [
   [
     {
       label: 'Tag Manager',
-      icon: 'i-lucide-tags',
+      icon: icons.tags,
       to: '/settings/tags',
     },
   ],
   [
     {
       label: 'Log out',
-      icon: 'i-lucide-log-out',
+      icon: icons.logout,
       disabled: toValue(isLoggingOut),
       onSelect: logout,
     },
@@ -35,7 +36,7 @@ const userItems = computed<DropdownMenuItem[][]>(() => [
         <UButton
           :loading="isLoggingOut"
           :label="user.name"
-          trailing-icon="i-lucide-chevrons-up-down"
+          :trailing-icon="icons.dropdown"
           color="neutral"
           variant="ghost"
           square

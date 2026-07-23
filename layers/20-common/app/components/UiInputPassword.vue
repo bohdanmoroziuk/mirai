@@ -6,6 +6,7 @@ const props = defineProps<Pick<InputProps, 'placeholder' | 'autocomplete' | 'dis
 const password = defineModel<string>({ default: '' })
 
 const [shown, toggle] = useToggle()
+const icons = useAppIcons()
 </script>
 
 <template>
@@ -20,7 +21,7 @@ const [shown, toggle] = useToggle()
         color="neutral"
         variant="link"
         size="sm"
-        :icon="shown ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+        :icon="shown ? icons.passwordHide : icons.passwordShow"
         :aria-label="shown ? 'Hide password' : 'Show password'"
         :aria-pressed="shown"
         aria-controls="password"
