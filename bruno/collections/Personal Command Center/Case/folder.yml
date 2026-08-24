@@ -1,0 +1,7 @@
+info:
+  name: Case
+  type: folder
+  seq: 7
+
+request:
+  auth: inherit

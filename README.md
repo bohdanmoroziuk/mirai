@@ -24,6 +24,11 @@ The server routes also expose authenticated read/update/delete endpoints for tag
 | Tags | `GET /api/tags`, `POST /api/tags`, `PATCH /api/tags/:tagId`, `DELETE /api/tags/:tagId` |
 | Collections | `GET /api/collections`, `POST /api/collections`, `GET /api/collections/:collectionId`, `PATCH /api/collections/:collectionId`, `DELETE /api/collections/:collectionId` |
 | Bookmarks | `GET /api/bookmarks`, `POST /api/bookmarks`, `GET /api/bookmarks/:bookmarkId`, `PATCH /api/bookmarks/:bookmarkId`, `DELETE /api/bookmarks/:bookmarkId` |
+| Cases | `GET /api/cases`, `POST /api/cases`, `GET /api/cases/:caseId`, `PATCH /api/cases/:caseId`, `DELETE /api/cases/:caseId` |
+
+### Cases
+
+Cases group long-running life situations such as treatment, vacations, learning, and household processes. A case owns a chronological plan of steps: completed and skipped steps remain in the history, while a step can become active only after its predecessor is finished. This change provides the authenticated CRUD API for cases and the persisted `Step` model (`pending`, `active`, `completed`, or `skipped`); step-management routes will be added with the next part of the feature.
 
 ### Not Included Yet in the UI
 
@@ -61,6 +66,7 @@ layers/40-auth/
 layers/50-tag/
 layers/60-collection/
 layers/70-bookmark/
+layers/80-case/
   Feature layers.
   Each feature owns its components, composables, workflows, queries, routes, schemas, models, repositories, mappers, and types.
 

@@ -12,3 +12,5 @@ variables:
     name: TAG_ID
   - secret: true
     name: BOOKMARK_ID
+  - secret: true
+    name: CASE_ID
