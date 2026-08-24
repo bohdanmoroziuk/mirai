@@ -1,7 +1,7 @@
-export default defineSafeEventHandler(() => {
-  return createResponse({
+export default defineApiRouteHandler(() => {
+  return {
     success: true,
-  })
+  }
 })
 
 defineRouteMeta({

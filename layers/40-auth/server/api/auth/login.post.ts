@@ -2,7 +2,7 @@ import { loginUserBodySchema } from '../../schemas/login-user.schema'
 import { toLoginUserInput } from '../../mappers/login-user.mapper'
 import { loginUser } from '../../auth.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const body = await validateBody(event, loginUserBodySchema)
   const user = await loginUser(toLoginUserInput(body))
 
@@ -11,7 +11,7 @@ export default defineSafeEventHandler(async (event) => {
     loggedInAt: new Date(),
   })
 
-  return createResponse(user)
+  return user
 })
 
 defineRouteMeta({

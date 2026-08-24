@@ -3,12 +3,12 @@ import { getBookmarksQuerySchema } from '../../schemas/get-bookmarks.schema'
 import { toGetBookmarksInput } from '../../mappers/get-bookmarks.mapper'
 import { getBookmarks } from '../../bookmark.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const query = await validateQuery(event, getBookmarksQuerySchema)
   const bookmarks = await getBookmarks(toGetBookmarksInput(userId, query))
 
-  return createResponse(bookmarks)
+  return bookmarks
 })
 
 defineRouteMeta({

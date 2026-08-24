@@ -4,13 +4,13 @@ import { createCase } from '../../case.container'
 import { toCreateCaseInput } from '../../mappers/create-case.mapper'
 import { createCaseBodySchema } from '../../schemas/create-case.schema'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const body = await validateBody(event, createCaseBodySchema)
   const caseItem = await createCase(toCreateCaseInput(userId, body))
 
   setResponseStatus(event, HttpStatus.CREATED)
-  return createResponse(caseItem)
+  return caseItem
 })
 
 defineRouteMeta({

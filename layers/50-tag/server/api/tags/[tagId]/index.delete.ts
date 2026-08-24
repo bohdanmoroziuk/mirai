@@ -3,12 +3,12 @@ import { tagParamsSchema } from '../../../schemas/tag-params.schema'
 import { toDeleteTagInput } from '../../../mappers/delete-tag.mapper'
 import { deleteTag } from '../../../tag.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, tagParamsSchema)
   const result = await deleteTag(toDeleteTagInput(userId, params))
 
-  return createResponse(result)
+  return result
 })
 
 defineRouteMeta({

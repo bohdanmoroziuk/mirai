@@ -2,11 +2,11 @@ import { requireUserId } from '@common/server/utils/auth'
 import { getCases } from '../../case.container'
 import { toGetCasesInput } from '../../mappers/get-cases.mapper'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const cases = await getCases(toGetCasesInput(userId))
 
-  return createResponse(cases)
+  return cases
 })
 
 defineRouteMeta({

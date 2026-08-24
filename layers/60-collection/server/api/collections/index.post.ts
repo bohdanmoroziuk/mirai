@@ -4,14 +4,14 @@ import { createCollectionBodySchema } from '../../schemas/create-collection.sche
 import { toCreateCollectionInput } from '../../mappers/create-collection.mapper'
 import { createCollection } from '../../collection.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const body = await validateBody(event, createCollectionBodySchema)
   const collection = await createCollection(toCreateCollectionInput(userId, body))
 
   setResponseStatus(event, HttpStatus.CREATED)
 
-  return createResponse(collection)
+  return collection
 })
 
 defineRouteMeta({

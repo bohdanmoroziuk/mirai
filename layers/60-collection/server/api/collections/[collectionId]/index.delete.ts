@@ -4,12 +4,12 @@ import { collectionParamsSchema } from '../../../schemas/collection-params.schem
 import { toDeleteCollectionInput } from '../../../mappers/delete-collection.mapper'
 import { deleteCollection } from '../../../collection.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, collectionParamsSchema)
   const result = await deleteCollection(toDeleteCollectionInput(userId, params))
 
-  return createResponse(result)
+  return result
 })
 
 defineRouteMeta({

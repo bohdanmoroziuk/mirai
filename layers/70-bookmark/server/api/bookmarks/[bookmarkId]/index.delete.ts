@@ -3,12 +3,12 @@ import { bookmarkParamsSchema } from '../../../schemas/bookmark-params.schema'
 import { toDeleteBookmarkInput } from '../../../mappers/delete-bookmark.mapper'
 import { deleteBookmark } from '../../../bookmark.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, bookmarkParamsSchema)
   const result = await deleteBookmark(toDeleteBookmarkInput(userId, params))
 
-  return createResponse(result)
+  return result
 })
 
 defineRouteMeta({

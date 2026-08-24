@@ -2,11 +2,11 @@ import { requireUserId } from '@common/server/utils/auth'
 import { toGetCollectionsInput } from '../../mappers/get-collections.mapper'
 import { getCollections } from '../../collection.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const collections = await getCollections(toGetCollectionsInput(userId))
 
-  return createResponse(collections)
+  return collections
 })
 
 defineRouteMeta({

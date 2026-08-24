@@ -2,12 +2,12 @@ import { deleteCase } from '../../../case.container'
 import { toDeleteCaseInput } from '../../../mappers/delete-case.mapper'
 import { caseParamsSchema } from '../../../schemas/case-params.schema'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, caseParamsSchema)
   const result = await deleteCase(toDeleteCaseInput(userId, params))
 
-  return createResponse(result)
+  return result
 })
 
 defineRouteMeta({

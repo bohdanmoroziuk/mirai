@@ -1,7 +1,7 @@
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const session = await getUserSession(event)
 
-  return createResponse(session.user ?? null)
+  return session.user ?? null
 })
 
 defineRouteMeta({

@@ -1,4 +1,5 @@
-import { type HttpStatusCode, HttpStatus } from '../../shared/constants/http'
+import { createError } from 'h3'
+import { type HttpStatusCode, HttpStatus } from '@core/shared/constants/http'
 
 export function invariant(
   condition: unknown,

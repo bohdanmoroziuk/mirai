@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { HttpStatus } from '@core/shared/constants/http'
-import { invariant } from '@core/server/utils/invariant'
+import { invariant } from '@common/server/utils/invariant'
 import { databaseLogger } from '@common/shared/services/logger.service'
 
 export const requireMongodbUri = () => {

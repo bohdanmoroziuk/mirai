@@ -2,12 +2,12 @@ import { getCase } from '../../../case.container'
 import { toGetCaseInput } from '../../../mappers/get-case.mapper'
 import { caseParamsSchema } from '../../../schemas/case-params.schema'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, caseParamsSchema)
   const caseItem = await getCase(toGetCaseInput(userId, params))
 
-  return createResponse(caseItem)
+  return caseItem
 })
 
 defineRouteMeta({

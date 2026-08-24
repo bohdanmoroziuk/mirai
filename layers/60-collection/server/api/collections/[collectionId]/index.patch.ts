@@ -4,13 +4,13 @@ import { updateCollectionBodySchema } from '../../../schemas/update-collection.s
 import { toUpdateCollectionInput } from '../../../mappers/update-collection.mapper'
 import { updateCollection } from '../../../collection.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, collectionParamsSchema)
   const body = await validateBody(event, updateCollectionBodySchema)
   const collection = await updateCollection(toUpdateCollectionInput(userId, params, body))
 
-  return createResponse(collection)
+  return collection
 })
 
 defineRouteMeta({

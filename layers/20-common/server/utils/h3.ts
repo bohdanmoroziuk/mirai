@@ -1,14 +1,15 @@
 import { createError, defineEventHandler, isError } from 'h3'
 import type { EventHandler, EventHandlerRequest } from 'h3'
 import { HttpStatus } from '@core/shared/constants/http'
-import { reportServerError } from './report-server-error'
+import { toApiResponse } from '@core/shared/utils/api'
+import { reportServerError } from './server-error-reporter'
 
-export function defineSafeEventHandler<T extends EventHandlerRequest, D>(
+export function defineApiRouteHandler<T extends EventHandlerRequest, D>(
   handler: EventHandler<T, D>,
-): EventHandler<T, D> {
+): EventHandler<T, ApiResponse<Awaited<D>>> {
   return defineEventHandler<T>(async (event) => {
     try {
-      return await handler(event)
+      return toApiResponse(await handler(event))
     }
     catch (error) {
       if (isError(error)) {
@@ -25,5 +26,5 @@ export function defineSafeEventHandler<T extends EventHandlerRequest, D>(
         statusMessage: 'Internal Server Error',
       })
     }
-  }) as EventHandler<T, D>
+  }) as EventHandler<T, ApiResponse<Awaited<D>>>
 }

@@ -3,13 +3,13 @@ import { toUpdateCaseInput } from '../../../mappers/update-case.mapper'
 import { caseParamsSchema } from '../../../schemas/case-params.schema'
 import { updateCaseBodySchema } from '../../../schemas/update-case.schema'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, caseParamsSchema)
   const body = await validateBody(event, updateCaseBodySchema)
   const caseItem = await updateCase(toUpdateCaseInput(userId, params, body))
 
-  return createResponse(caseItem)
+  return caseItem
 })
 
 defineRouteMeta({
