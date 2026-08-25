@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     './layers/50-tag',
     './layers/60-collection',
     './layers/70-bookmark',
+    './layers/80-case',
   ],
 
   modules: [
@@ -63,6 +64,7 @@ export default defineNuxtConfig({
     '@tag': resolveLayerPath('50-tag'),
     '@collection': resolveLayerPath('60-collection'),
     '@bookmark': resolveLayerPath('70-bookmark'),
+    '@case': resolveLayerPath('80-case'),
   },
 
   compatibilityDate: '2025-07-15',
