@@ -67,6 +67,11 @@ export default defineNuxtConfig({
     '@case': resolveLayerPath('80-case'),
   },
 
+  devServer: {
+    host: '127.0.0.1',
+    port: 3000,
+  },
+
   compatibilityDate: '2025-07-15',
 
   nitro: {

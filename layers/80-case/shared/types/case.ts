@@ -7,3 +7,10 @@ export type CaseEntity = {
 }
 
 export type Case = Entity & CaseEntity & Timestamps
+
+export type CaseStats = {
+  total: number
+  active: number
+  completed: number
+  empty: number
+}

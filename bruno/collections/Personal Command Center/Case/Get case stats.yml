@@ -1,11 +1,11 @@
 info:
-  name: Delete case
+  name: Get case stats
   type: http
-  seq: 5
+  seq: 4
 
 http:
-  method: DELETE
-  url: "{{BASE_URL}}/cases/{{CASE_ID}}"
+  method: GET
+  url: "{{BASE_URL}}/cases/stats"
   auth: inherit
 
 settings:
