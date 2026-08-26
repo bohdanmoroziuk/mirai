@@ -31,6 +31,16 @@ defineProps<{
       active-color="primary"
       variant="outline"
       exact-query
+      :to="{ path: '/cases', query: { status: 'empty' } }"
+    >
+      Empty · {{ stats.empty }}
+    </UButton>
+
+    <UButton
+      color="neutral"
+      active-color="primary"
+      variant="outline"
+      exact-query
       :to="{ path: '/cases' }"
     >
       All · {{ stats.total }}

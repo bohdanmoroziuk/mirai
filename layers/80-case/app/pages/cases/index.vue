@@ -21,7 +21,11 @@ const { data, error, isPending } = useGetCaseStatsWorkflow()
       </template>
 
       <template #default="{ data: stats }">
-        <CaseStats :stats />
+        <div class="flex items-center justify-between gap-4">
+          <CaseCreateModal />
+
+          <CaseStats :stats />
+        </div>
       </template>
     </UiQueryState>
   </div>

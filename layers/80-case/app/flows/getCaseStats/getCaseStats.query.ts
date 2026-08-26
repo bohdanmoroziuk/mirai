@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/vue-query'
 import { caseGateway } from '../../gateways/case.gateway'
+import { caseKeys } from '../../queries/case.keys'
 
 export const useCaseStatsQuery = () => {
   return useQuery<
@@ -7,7 +8,7 @@ export const useCaseStatsQuery = () => {
     Error,
     CaseStats
   >({
-    queryKey: ['case', 'stats'],
+    queryKey: caseKeys.query('stats'),
     queryFn: () => {
       return caseGateway.getStats()
     },

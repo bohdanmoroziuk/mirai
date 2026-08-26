@@ -225,6 +225,25 @@ Start the development server on `http://localhost:3000`:
 pnpm dev
 ```
 
+## Troubleshooting
+
+### Nuxt cannot find an auto-imported name
+
+If the editor or type checker reports `Cannot find name '<name>'` for a
+symbol exported from a configured auto-import directory, the generated Nuxt
+types may be stale. This commonly happens when a new file or export is added
+while the development server is not running.
+
+Regenerate the Nuxt types from the project root:
+
+```bash
+pnpm exec nuxt prepare
+```
+
+If the error remains visible, restart the development server and reload the
+editor's Vue or TypeScript language service. Do not edit files inside `.nuxt`
+manually because Nuxt regenerates that directory.
+
 ## Production
 
 Build the application for production:

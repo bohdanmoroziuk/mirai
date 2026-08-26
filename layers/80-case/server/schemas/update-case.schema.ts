@@ -1,6 +1,5 @@
 import { z } from 'zod'
 import { hasDefinedProperty } from '@core/shared/utils/object'
-import { caseDescriptionSchema, caseTitleSchema } from './case.schema'
 
 export const updateCaseBodySchema = z
   .object({
