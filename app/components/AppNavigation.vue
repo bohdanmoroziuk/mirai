@@ -17,6 +17,11 @@ const items = computed<NavigationMenuItem[]>(() => {
       badge: collectionItems.value.length.toString(),
       children: collectionItems.value,
     },
+    {
+      label: 'Cases',
+      to: '/cases?status=active',
+      icon: 'i-lucide-timeline',
+    },
   ]
 })
 </script>

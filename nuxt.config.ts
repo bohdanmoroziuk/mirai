@@ -28,25 +28,26 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       // App
-      'app/composables/**',
-      'app/utils/**',
+      '~/composables/**',
+      '~/utils/**',
 
       // Root shared
-      'shared/types/**',
-      'shared/schemas/**',
-      'shared/utils/**',
-      'shared/constants/**',
+      '~~/shared/types/**',
+      '~~/shared/schemas/**',
+      '~~/shared/utils/**',
+      '~~/shared/constants/**',
 
       // Feature app
-      'layers/*/app/composables/**',
-      'layers/*/app/workflows/**',
-      'layers/*/app/utils/**',
+      '~~/layers/*/app/composables/**',
+      '~~/layers/*/app/workflows/**',
+      '~~/layers/*/app/utils/**',
+      '~~/layers/*/app/flows/**',
 
       // Feature shared
-      'layers/*/shared/types/**',
-      'layers/*/shared/schemas/**',
-      'layers/*/shared/utils/**',
-      'layers/*/shared/constants/**',
+      '~~/layers/*/shared/types/**',
+      '~~/layers/*/shared/schemas/**',
+      '~~/layers/*/shared/utils/**',
+      '~~/layers/*/shared/constants/**',
     ],
   },
 
