@@ -1,6 +1,6 @@
 import type { PipelineStage, Types } from 'mongoose'
 
-export const createLookupStepsStage = (
+export const createLookupCaseStepsStage = (
   userId: Types.ObjectId,
 ): PipelineStage.Lookup => ({
   $lookup: {

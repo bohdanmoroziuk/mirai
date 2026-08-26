@@ -1,4 +1,4 @@
-import type { GetCaseStatsInput } from '../types/get-case-stats.types'
+import type { GetCaseStatsInput } from './getCaseStats.types'
 
 export const toGetCaseStatsInput = (userId: string): GetCaseStatsInput => ({
   userId,

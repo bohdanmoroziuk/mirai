@@ -8,9 +8,9 @@ import { toDeleteCaseQuery } from '../mappers/delete-case.mongo.mapper'
 import { toFindCaseQuery } from '../mappers/get-case.mongo.mapper'
 import { toFindCasesQuery } from '../mappers/get-cases.mongo.mapper'
 import { toUpdateCaseQuery } from '../mappers/update-case.mongo.mapper'
-import { createCaseStatsPipeline } from '../pipelines/case-stats/case-stats.pipeline'
+import { createCaseStatsPipeline } from '../operations/getCaseStats/getCaseStats.pipeline'
 import { CaseModel } from '../models/case.mongo.model'
-import { toGetCaseStatsQuery } from '../mappers/get-case-stats.mongo.mapper'
+import { toGetCaseStatsQuery } from '../operations/getCaseStats/getCaseStats.mapper'
 
 export const makeMongoCaseRepository = (): CaseRepository => ({
   async createOne(input) {

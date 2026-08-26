@@ -2,7 +2,7 @@ import { makeMongoCaseRepository } from './infra/mongo/repositories/case.mongo.r
 import { makeCreateCaseUseCase } from './use-cases/create-case.use-case'
 import { makeGetCaseUseCase } from './use-cases/get-case.use-case'
 import { makeGetCasesUseCase } from './use-cases/get-cases.use-case'
-import { makeGetCaseStatsUseCase } from './use-cases/get-case-stats.use-case'
+import { makeGetCaseStatsUseCase } from './flows/getCaseStats/getCaseStats.use-case'
 import { makeUpdateCaseUseCase } from './use-cases/update-case.use-case'
 import { makeDeleteCaseUseCase } from './use-cases/delete-case.use-case'
 
