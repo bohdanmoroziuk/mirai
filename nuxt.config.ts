@@ -25,6 +25,31 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
   ],
 
+  imports: {
+    dirs: [
+      // App
+      'app/composables/**',
+      'app/utils/**',
+
+      // Root shared
+      'shared/types/**',
+      'shared/schemas/**',
+      'shared/utils/**',
+      'shared/constants/**',
+
+      // Feature app
+      'layers/*/app/composables/**',
+      'layers/*/app/workflows/**',
+      'layers/*/app/utils/**',
+
+      // Feature shared
+      'layers/*/shared/types/**',
+      'layers/*/shared/schemas/**',
+      'layers/*/shared/utils/**',
+      'layers/*/shared/constants/**',
+    ],
+  },
+
   devtools: {
     enabled: false,
   },
@@ -85,6 +110,29 @@ export default defineNuxtConfig({
         description: 'API Documentation for Mirai.',
         version: '0.1.0',
       },
+    },
+
+    imports: {
+      dirs: [
+        // Server
+        'server/utils/**',
+
+        // Root shared
+        'shared/types/**',
+        'shared/schemas/**',
+        'shared/utils/**',
+        'shared/constants/**',
+
+        // Feature shared
+        'layers/*/shared/types/**',
+        'layers/*/shared/schemas/**',
+        'layers/*/shared/utils/**',
+        'layers/*/shared/constants/**',
+
+        // Feature server
+        'layers/*/server/flows/**',
+        'layers/*/server/infra/**',
+      ],
     },
   },
 

@@ -1,6 +1,4 @@
 import { mapValueOr } from '@core/shared/utils/value'
-import { EMPTY_CASE_STATS } from '../../../../shared/constants/case.constants'
-import type { CaseStats } from '../../../../shared/types/case'
 import type { CaseRepository } from '../../../ports/case.repository.port'
 import { toCase } from '../mappers/case.mongo.mapper'
 import { toCreateCaseData } from '../mappers/create-case.mongo.mapper'
@@ -8,9 +6,7 @@ import { toDeleteCaseQuery } from '../mappers/delete-case.mongo.mapper'
 import { toFindCaseQuery } from '../mappers/get-case.mongo.mapper'
 import { toFindCasesQuery } from '../mappers/get-cases.mongo.mapper'
 import { toUpdateCaseQuery } from '../mappers/update-case.mongo.mapper'
-import { createCaseStatsPipeline } from '../operations/getCaseStats/getCaseStats.pipeline'
 import { CaseModel } from '../models/case.mongo.model'
-import { toGetCaseStatsQuery } from '../operations/getCaseStats/getCaseStats.mapper'
 
 export const makeMongoCaseRepository = (): CaseRepository => ({
   async createOne(input) {

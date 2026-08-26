@@ -3,7 +3,6 @@ import type { Case, CaseStats } from '../../shared/types/case'
 import type { CreateCaseInput } from '../types/create-case.types'
 import type { GetCaseInput } from '../types/get-case.types'
 import type { GetCasesInput } from '../types/get-cases.types'
-import type { GetCaseStatsInput } from '../flows/getCaseStats/getCaseStats.types'
 import type { UpdateCaseInput } from '../types/update-case.types'
 import type { DeleteCaseInput } from '../types/delete-case.types'
 
