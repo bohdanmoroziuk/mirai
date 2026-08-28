@@ -1,49 +1,30 @@
 <script setup lang="ts">
-defineProps<{
-  stats: CaseStats
-}>()
+const { data, error, isPending } = useGetCaseStatsWorkflow()
+
+const statItems = computed(() => {
+  return data.value === undefined
+    ? []
+    : toCaseStatItems(data.value)
+})
 </script>
 
 <template>
-  <div class="flex items-center justify-start gap-4">
-    <UButton
-      color="neutral"
-      active-color="primary"
-      variant="outline"
-      exact-query
-      :to="{ path: '/cases', query: { status: 'active' } }"
-    >
-      Active · {{ stats.active }}
-    </UButton>
+  <UiQueryState
+    :data="data"
+    :error="error"
+    :fetching="isPending"
+    :empty-when="isEmpty"
+  >
+    <template #fetching>
+      <div class="flex justify-center">
+        <UiLoader />
+      </div>
+    </template>
 
-    <UButton
-      color="neutral"
-      active-color="primary"
-      variant="outline"
-      exact-query
-      :to="{ path: '/cases', query: { status: 'completed' } }"
-    >
-      Completed · {{ stats.completed }}
-    </UButton>
-
-    <UButton
-      color="neutral"
-      active-color="primary"
-      variant="outline"
-      exact-query
-      :to="{ path: '/cases', query: { status: 'empty' } }"
-    >
-      Empty · {{ stats.empty }}
-    </UButton>
-
-    <UButton
-      color="neutral"
-      active-color="primary"
-      variant="outline"
-      exact-query
-      :to="{ path: '/cases' }"
-    >
-      All · {{ stats.total }}
-    </UButton>
-  </div>
+    <template #default>
+      <div class="flex items-center justify-between gap-4">
+        <CaseStatList :items="statItems" />
+      </div>
+    </template>
+  </UiQueryState>
 </template>

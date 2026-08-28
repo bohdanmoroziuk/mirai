@@ -1,3 +1,3 @@
-import type { GetCasesInput } from '../types/get-cases.types'
+import type { GetCasesInput } from './getCases.types'
 
 export const toGetCasesInput = (userId: string): GetCasesInput => ({ userId })

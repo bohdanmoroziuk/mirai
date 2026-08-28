@@ -1,5 +1,5 @@
-import type { GetCasesInput } from '../../../types/get-cases.types'
-import type { FindCasesQuery } from '../types/get-cases.mongo.types'
+import type { GetCasesInput } from '../../../../flows/getCases/getCases.types'
+import type { FindCasesQuery } from './getCases.types'
 
 export const toFindCasesQuery = (input: GetCasesInput): FindCasesQuery => ({
   filter: { userId: toObjectId(input.userId) },

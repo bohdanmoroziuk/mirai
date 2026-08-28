@@ -17,7 +17,7 @@ export const useCreateCaseMutation = () => {
         }),
 
         queryClient.invalidateQueries({
-          queryKey: caseKeys.lists(),
+          queryKey: caseKeys.query('overviews'),
         }),
       ])
     },

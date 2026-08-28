@@ -4,7 +4,8 @@ import { toCase } from '../mappers/case.mongo.mapper'
 import { toCreateCaseData } from '../mappers/create-case.mongo.mapper'
 import { toDeleteCaseQuery } from '../mappers/delete-case.mongo.mapper'
 import { toFindCaseQuery } from '../mappers/get-case.mongo.mapper'
-import { toFindCasesQuery } from '../mappers/get-cases.mongo.mapper'
+import { toFindCasesQuery } from '../operations/getCases/getCases.mapper'
+import { toCaseOverview, toFindCaseOverviewsQuery } from '../operations/getCaseOverviews/getCaseOverviews.mapper'
 import { toUpdateCaseQuery } from '../mappers/update-case.mongo.mapper'
 import { CaseModel } from '../models/case.mongo.model'
 
@@ -20,6 +21,11 @@ export const makeMongoCaseRepository = (): CaseRepository => ({
     const query = toFindCasesQuery(input)
     const documents = await CaseModel.find(query.filter).sort(query.sort).exec()
     return documents.map(toCase)
+  },
+  async findOverviews(input) {
+    const query = toFindCaseOverviewsQuery(input)
+    const documents = await CaseModel.find(query.filter).sort(query.sort).exec()
+    return documents.map(toCaseOverview)
   },
   async updateOne(input) {
     const query = toUpdateCaseQuery(input)
