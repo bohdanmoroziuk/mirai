@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 rounded-lg overflow-hidden bg-default ring ring-default w-full p-4">
+  <div class="flex flex-col gap-2 relative rounded-lg overflow-hidden bg-default ring ring-default w-full p-4">
     <h3 class="font-bold">
       {{ caseOverview.title }}
     </h3>
@@ -39,6 +39,10 @@ defineProps<{
       >
         Pick up the rental car
       </ULink>
+    </div>
+
+    <div class="absolute top-4 right-4">
+      <CaseOverviewCardMenu :case-id="caseOverview.id" />
     </div>
   </div>
 </template>
