@@ -1,5 +1,5 @@
-import type { CaseRepository } from '../ports/case.repository.port'
-import type { DeleteCaseInput, DeleteCaseOutput } from '../types/delete-case.types'
+import type { CaseRepository } from '../../ports/case.repository.port'
+import type { DeleteCaseInput, DeleteCaseOutput } from './deleteCase.types'
 
 export const makeDeleteCaseUseCase = (caseRepository: CaseRepository) => {
   return async (input: DeleteCaseInput): Promise<DeleteCaseOutput> => {

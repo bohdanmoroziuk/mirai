@@ -4,7 +4,7 @@ import { makeGetCaseUseCase } from './use-cases/get-case.use-case'
 import { makeGetCasesUseCase } from './flows/getCases/getCases.use-case'
 import { makeGetCaseOverviewsUseCase } from './flows/getCaseOverviews/getCaseOverviews.use-case'
 import { makeUpdateCaseUseCase } from './use-cases/update-case.use-case'
-import { makeDeleteCaseUseCase } from './use-cases/delete-case.use-case'
+import { makeDeleteCaseUseCase } from './flows/deleteCase/deleteCase.use-case'
 
 const caseRepository = makeMongoCaseRepository()
 

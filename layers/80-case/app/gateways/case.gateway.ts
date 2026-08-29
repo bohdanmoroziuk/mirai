@@ -17,4 +17,10 @@ export const caseGateway = {
       method: 'get',
     })
   },
+
+  deleteOne(input: DeleteCaseInput) {
+    return $fetch<ApiResponse<DeleteCaseOutput>>(`/api/cases/${input.params.caseId}`, {
+      method: 'delete',
+    })
+  },
 }

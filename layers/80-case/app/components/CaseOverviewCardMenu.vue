@@ -5,6 +5,8 @@ const props = defineProps<{
   caseId: string
 }>()
 
+const { isDeleting, deleteCase } = useDeleteCaseWorkflow()
+
 const items = computed<DropdownMenuItem[][]>(() => {
   return [
     [
@@ -24,6 +26,10 @@ const items = computed<DropdownMenuItem[][]>(() => {
         label: 'Delete',
         color: 'error',
         icon: 'i-lucide-trash',
+        loading: toValue(isDeleting),
+        onSelect: () => {
+          deleteCase(props.caseId)
+        },
       },
     ],
   ]

@@ -5,7 +5,7 @@ import type { GetCaseInput } from '../types/get-case.types'
 import type { GetCasesInput } from '../flows/getCases/getCases.types'
 import type { CaseOverview, GetCaseOverviewsInput } from '../flows/getCaseOverviews/getCaseOverviews.types'
 import type { UpdateCaseInput } from '../types/update-case.types'
-import type { DeleteCaseInput } from '../types/delete-case.types'
+import type { DeleteCaseInput } from '../flows/deleteCase/deleteCase.types'
 
 export interface CaseRepository {
   findOne(input: GetCaseInput): Promise<Nullable<Case>>
