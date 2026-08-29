@@ -1,4 +1,10 @@
 export const caseGateway = {
+  getMany() {
+    return $fetch<ApiResponse<Case[]>>('/api/cases', {
+      method: 'get',
+    })
+  },
+
   getOverviews() {
     return $fetch<ApiResponse<CaseOverview[]>>('/api/cases/overviews', {
       method: 'get',
