@@ -1,4 +1,10 @@
 export const caseGateway = {
+  getOne(input: GetCaseInput) {
+    return $fetch<ApiResponse<Case>>(`/api/cases/${input.params.caseId}`, {
+      method: 'get',
+    })
+  },
+
   getMany() {
     return $fetch<ApiResponse<Case[]>>('/api/cases', {
       method: 'get',
@@ -11,6 +17,12 @@ export const caseGateway = {
     })
   },
 
+  getStats() {
+    return $fetch<ApiResponse<CaseStats>>('/api/cases/stats', {
+      method: 'get',
+    })
+  },
+
   createOne(input: CreateCaseInput) {
     return $fetch<ApiResponse<Case>>('/api/cases', {
       method: 'post',
@@ -18,9 +30,10 @@ export const caseGateway = {
     })
   },
 
-  getStats() {
-    return $fetch<ApiResponse<CaseStats>>('/api/cases/stats', {
-      method: 'get',
+  updateOne(input: UpdateCaseInput) {
+    return $fetch<ApiResponse<Case>>(`/api/cases/${input.params.caseId}`, {
+      method: 'patch',
+      body: input.body,
     })
   },
 

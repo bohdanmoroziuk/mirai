@@ -1,7 +1,7 @@
 import { updateCase } from '../../../case.container'
-import { toUpdateCaseInput } from '../../../mappers/update-case.mapper'
+import { toUpdateCaseInput } from '../../../flows/updateCase/updateCase.mapper'
+import { updateCaseBodySchema } from '../../../flows/updateCase/updateCase.schema'
 import { caseParamsSchema } from '../../../schemas/case-params.schema'
-import { updateCaseBodySchema } from '../../../schemas/update-case.schema'
 
 export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)

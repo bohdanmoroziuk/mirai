@@ -1,5 +1,5 @@
-import type { CaseParams } from '../types/case-params.types'
-import type { UpdateCaseBody, UpdateCaseInput } from '../types/update-case.types'
+import type { CaseParams } from '../../types/case-params.types'
+import type { UpdateCaseBody, UpdateCaseInput } from './updateCase.types'
 
 export const toUpdateCaseInput = (
   userId: string,

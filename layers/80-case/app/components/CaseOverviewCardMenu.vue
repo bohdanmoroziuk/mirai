@@ -5,7 +5,7 @@ const props = defineProps<{
   caseId: string
 }>()
 
-const { isDeleting, deleteCase } = useDeleteCaseWorkflow()
+const { openCase, updateCase, deleteCase } = useCaseOverviewsContext()
 
 const items = computed<DropdownMenuItem[][]>(() => {
   return [
@@ -13,11 +13,15 @@ const items = computed<DropdownMenuItem[][]>(() => {
       {
         label: 'Open',
         icon: 'i-lucide-external-link',
-        to: {
-          name: 'cases-caseId',
-          params: {
-            caseId: props.caseId,
-          },
+        onSelect: () => {
+          openCase(props.caseId)
+        },
+      },
+      {
+        label: 'Update',
+        icon: 'i-lucide-pencil',
+        onSelect: () => {
+          updateCase(props.caseId)
         },
       },
     ],
@@ -26,7 +30,6 @@ const items = computed<DropdownMenuItem[][]>(() => {
         label: 'Delete',
         color: 'error',
         icon: 'i-lucide-trash',
-        loading: toValue(isDeleting),
         onSelect: () => {
           deleteCase(props.caseId)
         },

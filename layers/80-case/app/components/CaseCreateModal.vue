@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { getCaseFormInitialState } from '../mappers/case.mapper'
+import type { CaseFormState } from '../types/case'
+
 const initialState = getCaseFormInitialState()
 const { isCreating, createCase } = useCreateCaseWorkflow()
 const { isOpen, open, close } = useModalState()
@@ -28,7 +31,7 @@ const handleCaseCreate = async (state: CaseFormState) => {
     </template>
 
     <template #body>
-      <CaseCreateForm
+      <CaseForm
         :initial-state
         :submitting="isCreating"
         @cancel="close"

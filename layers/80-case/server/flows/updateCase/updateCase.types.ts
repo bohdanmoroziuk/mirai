@@ -1,5 +1,5 @@
 import type { z } from 'zod'
-import type { updateCaseBodySchema } from '../schemas/update-case.schema'
+import type { updateCaseBodySchema } from './updateCase.schema'
 
 export type UpdateCaseBody = z.infer<typeof updateCaseBodySchema>
 

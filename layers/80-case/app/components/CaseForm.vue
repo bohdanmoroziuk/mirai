@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { caseFormStateSchema } from '../schemas/case.schema'
+import type { CaseFormState } from '../types/case'
+
 const props = withDefaults(
   defineProps<{
     submitting?: boolean

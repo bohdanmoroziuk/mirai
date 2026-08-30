@@ -1,5 +1,5 @@
 import type { QueryOptions, Types, UpdateQuery } from 'mongoose'
-import type { CaseFields } from './case.mongo.types'
+import type { CaseFields } from '../../types/case.mongo.types'
 
 export type UpdateCaseQuery = {
   filter: {

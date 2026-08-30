@@ -1,5 +1,5 @@
-import type { GetCaseInput } from '../../../types/get-case.types'
-import type { FindCaseQuery } from '../types/get-case.mongo.types'
+import type { GetCaseInput } from '../../../../flows/getCase/getCase.types'
+import type { FindCaseQuery } from './getCase.types'
 
 export const toFindCaseQuery = (input: GetCaseInput): FindCaseQuery => ({
   filter: {

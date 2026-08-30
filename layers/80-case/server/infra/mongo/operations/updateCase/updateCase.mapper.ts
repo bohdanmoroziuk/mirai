@@ -1,6 +1,6 @@
 import { compactObject } from '@core/shared/utils/object'
-import type { UpdateCaseInput } from '../../../types/update-case.types'
-import type { UpdateCaseQuery } from '../types/update-case.mongo.types'
+import type { UpdateCaseInput } from '../../../../flows/updateCase/updateCase.types'
+import type { UpdateCaseQuery } from './updateCase.types'
 
 export const toUpdateCaseQuery = (input: UpdateCaseInput): UpdateCaseQuery => ({
   filter: {

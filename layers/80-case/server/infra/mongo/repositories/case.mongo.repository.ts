@@ -3,10 +3,10 @@ import type { CaseRepository } from '../../../ports/case.repository.port'
 import { toCase } from '../mappers/case.mongo.mapper'
 import { toCreateCaseData } from '../mappers/create-case.mongo.mapper'
 import { toDeleteCaseQuery } from '../operations/deleteCase/deleteCase.mapper'
-import { toFindCaseQuery } from '../mappers/get-case.mongo.mapper'
+import { toFindCaseQuery } from '../operations/getCase/getCase.mapper'
 import { toFindCasesQuery } from '../operations/getCases/getCases.mapper'
 import { toCaseOverview, toFindCaseOverviewsQuery } from '../operations/getCaseOverviews/getCaseOverviews.mapper'
-import { toUpdateCaseQuery } from '../mappers/update-case.mongo.mapper'
+import { toUpdateCaseQuery } from '../operations/updateCase/updateCase.mapper'
 import { CaseModel } from '../models/case.mongo.model'
 
 export const makeMongoCaseRepository = (): CaseRepository => ({
