@@ -1,5 +1,5 @@
-import type { CreateCaseInput } from '../../../types/create-case.types'
-import type { CreateCaseData } from '../types/create-case.mongo.types'
+import type { CreateCaseInput } from '../../../../flows/createCase'
+import type { CreateCaseData } from './createCase.types'
 
 export const toCreateCaseData = (input: CreateCaseInput): CreateCaseData => ({
   title: input.title,

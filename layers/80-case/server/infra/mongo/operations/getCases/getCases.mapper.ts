@@ -1,4 +1,4 @@
-import type { GetCasesInput } from '../../../../flows/getCases/getCases.types'
+import type { GetCasesInput } from '../../../../flows/getCases'
 import type { FindCasesQuery } from './getCases.types'
 
 export const toFindCasesQuery = (input: GetCasesInput): FindCasesQuery => ({

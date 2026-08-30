@@ -60,6 +60,12 @@ shareCaseOverviewsContext({
       </div>
     </template>
 
+    <template #error="{ error: queryError }">
+      <p class="text-error text-center">
+        {{ queryError.message }}
+      </p>
+    </template>
+
     <template #default="{ data: caseOverviews }">
       <CaseOverviewList :case-overviews />
     </template>

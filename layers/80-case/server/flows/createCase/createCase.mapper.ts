@@ -1,4 +1,4 @@
-import type { CreateCaseBody, CreateCaseInput } from '../types/create-case.types'
+import type { CreateCaseBody, CreateCaseInput } from './createCase.types'
 
 export const toCreateCaseInput = (
   userId: string,

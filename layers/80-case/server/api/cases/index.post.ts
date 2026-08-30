@@ -1,8 +1,7 @@
 import { HttpStatus } from '@core/shared/constants/http'
 import { requireUserId } from '@common/server/utils/auth'
 import { createCase } from '../../case.container'
-import { toCreateCaseInput } from '../../mappers/create-case.mapper'
-import { createCaseBodySchema } from '../../schemas/create-case.schema'
+import { createCaseBodySchema, toCreateCaseInput } from '../../flows/createCase'
 
 export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)

@@ -1,5 +1,5 @@
 import { deleteCase } from '../../../case.container'
-import { toDeleteCaseInput } from '../../../flows/deleteCase/deleteCase.mapper'
+import { toDeleteCaseInput } from '../../../flows/deleteCase'
 import { caseParamsSchema } from '../../../schemas/case-params.schema'
 
 export default defineApiRouteHandler(async (event) => {

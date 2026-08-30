@@ -10,7 +10,7 @@ export const useDeleteCaseMutation = () => {
     mutationFn: (input: DeleteCaseInput) => {
       return caseGateway.deleteOne(input)
     },
-    onSuccess: async () => {
+    onSuccess: async (_, input) => {
       await Promise.all([
         queryClient.invalidateQueries({
           queryKey: caseKeys.query('stats'),
@@ -24,6 +24,10 @@ export const useDeleteCaseMutation = () => {
           queryKey: caseKeys.lists(),
         }),
       ])
+
+      queryClient.removeQueries({
+        queryKey: caseKeys.detail(input.params),
+      })
     },
   })
 }

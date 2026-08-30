@@ -1,5 +1,5 @@
 import { getCase } from '../../../case.container'
-import { toGetCaseInput } from '../../../flows/getCase/getCase.mapper'
+import { toGetCaseInput } from '../../../flows/getCase'
 import { caseParamsSchema } from '../../../schemas/case-params.schema'
 
 export default defineApiRouteHandler(async (event) => {

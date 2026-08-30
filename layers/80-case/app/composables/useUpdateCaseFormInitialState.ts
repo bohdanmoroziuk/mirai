@@ -12,7 +12,7 @@ export const useUpdateCaseFormInitialState = (
     isFetching: isRefreshing,
     error,
     refetch: refresh,
-  } = useCaseQuery(caseQueryInput)
+  } = useGetCaseWorkflow(caseQueryInput)
 
   const initialState = computed(() => {
     return isDefined(caseItem)

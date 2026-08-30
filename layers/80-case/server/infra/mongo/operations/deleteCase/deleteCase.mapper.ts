@@ -1,4 +1,4 @@
-import type { DeleteCaseInput } from '../../../../flows/deleteCase/deleteCase.types'
+import type { DeleteCaseInput } from '../../../../flows/deleteCase'
 import type { DeleteCaseQuery } from './deleteCase.types'
 
 export const toDeleteCaseQuery = (input: DeleteCaseInput): DeleteCaseQuery => ({

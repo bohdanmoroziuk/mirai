@@ -1,5 +1,5 @@
 import { compactObject } from '@core/shared/utils/object'
-import type { UpdateCaseInput } from '../../../../flows/updateCase/updateCase.types'
+import type { UpdateCaseInput } from '../../../../flows/updateCase'
 import type { UpdateCaseQuery } from './updateCase.types'
 
 export const toUpdateCaseQuery = (input: UpdateCaseInput): UpdateCaseQuery => ({

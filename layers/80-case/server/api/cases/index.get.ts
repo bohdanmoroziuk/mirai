@@ -1,6 +1,6 @@
 import { requireUserId } from '@common/server/utils/auth'
 import { getCases } from '../../case.container'
-import { toGetCasesInput } from '../../flows/getCases/getCases.mapper'
+import { toGetCasesInput } from '../../flows/getCases'
 
 export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)

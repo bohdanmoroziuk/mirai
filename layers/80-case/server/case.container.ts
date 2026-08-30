@@ -1,10 +1,11 @@
 import { makeMongoCaseRepository } from './infra/mongo/repositories/case.mongo.repository'
-import { makeCreateCaseUseCase } from './use-cases/create-case.use-case'
-import { makeGetCaseUseCase } from './flows/getCase/getCase.use-case'
-import { makeGetCasesUseCase } from './flows/getCases/getCases.use-case'
-import { makeGetCaseOverviewsUseCase } from './flows/getCaseOverviews/getCaseOverviews.use-case'
-import { makeUpdateCaseUseCase } from './flows/updateCase/updateCase.use-case'
-import { makeDeleteCaseUseCase } from './flows/deleteCase/deleteCase.use-case'
+import { makeCreateCaseUseCase } from './flows/createCase'
+import { makeDeleteCaseUseCase } from './flows/deleteCase'
+import { makeGetCaseUseCase } from './flows/getCase'
+import { makeGetCaseOverviewsUseCase } from './flows/getCaseOverviews'
+import { makeGetCaseStatsUseCase } from './flows/getCaseStats'
+import { makeGetCasesUseCase } from './flows/getCases'
+import { makeUpdateCaseUseCase } from './flows/updateCase'
 
 const caseRepository = makeMongoCaseRepository()
 

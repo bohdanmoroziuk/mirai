@@ -1,5 +1,5 @@
 import { mapValueOr } from '@core/shared/utils/value'
-import type { CaseOverview, GetCaseOverviewsInput } from '../../../../flows/getCaseOverviews/getCaseOverviews.types'
+import type { CaseOverview, GetCaseOverviewsInput } from '../../../../flows/getCaseOverviews'
 import type { CaseDocument } from '../../types/case.mongo.types'
 import type { FindCaseOverviewsQuery } from './getCaseOverviews.types'
 
