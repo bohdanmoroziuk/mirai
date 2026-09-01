@@ -32,7 +32,8 @@
       "@tag/*": ["./layers/50-tag/*"],
       "@collection/*": ["./layers/60-collection/*"],
       "@bookmark/*": ["./layers/70-bookmark/*"],
-      "@case/*": ["./layers/80-case/*"]
+      "@case/*": ["./layers/80-case/*"],
+      "@step/*": ["./layers/90-step/*"]
     }
   }
 }

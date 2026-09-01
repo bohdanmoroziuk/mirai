@@ -35,6 +35,14 @@ const stepSchema = new Schema<StepFields>({
   timestamps: true,
 })
 
-stepSchema.index({ caseId: 1, order: 1 })
+stepSchema.index(
+  {
+    caseId: 1,
+    order: 1,
+  },
+  {
+    unique: true,
+  },
+)
 
 export const StepModel = createMongooseModel<StepFields>('Step', stepSchema)
