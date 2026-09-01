@@ -4,14 +4,14 @@ import { createTagBodySchema } from '../../schemas/create-tag.schema'
 import { toCreateTagInput } from '../../mappers/create-tag.mapper'
 import { createTag } from '../../tag.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const body = await validateBody(event, createTagBodySchema)
   const tag = await createTag(toCreateTagInput(userId, body))
 
   setResponseStatus(event, HttpStatus.CREATED)
 
-  return createResponse(tag)
+  return tag
 })
 
 defineRouteMeta({

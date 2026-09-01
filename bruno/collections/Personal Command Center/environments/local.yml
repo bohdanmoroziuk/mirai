@@ -2,13 +2,22 @@ name: local
 variables:
   - name: BASE_URL
     value: http://localhost:3000/api
+    description: ""
   - secret: true
     name: USER_EMAIL
+    description: ""
   - secret: true
     name: USER_PASSWORD
+    description: ""
   - secret: true
     name: COLLECTION_ID
+    description: ""
   - secret: true
     name: TAG_ID
+    description: ""
   - secret: true
     name: BOOKMARK_ID
+    description: ""
+  - secret: true
+    name: CASE_ID
+    description: ""

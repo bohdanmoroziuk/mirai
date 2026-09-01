@@ -1,10 +1,9 @@
 import { HttpStatus } from '@core/shared/constants/http'
-import { createResponse } from '@core/server/utils/response'
 import { signupUserBodySchema } from '../../schemas/signup-user.schema'
 import { toSignupUserInput } from '../../mappers/signup-user.mapper'
 import { signupUser } from '../../auth.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const body = await validateBody(event, signupUserBodySchema)
   const user = await signupUser(toSignupUserInput(body))
 
@@ -15,7 +14,7 @@ export default defineSafeEventHandler(async (event) => {
 
   setResponseStatus(event, HttpStatus.CREATED)
 
-  return createResponse(user)
+  return user
 })
 
 defineRouteMeta({

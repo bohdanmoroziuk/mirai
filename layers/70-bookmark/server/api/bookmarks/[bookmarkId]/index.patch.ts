@@ -3,13 +3,13 @@ import { updateBookmarkBodySchema } from '../../../schemas/update-bookmark.schem
 import { toUpdateBookmarkInput } from '../../../mappers/update-bookmark.mapper'
 import { updateBookmark } from '../../../bookmark.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, bookmarkParamsSchema)
   const body = await validateBody(event, updateBookmarkBodySchema)
   const bookmark = await updateBookmark(toUpdateBookmarkInput(userId, params, body))
 
-  return createResponse(bookmark)
+  return bookmark
 })
 
 defineRouteMeta({

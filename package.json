@@ -15,7 +15,11 @@
     "lint:fix": "eslint . --fix",
     "mirai": "tsx --tsconfig scripts/mirai/tsconfig.json scripts/mirai/cli.ts",
     "test:unit:cli": "vitest run --project mirai-cli",
-    "test:unit:cli:watch": "vitest --project mirai-cli"
+    "test:unit:cli:watch": "vitest --project mirai-cli",
+    "db:up": "colima start && docker compose up -d",
+    "db:down": "docker compose down && colima stop",
+    "start": "pnpm db:up && pnpm dev",
+    "stop": "pnpm db:down"
   },
   "imports": {
     "#mirai/*": "./scripts/mirai/*.ts"

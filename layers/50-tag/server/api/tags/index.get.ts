@@ -3,12 +3,12 @@ import { getTagsQuerySchema } from '../../schemas/get-tags.schema'
 import { toGetTagsInput } from '../../mappers/get-tags.mapper'
 import { getTags } from '../../tag.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const query = await validateQuery(event, getTagsQuerySchema)
   const tags = await getTags(toGetTagsInput(userId, query))
 
-  return createResponse(tags)
+  return tags
 })
 
 defineRouteMeta({

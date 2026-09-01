@@ -3,12 +3,12 @@ import { collectionParamsSchema } from '../../../schemas/collection-params.schem
 import { toGetCollectionInput } from '../../../mappers/get-collection.mapper'
 import { getCollection } from '../../../collection.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, collectionParamsSchema)
   const collection = await getCollection(toGetCollectionInput(userId, params))
 
-  return createResponse(collection)
+  return collection
 })
 
 defineRouteMeta({

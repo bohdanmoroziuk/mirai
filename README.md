@@ -24,6 +24,11 @@ The server routes also expose authenticated read/update/delete endpoints for tag
 | Tags | `GET /api/tags`, `POST /api/tags`, `PATCH /api/tags/:tagId`, `DELETE /api/tags/:tagId` |
 | Collections | `GET /api/collections`, `POST /api/collections`, `GET /api/collections/:collectionId`, `PATCH /api/collections/:collectionId`, `DELETE /api/collections/:collectionId` |
 | Bookmarks | `GET /api/bookmarks`, `POST /api/bookmarks`, `GET /api/bookmarks/:bookmarkId`, `PATCH /api/bookmarks/:bookmarkId`, `DELETE /api/bookmarks/:bookmarkId` |
+| Cases | `GET /api/cases`, `POST /api/cases`, `GET /api/cases/:caseId`, `PATCH /api/cases/:caseId`, `DELETE /api/cases/:caseId` |
+
+### Cases
+
+Cases group long-running life situations such as treatment, vacations, learning, and household processes. A case owns a chronological plan of steps: completed and skipped steps remain in the history, while a step can become active only after its predecessor is finished. This change provides the authenticated CRUD API for cases and the persisted `Step` model (`pending`, `active`, `completed`, or `skipped`); step-management routes will be added with the next part of the feature.
 
 ### Not Included Yet in the UI
 
@@ -35,13 +40,89 @@ The server routes also expose authenticated read/update/delete endpoints for tag
 
 ## Architecture
 
-The project uses a layered Nuxt architecture with a clear separation between application shell, shared logic, feature code, and third-party setup.
+The project uses a layered Nuxt architecture with clear boundaries between the
+application shell, shared logic, feature code, and third-party setup.
 
 ```txt
 app/      → Nuxt application shell
 layers/   → core, shared, and feature code
 modules/  → local Nuxt modules for third-party setup
 ```
+
+### Architecture evolution
+
+#### v0.1.0: Feature-based Vertical Slice Architecture
+
+In `v0.1.0`, Mirai follows Feature-based Vertical Slice Architecture. Each
+feature owns its client, server, shared, domain, and infrastructure code, while
+files inside the feature are grouped mainly by technical role.
+
+Typical technical groups include `components`, `workflows`, `queries`,
+`mappers`, `schemas`, `types`, `use-cases`, `ports`, and `infra`.
+
+#### v0.2.0: Feature-based Flow-focused Architecture
+
+Starting with `v0.2.0`, Mirai is incrementally adopting Feature-based
+Flow-focused Architecture. The feature remains the primary ownership boundary,
+but behavior is organized around explicit application flows within that
+feature.
+
+A flow represents one user or application operation, such as creating a case
+or loading case statistics. Artifacts used only by that operation are grouped
+together instead of being distributed across technical directories.
+
+The end-to-end `createCase` behavior is the first completed `v0.2.0` flow. It
+covers both the client and server sides of creating a case. Existing features
+and operations retain the `v0.1.0` vertical-slice structure until they are
+migrated deliberately.
+
+### Flow-focused structure
+
+Client-side flow artifacts live under the feature's `app/flows` directory:
+
+```txt
+layers/<feature>/app/flows/<flow>/
+  <flow>.mapper.ts
+  <flow>.mutation.ts or <flow>.query.ts
+  <flow>.schema.ts
+  <flow>.types.ts
+  <flow>.workflow.ts
+```
+
+Server-side flow artifacts live under the feature's `server/flows` directory:
+
+```txt
+layers/<feature>/server/flows/<flow>/
+  <flow>.mapper.ts
+  <flow>.schema.ts
+  <flow>.types.ts
+  <flow>.use-case.ts
+```
+
+Only flow-specific code belongs inside a flow. Code shared by multiple flows
+stays at the feature level. Examples include components, gateways, query keys,
+ports, database infrastructure, shared schemas, and shared types.
+
+The main dependency paths are:
+
+```txt
+component or page
+  → workflow
+  → query or mutation
+  → gateway
+  → API route
+
+API route
+  → flow mapper and schema
+  → use case
+  → port
+  → infrastructure
+```
+
+Components continue to own concrete UI state such as forms and modals.
+Workflows coordinate application operations, notifications, and redirects.
+Routes validate transport input and delegate to flow-specific application
+logic. Infrastructure remains outside flows and implements feature ports.
 
 ### Mental model
 
@@ -61,11 +142,14 @@ layers/40-auth/
 layers/50-tag/
 layers/60-collection/
 layers/70-bookmark/
+layers/80-case/
   Feature layers.
-  Each feature owns its components, composables, workflows, queries, routes, schemas, models, repositories, mappers, and types.
+  Each feature owns its flows, UI, routes, domain, and infrastructure.
+  Starting with v0.2.0, new behavior is grouped around explicit flows.
 
 modules/
-  Local Nuxt modules used to install and configure third-party tools such as Vue Query and Mongoose.
+  Local Nuxt modules used to install and configure third-party tools.
+  Examples include Vue Query and Mongoose.
 ```
 
 ### Rules
@@ -218,6 +302,25 @@ Start the development server on `http://localhost:3000`:
 ```bash
 pnpm dev
 ```
+
+## Troubleshooting
+
+### Nuxt cannot find an auto-imported name
+
+If the editor or type checker reports `Cannot find name '<name>'` for a
+symbol exported from a configured auto-import directory, the generated Nuxt
+types may be stale. This commonly happens when a new file or export is added
+while the development server is not running.
+
+Regenerate the Nuxt types from the project root:
+
+```bash
+pnpm exec nuxt prepare
+```
+
+If the error remains visible, restart the development server and reload the
+editor's Vue or TypeScript language service. Do not edit files inside `.nuxt`
+manually because Nuxt regenerates that directory.
 
 ## Production
 

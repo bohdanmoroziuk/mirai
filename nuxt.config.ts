@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     './layers/50-tag',
     './layers/60-collection',
     './layers/70-bookmark',
+    './layers/80-case',
   ],
 
   modules: [
@@ -23,6 +24,32 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     '@vueuse/nuxt',
   ],
+
+  imports: {
+    dirs: [
+      // App
+      '~/composables/**',
+      '~/utils/**',
+
+      // Root shared
+      '~~/shared/types/**',
+      '~~/shared/schemas/**',
+      '~~/shared/utils/**',
+      '~~/shared/constants/**',
+
+      // Feature app
+      '~~/layers/*/app/composables/**',
+      '~~/layers/*/app/workflows/**',
+      '~~/layers/*/app/utils/**',
+      '~~/layers/*/app/flows/**',
+
+      // Feature shared
+      '~~/layers/*/shared/types/**',
+      '~~/layers/*/shared/schemas/**',
+      '~~/layers/*/shared/utils/**',
+      '~~/layers/*/shared/constants/**',
+    ],
+  },
 
   devtools: {
     enabled: false,
@@ -63,6 +90,12 @@ export default defineNuxtConfig({
     '@tag': resolveLayerPath('50-tag'),
     '@collection': resolveLayerPath('60-collection'),
     '@bookmark': resolveLayerPath('70-bookmark'),
+    '@case': resolveLayerPath('80-case'),
+  },
+
+  devServer: {
+    host: '127.0.0.1',
+    port: 3000,
   },
 
   compatibilityDate: '2025-07-15',
@@ -78,6 +111,29 @@ export default defineNuxtConfig({
         description: 'API Documentation for Mirai.',
         version: '0.1.0',
       },
+    },
+
+    imports: {
+      dirs: [
+        // Server
+        'server/utils/**',
+
+        // Root shared
+        'shared/types/**',
+        'shared/schemas/**',
+        'shared/utils/**',
+        'shared/constants/**',
+
+        // Feature shared
+        'layers/*/shared/types/**',
+        'layers/*/shared/schemas/**',
+        'layers/*/shared/utils/**',
+        'layers/*/shared/constants/**',
+
+        // Feature server
+        'layers/*/server/flows/**',
+        'layers/*/server/infra/**',
+      ],
     },
   },
 

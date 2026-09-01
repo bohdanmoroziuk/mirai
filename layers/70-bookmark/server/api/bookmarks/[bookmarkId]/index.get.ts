@@ -2,12 +2,12 @@ import { bookmarkParamsSchema } from '../../../schemas/bookmark-params.schema'
 import { toGetBookmarkInput } from '../../../mappers/get-bookmark.mapper'
 import { getBookmark } from '../../../bookmark.container'
 
-export default defineSafeEventHandler(async (event) => {
+export default defineApiRouteHandler(async (event) => {
   const userId = await requireUserId(event)
   const params = await validateParams(event, bookmarkParamsSchema)
   const bookmark = await getBookmark(toGetBookmarkInput(userId, params))
 
-  return createResponse(bookmark)
+  return bookmark
 })
 
 defineRouteMeta({
