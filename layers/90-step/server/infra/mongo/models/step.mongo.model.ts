@@ -9,6 +9,12 @@ const stepSchema = new Schema<StepFields>({
     required: true,
     index: true,
   },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+    index: true,
+  },
   title: {
     type: String,
     required: true,
@@ -16,6 +22,7 @@ const stepSchema = new Schema<StepFields>({
   },
   description: {
     type: String,
+    required: true,
     trim: true,
   },
   status: {
@@ -30,6 +37,7 @@ const stepSchema = new Schema<StepFields>({
   },
   completedAt: {
     type: Date,
+    default: null,
   },
 }, {
   timestamps: true,
