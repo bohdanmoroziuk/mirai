@@ -10,7 +10,7 @@ http:
     type: json
     data: |-
       {
-        "caseId": "6a927c18e38ec91d38722d63",
+        "caseId": "{{CASE_ID}}",
         "title": "Rent a car",
         "description": "Rent Toyota RAV4 to drive to parents' home"
       }

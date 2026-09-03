@@ -4,3 +4,4 @@ import { makeMongoStepRepository } from './infra/mongo/repositories/step.mongo.r
 const stepRepository = makeMongoStepRepository()
 
 export const createStep = makeCreateStepUseCase(stepRepository)
+export const getSteps = makeGetStepsUseCase(stepRepository)
