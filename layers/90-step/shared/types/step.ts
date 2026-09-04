@@ -1,14 +1,14 @@
 import type { Nullable } from '@core/shared/types/common'
 import type { Entity, Timestamps } from '@core/shared/types/entity'
 
-export const StepStatus = {
+export const stepStatuses = {
   Pending: 'pending',
   Active: 'active',
   Completed: 'completed',
   Skipped: 'skipped',
 } as const
 
-export type StepStatus = typeof StepStatus[keyof typeof StepStatus]
+export type StepStatus = typeof stepStatuses[keyof typeof stepStatuses]
 
 export type StepEntity = {
   caseId: string

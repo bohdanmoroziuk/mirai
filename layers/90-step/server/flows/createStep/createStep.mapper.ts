@@ -1,4 +1,4 @@
-import { StepStatus } from '../../../shared/types/step'
+import { stepStatuses } from '../../../shared/types/step'
 import type { CreateStepBody, CreateStepInput } from './createStep.types'
 
 export const toCreateStepInput = (
@@ -9,7 +9,7 @@ export const toCreateStepInput = (
     userId,
     caseId: body.caseId,
     title: body.title,
-    status: StepStatus.Pending,
+    status: stepStatuses.Pending,
     // TODO: Replace hard-coded `order: 1` with per-case sequential ordering
     order: 1,
     description: body.description,

@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose'
-import { StepStatus } from '../../../../shared/types/step'
+import { stepStatuses } from '../../../../shared/types/step'
 import type { StepFields } from '../types/step.mongo.types'
 
 const stepSchema = new Schema<StepFields>({
@@ -27,8 +27,8 @@ const stepSchema = new Schema<StepFields>({
   },
   status: {
     type: String,
-    enum: Object.values(StepStatus),
-    default: StepStatus.Pending,
+    enum: Object.values(stepStatuses),
+    default: stepStatuses.Pending,
     required: true,
   },
   order: {

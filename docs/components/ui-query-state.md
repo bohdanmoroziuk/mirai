@@ -25,7 +25,7 @@ It does not fetch data by itself. It only receives already prepared state:
 ## Props
 
 ```ts
-type UiQueryStateProps<T, E = Error> = {
+type UiQueryStateProps<T, E extends Error = Error> = {
   data?: T
   error?: E | null
   fetching?: boolean
@@ -35,12 +35,12 @@ type UiQueryStateProps<T, E = Error> = {
 
 ## Slots
 
-| Slot       | Props          | Purpose                                                               |
-| ---------- | -------------- | --------------------------------------------------------------------- |
-| `fetching` | —              | Rendered while data is being fetched.                                 |
-| `error`    | `{ error: E }` | Rendered when an error exists.                                        |
-| `empty`    | —              | Rendered when `emptyWhen(data)` returns `true`, when provided.         |
-| `default`  | `{ data: T }`  | Rendered when data exists and there is no fetching/error/empty state. |
+| Slot       | Props          | Purpose                                                               | Default content                    |
+| ---------- | -------------- | --------------------------------------------------------------------- | ---------------------------------- |
+| `fetching` | —              | Rendered while data is being fetched.                                 | Centered `UiLoader`.               |
+| `error`    | `{ error: E }` | Rendered when an error exists.                                        | Centered error message.            |
+| `empty`    | —              | Rendered when `emptyWhen(data)` returns `true`, when provided.         | Centered muted `No data.` message. |
+| `default`  | `{ data: T }`  | Rendered when data exists and there is no fetching/error/empty state. | None.                              |
 
 ## Behavior
 
@@ -53,7 +53,31 @@ type UiQueryStateProps<T, E = Error> = {
 
 This means fetching has the highest priority.
 
+The `fetching`, `error` and `empty` slots provide default content. Define any of
+these slots only when the screen needs a custom state. Because the error fallback
+renders `error.message`, the error type must extend `Error`.
+
 ## Basic usage
+
+```vue
+<UiQueryState
+  :data="bookmarks"
+  :error="error"
+  :fetching="fetching"
+  :empty-when="(bookmarks) => !bookmarks?.length"
+>
+  <template #default="{ data: bookmarks }">
+    <BookmarkList :bookmarks="bookmarks" />
+  </template>
+</UiQueryState>
+```
+
+While the query is fetching, the component renders `UiLoader`. Errors render
+their message, and an empty result renders `No data.`.
+
+## Custom state content
+
+Override the fallback for any state by defining its slot:
 
 ```vue
 <UiQueryState
@@ -67,7 +91,7 @@ This means fetching has the highest priority.
   </template>
 
   <template #error="{ error }">
-    {{ error.message }}
+    Could not load bookmarks: {{ error.message }}
   </template>
 
   <template #empty>
@@ -87,14 +111,6 @@ When no `emptyWhen` function is provided, the component skips the empty state an
   :error="error"
   :fetching="isFetching"
 >
-  <template #fetching>
-    Loading bookmark...
-  </template>
-
-  <template #error="{ error }">
-    {{ error.message }}
-  </template>
-
   <template #default>
     <BookmarkForm :initial-state="initialState" />
   </template>
@@ -122,18 +138,6 @@ const {
     :fetching="isFetching"
     :empty-when="(bookmarks) => !bookmarks?.length"
   >
-    <template #fetching>
-      Loading bookmarks...
-    </template>
-
-    <template #error="{ error }">
-      {{ error.message }}
-    </template>
-
-    <template #empty>
-      No bookmarks yet.
-    </template>
-
     <template #default="{ data: bookmarks }">
       <BookmarkList :bookmarks="bookmarks" />
     </template>
