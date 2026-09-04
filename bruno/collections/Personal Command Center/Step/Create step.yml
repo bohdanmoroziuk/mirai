@@ -1,0 +1,24 @@
+info:
+  name: Create step
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/steps"
+  body:
+    type: json
+    data: |-
+      {
+        "caseId": "{{CASE_ID}}",
+        "title": "Rent a car",
+        "description": "Rent Toyota RAV4 to drive to parents' home"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

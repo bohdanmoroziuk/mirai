@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     './layers/60-collection',
     './layers/70-bookmark',
     './layers/80-case',
+    './layers/90-step',
   ],
 
   modules: [
@@ -91,6 +92,7 @@ export default defineNuxtConfig({
     '@collection': resolveLayerPath('60-collection'),
     '@bookmark': resolveLayerPath('70-bookmark'),
     '@case': resolveLayerPath('80-case'),
+    '@step': resolveLayerPath('90-step'),
   },
 
   devServer: {

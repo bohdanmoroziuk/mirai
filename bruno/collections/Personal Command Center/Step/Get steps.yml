@@ -1,0 +1,20 @@
+info:
+  name: Get steps
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/steps?caseId={{CASE_ID}}"
+  params:
+    - name: caseId
+      value: "{{CASE_ID}}"
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

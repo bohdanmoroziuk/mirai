@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T, E = Error">
+<script setup lang="ts" generic="T, E extends Error = Error">
 const props = withDefaults(
   defineProps<{
     data?: T
@@ -38,18 +38,30 @@ const empty = computed(() => {
 
 <template>
   <template v-if="fetching">
-    <slot name="fetching" />
+    <slot name="fetching">
+      <div class="flex justify-center">
+        <UiLoader />
+      </div>
+    </slot>
   </template>
 
   <template v-else-if="hasError">
     <slot
       name="error"
       :error="error!"
-    />
+    >
+      <p class="text-error text-center">
+        {{ error!.message }}
+      </p>
+    </slot>
   </template>
 
   <template v-else-if="empty">
-    <slot name="empty" />
+    <slot name="empty">
+      <p class="text-muted text-center">
+        No data.
+      </p>
+    </slot>
   </template>
 
   <template v-else>

@@ -1,11 +1,17 @@
 import { Schema } from 'mongoose'
-import { StepStatus } from '../../../../shared/types/step'
+import { stepStatuses } from '../../../../shared/types/step'
 import type { StepFields } from '../types/step.mongo.types'
 
 const stepSchema = new Schema<StepFields>({
   caseId: {
     type: Schema.Types.ObjectId,
     ref: 'Case',
+    required: true,
+    index: true,
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
     index: true,
   },
@@ -16,12 +22,13 @@ const stepSchema = new Schema<StepFields>({
   },
   description: {
     type: String,
+    required: true,
     trim: true,
   },
   status: {
     type: String,
-    enum: Object.values(StepStatus),
-    default: StepStatus.Pending,
+    enum: Object.values(stepStatuses),
+    default: stepStatuses.Pending,
     required: true,
   },
   order: {
@@ -30,11 +37,20 @@ const stepSchema = new Schema<StepFields>({
   },
   completedAt: {
     type: Date,
+    default: null,
   },
 }, {
   timestamps: true,
 })
 
-stepSchema.index({ caseId: 1, order: 1 })
+stepSchema.index(
+  {
+    caseId: 1,
+    order: 1,
+  },
+  {
+    unique: true,
+  },
+)
 
 export const StepModel = createMongooseModel<StepFields>('Step', stepSchema)

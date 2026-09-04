@@ -30,6 +30,9 @@ Use it when a component needs to show that some async action or data fetching is
 
 ## With UiQueryState
 
+`UiQueryState` uses `UiLoader` as its default fetching content, so no fetching
+slot is needed unless the screen requires a custom loading layout.
+
 ```vue
 <UiQueryState
   :data="bookmarks"
@@ -37,18 +40,6 @@ Use it when a component needs to show that some async action or data fetching is
   :fetching="isFetching"
   :empty-when="(bookmarks) => !bookmarks?.length"
 >
-  <template #fetching>
-    <UiLoader />
-  </template>
-
-  <template #error="{ error }">
-    {{ error.message }}
-  </template>
-
-  <template #empty>
-    No bookmarks yet.
-  </template>
-
   <template #default="{ data: bookmarks }">
     <BookmarkList :bookmarks="bookmarks" />
   </template>
